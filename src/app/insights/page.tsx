@@ -3,7 +3,7 @@ import { FooterSection } from "@/components/FooterSection";
 
 export default function InsightsPage() {
   return (
-    <main className="relative w-full overflow-hidden text-sm text-zinc-200">
+    <main className="relative w-full overflow-x-hidden text-sm text-zinc-200">
       <Header />
       <section className="border-b border-zinc-900/60 bg-black">
         <div className="mx-auto max-w-6xl px-6 py-16 md:px-10 md:py-20 lg:px-0">

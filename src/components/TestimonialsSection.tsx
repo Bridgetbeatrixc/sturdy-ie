@@ -7,6 +7,8 @@ type Testimonial = {
   name: string;
   title: string;
   quote: string;
+  img: string;
+  stars: number;
 };
 
 const TESTIMONIALS: Testimonial[] = [
@@ -16,6 +18,8 @@ const TESTIMONIALS: Testimonial[] = [
     title: "Client Manager",
     quote:
       "Their client-focused approach strengthened our communication and trust. Every interaction was smooth, thoughtful, and aligned with our needs, helping our team operate with greater clarity, confidence, and long-lasting momentum.",
+    img: "https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=400",
+    stars: 4,
   },
   {
     id: 2,
@@ -23,6 +27,8 @@ const TESTIMONIALS: Testimonial[] = [
     title: "Programme Director",
     quote:
       "A deep understanding of governance, regulation, and delivery. They consistently translated complex requirements into practical, implementable solutions.",
+    img: "https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg?auto=compress&cs=tinysrgb&w=400",
+    stars: 5,
   },
   {
     id: 3,
@@ -30,13 +36,17 @@ const TESTIMONIALS: Testimonial[] = [
     title: "Chief Data Officer",
     quote:
       "Their work enabled us to accelerate sensitive data collaboration without compromising privacy, ethics, or regulatory obligations.",
+    img: "https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=400",
+    stars: 5,
   },
   {
     id: 4,
-    name: "Liam O’Connor",
+    name: "Liam O'Connor",
     title: "Head of Innovation",
     quote:
       "A rare blend of strategic thinking and delivery discipline, helping our teams align on governance while still moving quickly.",
+    img: "https://images.pexels.com/photos/1516680/pexels-photo-1516680.jpeg?auto=compress&cs=tinysrgb&w=400",
+    stars: 4,
   },
 ];
 
@@ -45,60 +55,67 @@ export function TestimonialsSection() {
 
   return (
     <section className="border-b border-zinc-900/60 bg-black">
-      <div className="mx-auto max-w-6xl px-6 py-16 md:px-10 md:py-20 lg:px-0">
-        <div className="relative mb-10">
-          <h2 className="text-3xl font-semibold tracking-tight text-zinc-900/30 md:text-4xl">
-            What our clients say
-          </h2>
-          <p className="absolute left-0 top-1/2 text-sm font-medium text-zinc-200/90 md:top-3/4">
-            What our clients say
-          </p>
-        </div>
+      <div className="mx-auto max-w-5xl px-6 py-16 md:px-10 md:py-24 lg:px-0">
+        {/* Heading */}
+        <h2 className="mb-12 text-center text-3xl font-semibold text-white md:mb-16 md:text-5xl">
+          What our <em className="not-italic text-[#c5f018]">clients say</em>
+        </h2>
 
-        <div className="flex flex-col gap-10 md:flex-row md:items-center">
-          {/* Headshots column */}
-          <div className="flex flex-row gap-4 md:flex-col">
-            {TESTIMONIALS.map((t) => {
-              const isActive = t.id === active.id;
-              return (
-                <button
-                  key={t.id}
-                  type="button"
-                  onClick={() => setActive(t)}
-                  className={`relative h-12 w-12 rounded-full border border-zinc-700 bg-[url('https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&w=400')] bg-cover bg-center transition ${
-                    isActive ? "ring-2 ring-[#c5f018] ring-offset-2 ring-offset-black" : ""
-                  }`}
-                  aria-label={`View testimonial from ${t.name}`}
-                />
-              );
-            })}
+        <div className="flex flex-col items-stretch gap-6 md:flex-row">
+          {/* Avatars card */}
+          <div className="flex items-center justify-center rounded-3xl bg-zinc-900/80 px-8 py-8 md:px-10 md:py-10">
+            <div className="flex flex-row gap-6 md:flex-col">
+              {TESTIMONIALS.map((t) => {
+                const isActive = t.id === active.id;
+                return (
+                  <button
+                    key={t.id}
+                    type="button"
+                    onClick={() => setActive(t)}
+                    className={`relative h-16 w-16 shrink-0 overflow-hidden rounded-full border-2 transition-all duration-300 md:h-20 md:w-20 ${
+                      isActive
+                        ? "border-[#c5f018] shadow-[0_0_12px_rgba(197,240,24,0.4)]"
+                        : "border-zinc-700 opacity-70 hover:opacity-100"
+                    }`}
+                    aria-label={`View testimonial from ${t.name}`}
+                  >
+                    <div
+                      className="h-full w-full bg-cover bg-center"
+                      style={{ backgroundImage: `url(${t.img})` }}
+                    />
+                  </button>
+                );
+              })}
+            </div>
           </div>
 
           {/* Testimonial card */}
-          <div className="flex-1">
-            <div className="rounded-3xl border border-lime-400/70 bg-gradient-to-br from-lime-500/10 via-emerald-500/10 to-black p-[1px]">
-              <div className="h-full rounded-[1.4rem] bg-gradient-to-br from-zinc-950 to-slate-950 px-6 py-8 md:px-8 md:py-10">
-                <p className="text-sm leading-relaxed text-zinc-100">
-                  “{active.quote}”
+          <div className="flex-1 rounded-3xl border border-lime-400/30 bg-gradient-to-br from-lime-500/10 via-emerald-900/20 to-zinc-950 p-[1px]">
+            <div className="flex h-full flex-col justify-between rounded-[1.4rem] bg-gradient-to-br from-zinc-950/80 via-emerald-950/30 to-zinc-950 px-8 py-10 md:px-10 md:py-12">
+              <div>
+                <h3 className="text-2xl font-semibold text-white md:text-4xl">
+                  {active.name}
+                </h3>
+                <p className="mt-1 text-sm font-medium text-[#c5f018] md:text-base">
+                  {active.title}
                 </p>
-                <div className="mt-6 flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
-                  <div>
-                    <p className="text-sm font-semibold text-white">{active.name}</p>
-                    <p className="text-xs text-zinc-400">{active.title}</p>
-                  </div>
-                  <div className="flex items-center gap-1 text-xs">
-                    {Array.from({ length: 5 }).map((_, idx) => (
-                      <span
-                        key={idx}
-                        className={`inline-block text-base ${
-                          idx < 4 ? "text-[#c5f018]" : "text-zinc-500"
-                        }`}
-                      >
-                        ★
-                      </span>
-                    ))}
-                  </div>
-                </div>
+
+                <p className="mt-8 text-sm leading-relaxed text-zinc-200 md:text-lg md:leading-relaxed">
+                  {active.quote}
+                </p>
+              </div>
+
+              <div className="mt-10 flex items-center gap-1.5">
+                {Array.from({ length: 5 }).map((_, idx) => (
+                  <span
+                    key={idx}
+                    className={`inline-block text-2xl ${
+                      idx < active.stars ? "text-[#c5f018]" : "text-zinc-600"
+                    }`}
+                  >
+                    ★
+                  </span>
+                ))}
               </div>
             </div>
           </div>
@@ -107,4 +124,3 @@ export function TestimonialsSection() {
     </section>
   );
 }
-

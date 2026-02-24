@@ -1,23 +1,37 @@
 export function CollaborationCtaSection() {
   return (
     <section className="border-b border-zinc-900/60">
-      <div className="bg-slate-950 bg-[linear-gradient(135deg,rgba(148,163,184,0.06)_0,rgba(148,163,184,0.06)_1px,transparent_1px,transparent_12px)] bg-[length:14px_14px]">
-        <div className="mx-auto max-w-6xl px-6 py-16 md:px-10 md:py-20 lg:px-0">
-          <div className="max-w-2xl space-y-4">
-            <h2 className="text-xl font-semibold text-white md:text-2xl">
-              Exploring <span className="text-[#c5f018]">Collaboration</span>?
+      <div className="relative overflow-hidden bg-zinc-950">
+        {/* Diagonal stripes background */}
+        <div className="absolute inset-0">
+          <div
+            className="absolute inset-0 opacity-[0.07]"
+            style={{
+              backgroundImage:
+                "repeating-linear-gradient(-45deg, transparent, transparent 40px, rgba(255,255,255,0.5) 40px, rgba(255,255,255,0.5) 42px)",
+            }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-zinc-950 via-zinc-950/80 to-transparent" />
+        </div>
+
+        <div className="relative mx-auto max-w-6xl px-6 py-20 md:px-10 md:py-28 lg:px-0">
+          <div className="max-w-2xl space-y-5">
+            <h2 className="text-3xl font-semibold leading-tight text-[#c5f018] md:text-4xl">
+              Exploring
+              <br />
+              <span className="font-bold text-white">Collaboration</span>?
             </h2>
-            <p className="text-sm leading-relaxed text-zinc-300">
-              Open to partnerships across research, regulated innovation, and venture
-              initiatives where secure environments, governance, and
+            <p className="text-sm leading-relaxed text-zinc-300 md:text-base">
+              Open to partnerships across research, regulated innovation, and
+              venture initiatives where secure environments, governance, and
               standards-aligned exchange are critical.
             </p>
             <button
               type="button"
-              className="inline-flex items-center gap-2 rounded-full bg-[#c5f018] px-6 py-3 text-sm font-semibold text-black shadow-md shadow-lime-300/30 transition hover:-translate-y-[1px] hover:bg-lime-300"
+              className="mt-4 inline-flex items-center gap-2 rounded-lg bg-[#c5f018] px-7 py-3.5 text-sm font-semibold text-black shadow-md shadow-lime-300/20 transition hover:-translate-y-[1px] hover:bg-lime-300"
             >
               <span>Get in touch</span>
-              <span className="text-xs">↗</span>
+              <span className="text-xs">&#8599;</span>
             </button>
           </div>
         </div>
@@ -25,4 +39,3 @@ export function CollaborationCtaSection() {
     </section>
   );
 }
-

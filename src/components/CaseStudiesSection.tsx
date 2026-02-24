@@ -1,3 +1,7 @@
+"use client";
+
+import { useEffect, useRef, useState } from "react";
+
 const CASE_STUDIES = [
   {
     number: 1,
@@ -19,38 +23,88 @@ const CASE_STUDIES = [
 ];
 
 export function CaseStudiesSection() {
-  return (
-    <section className="border-b border-zinc-900/60 bg-gradient-to-b from-black to-slate-950">
-      <div className="mx-auto max-w-6xl px-6 py-16 md:px-10 md:py-20 lg:px-0">
-        <div className="mb-8 flex items-center gap-3">
-          <span className="h-2 w-2 rounded-full bg-[#c5f018]" />
-          <h2 className="text-sm font-semibold uppercase tracking-[0.25em] text-zinc-300">
-            Case studies
-          </h2>
-        </div>
+  const sectionRef = useRef<HTMLElement | null>(null);
+  const [progress, setProgress] = useState(0);
 
-        <div className="space-y-8">
-          {CASE_STUDIES.map((item, idx) => (
+  useEffect(() => {
+    const handleScroll = () => {
+      const el = sectionRef.current;
+      if (!el) return;
+
+      const rect = el.getBoundingClientRect();
+
+      // total scroll distance where animation should run
+      const total = el.offsetHeight - window.innerHeight;
+
+      // how far section has travelled through viewport
+      const scrolled = Math.min(Math.max(-rect.top, 0), total);
+
+      const p = total > 0 ? scrolled / total : 0;
+      setProgress(p);
+    };
+
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const maxOffset = CASE_STUDIES.length - 1;
+  const translatePercent = -progress * maxOffset * 100;
+
+  return (
+    <section
+      ref={sectionRef}
+      className="relative border-b border-zinc-900/60 bg-black"
+      style={{ height: `${CASE_STUDIES.length * 100}vh` }}
+    >
+      {/* STICKY VIEWPORT */}
+      <div className="sticky top-0 h-screen w-full overflow-hidden">
+        <div
+          className="flex h-full w-full will-change-transform"
+          style={{
+            transform: `translateX(${translatePercent}%)`,
+          }}
+        >
+          {CASE_STUDIES.map((item) => (
             <article
               key={item.number}
-              className={`flex flex-col overflow-hidden rounded-3xl border border-zinc-800 bg-zinc-950/80 md:flex-row ${
-                idx % 2 === 1 ? "md:flex-row-reverse" : ""
-              }`}
+              className="relative flex h-full min-w-full items-center overflow-hidden"
             >
-              <div
-                className="relative h-60 w-full md:h-72 md:w-1/2"
-                style={{ backgroundImage: `url(${item.img})` }}
-              >
-                <div className="absolute inset-0 bg-cover bg-center" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
-                <div className="absolute -bottom-4 left-5 flex h-10 w-10 items-center justify-center rounded-full border border-lime-400/70 bg-black/80 text-sm font-semibold text-lime-300">
-                  {item.number}
+              {/* Background */}
+              <div className="absolute inset-0">
+                <div
+                  className="h-full w-full bg-cover bg-center"
+                  style={{ backgroundImage: `url(${item.img})` }}
+                />
+                <div className="absolute inset-0 bg-gradient-to-r from-black via-black/40 to-transparent" />
+              </div>
+
+              {/* Text */}
+              <div className="relative z-10 flex h-full flex-1 items-center px-8 md:px-20 lg:px-28">
+                <div className="space-y-4">
+                  <div className="mb-4 flex items-center gap-3 text-xs font-medium text-zinc-300">
+                    <span className="h-2 w-2 rounded-full bg-[#c5f018]" />
+                    <span className="tracking-[0.25em] uppercase">
+                      Case studies
+                    </span>
+                  </div>
+
+                  <h3 className="text-2xl font-semibold text-white md:text-3xl lg:text-4xl">
+                    Case Study {item.number}
+                  </h3>
+
+                  <p className="max-w-2xl text-sm leading-relaxed text-zinc-200 md:text-lg">
+                    {item.title}
+                  </p>
                 </div>
               </div>
-              <div className="flex flex-1 items-center p-6 md:p-8">
-                <p className="max-w-xl text-sm leading-relaxed text-zinc-200">
-                  {item.title}
-                </p>
+
+              {/* Number */}
+              <div className="relative z-10 pr-8 md:pr-12 lg:pr-16">
+                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#c5f018] text-sm font-semibold text-black md:h-12 md:w-12">
+                  {item.number}
+                </div>
               </div>
             </article>
           ))}
@@ -59,4 +113,3 @@ export function CaseStudiesSection() {
     </section>
   );
 }
-

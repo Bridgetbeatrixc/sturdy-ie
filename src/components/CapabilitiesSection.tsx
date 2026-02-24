@@ -33,11 +33,11 @@ export function CapabilitiesSection() {
             Horizontally scroll on smaller screens to explore more.
           </p>
         </div>
-        <div className="flex gap-4 overflow-x-auto pb-2">
+        <div className="no-scrollbar flex gap-4 overflow-x-auto pb-2">
           {CAPABILITIES.map((card) => (
             <article
               key={card.title}
-              className="relative h-52 w-72 shrink-0 overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-950/80"
+              className="relative h-80 w-80 shrink-0 overflow-hidden rounded-none border border-zinc-800 bg-zinc-950/80"
             >
               <div
                 className="absolute inset-0 bg-cover bg-center opacity-60"
@@ -45,8 +45,10 @@ export function CapabilitiesSection() {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent" />
               <div className="relative flex h-full flex-col justify-between p-5">
-                <span className="h-2 w-2 rounded-sm bg-[#c5f018]" />
-                <h3 className="text-sm font-semibold text-white">{card.title}</h3>
+                <span className="h-3 w-3 rounded-sm bg-[#c5f018]" />
+                <h3 className="text-base font-semibold text-white md:text-lg">
+                  {card.title}
+                </h3>
               </div>
             </article>
           ))}
