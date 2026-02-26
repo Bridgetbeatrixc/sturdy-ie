@@ -1,12 +1,14 @@
 import { Header } from "@/components/Header";
-import { CaseStudiesSection } from "@/components/CaseStudiesSection";
+import { CaseStudyCarousel } from "@/components/CaseStudyCarousel";
+import { CaseStudyBlogSection } from "@/components/CaseStudyBlogSection";
 import { FooterSection } from "@/components/FooterSection";
 
 export default function CaseStudiesPage() {
   return (
-    <main className="relative w-full overflow-x-hidden text-sm text-zinc-200">
+    <main className="relative w-full text-sm text-zinc-200">
       <Header />
-      <CaseStudiesSection />
+      <CaseStudyCarousel />
+      <CaseStudyBlogSection />
       <FooterSection />
     </main>
   );
