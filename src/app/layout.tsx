@@ -1,12 +1,5 @@
 import type { Metadata } from "next";
-import { Poppins } from "next/font/google";
 import "./globals.css";
-
-const poppins = Poppins({
-  variable: "--font-poppins",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-});
 
 export const metadata: Metadata = {
   title: "Jason Sturdy | Data Governance & Regulatory Compliance Advisor",
@@ -22,7 +15,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${poppins.className} antialiased bg-black text-zinc-100`}
+        className="antialiased bg-black text-zinc-100"
+        style={{ fontFamily: "'Poppins', sans-serif" }}
       >
         <div className="flex min-h-screen min-w-0 justify-center">
           {children}

@@ -56,7 +56,8 @@ export function Header() {
         </Link>
 
         {/* Hamburger + dropdown wrapper */}
-        <div className="relative">
+
+        <div className="relative z-10 rounded-md bg-[#c5f018] transition">
           <button
             ref={buttonRef}
             type="button"
@@ -72,19 +73,19 @@ export function Header() {
                 className={`block h-[2px] w-5 transition-all duration-300 ${
                   menuOpen
                     ? "translate-y-[7px] rotate-45 bg-black"
-                    : "bg-white"
+                    : "bg-black"
                 }`}
               />
               <span
                 className={`block h-[2px] w-5 transition-all duration-300 ${
-                  menuOpen ? "opacity-0" : "bg-white"
+                  menuOpen ? "opacity-0" : "bg-black"
                 }`}
               />
               <span
                 className={`block h-[2px] w-5 transition-all duration-300 ${
                   menuOpen
                     ? "-translate-y-[7px] -rotate-45 bg-black"
-                    : "bg-white"
+                    : "bg-black"
                 }`}
               />
             </span>
