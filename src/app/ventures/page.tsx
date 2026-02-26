@@ -1,53 +1,10 @@
 import Link from "next/link";
 import { Header } from "@/components/Header";
 import { FooterSection } from "@/components/FooterSection";
-
-const VENTURES = [
-  {
-    slug: "preventive-health-platform",
-    title: "Preventive Health Intelligence Platform",
-    status: "Exploring" as const,
-    overview:
-      "Exploring how secure biometrics, personalised analytics, and governance-aligned infrastructure can power next-generation preventive health models.",
-  },
-  {
-    slug: "federated-data-ecosystem",
-    title: "Federated Data Ecosystem",
-    status: "Active" as const,
-    overview:
-      "Building infrastructure for privacy-preserving cross-institutional analytics without centralising sensitive datasets.",
-  },
-  {
-    slug: "regulated-innovation-lab",
-    title: "Regulated Innovation Lab",
-    status: "Active" as const,
-    overview:
-      "A sandbox for testing governance-aligned innovation patterns within highly regulated sectors such as finance and healthcare.",
-  },
-  {
-    slug: "performance-optimisation-engine",
-    title: "Performance & Longevity Analytics",
-    status: "Exploring" as const,
-    overview:
-      "Investigating data-driven models for human performance optimisation grounded in secure analytics and preventive insights.",
-  },
-  {
-    slug: "collaboration-platform",
-    title: "Secure Collaboration Platform",
-    status: "Relaunching" as const,
-    overview:
-      "Re-engineering institutional collaboration tooling with end-to-end governance, auditability, and scalable trust boundaries.",
-  },
-];
-
-const STATUS_STYLES: Record<string, string> = {
-  Exploring:
-    "border-amber-500/40 bg-amber-500/10 text-amber-400",
-  Active:
-    "border-[#c5f018]/40 bg-[#c5f018]/10 text-[#c5f018]",
-  Relaunching:
-    "border-sky-400/40 bg-sky-400/10 text-sky-400",
-};
+import {
+  VENTURES_INDEX,
+  STATUS_STYLES,
+} from "@/data/ventures";
 
 export default function VenturesPage() {
   return (
@@ -77,7 +34,7 @@ export default function VenturesPage() {
       {/* Grid */}
       <section className="border-b border-zinc-900/60 bg-black">
         <div className="mx-auto grid max-w-6xl gap-6 px-4 py-12 sm:grid-cols-2 sm:px-6 md:px-10 md:py-16 lg:grid-cols-3 lg:px-0">
-          {VENTURES.map((v) => (
+          {VENTURES_INDEX.map((v) => (
             <Link
               key={v.slug}
               href={`/ventures/${v.slug}`}
