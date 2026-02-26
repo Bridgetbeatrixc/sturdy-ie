@@ -22,7 +22,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${poppins.className} antialiased bg-[radial-gradient(circle_at_center,rgba(197,240,24,0.2),transparent_70%)] bg-neutral-950 text-zinc-100`}
+        className={`${poppins.className} antialiased bg-black text-zinc-100`}
       >
         <div className="flex min-h-screen min-w-0 justify-center">
           {children}
