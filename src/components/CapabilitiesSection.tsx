@@ -1,3 +1,6 @@
+"use client";
+import { useRef, useEffect } from "react";
+
 const CAPABILITIES = [
   {
     title: "20+ years delivering in regulated environments",
@@ -22,6 +25,22 @@ const CAPABILITIES = [
 ];
 
 export function CapabilitiesSection() {
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+
+    const onWheel = (e: WheelEvent) => {
+      if (e.deltaY === 0) return;
+      e.preventDefault();
+      el.scrollBy({ left: e.deltaY, behavior: "smooth" });
+    };
+
+    el.addEventListener("wheel", onWheel, { passive: false });
+    return () => el.removeEventListener("wheel", onWheel);
+  }, []);
+
   return (
     <section className="border-b border-zinc-900/60 bg-gradient-to-b from-black to-slate-950">
       <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 md:px-10 md:py-20 lg:px-0">
@@ -30,10 +49,14 @@ export function CapabilitiesSection() {
             Capabilities in regulated environments
           </h2>
           <p className="hidden text-xs text-zinc-400 md:block">
-            Horizontally scroll to explore more.
+            Scroll right to explore more.
           </p>
         </div>
-        <div className="flex flex-col gap-4 md:flex-row md:overflow-x-auto md:overscroll-x-contain md:pb-2 md:no-scrollbar md:scroll-touch md:min-w-0">
+        <div
+          ref={scrollRef}
+          style={{ scrollbarWidth: "none", msOverflowStyle: "none" } as React.CSSProperties}
+          className="flex flex-col gap-4 md:flex-row md:overflow-x-auto md:overscroll-x-contain md:scroll-touch md:min-w-0 [&::-webkit-scrollbar]:hidden"
+        >
           {CAPABILITIES.map((card) => (
             <article
               key={card.title}
@@ -57,4 +80,3 @@ export function CapabilitiesSection() {
     </section>
   );
 }
-

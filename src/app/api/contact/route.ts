@@ -66,7 +66,7 @@ function createEmailTemplate(data: {
     <body>
       <div class="container">
         <div class="header">
-          <h2>New Submission</h2>
+          <h2>New Messages</h2>
           <p>You just received a new form submission on your website Jason Sturdy | Sturdy.ie.</p>
         </div>
         <div class="body">
@@ -130,7 +130,7 @@ export async function POST(request: NextRequest) {
       from: "Contact Form - Website Jason Sturdy <onboarding@resend.dev>", 
       to: ["jason@sturdy.ie"], 
       replyTo: validatedData.email,
-      subject: `New Enquiry — ${validatedData.interestArea}`,
+      subject: `New Message — ${validatedData.interestArea}`,
       html: createEmailTemplate(validatedData),
     });
 
