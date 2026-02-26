@@ -4,51 +4,54 @@ import Link from "next/link";
 
 const CASE_STUDY_POSTS = [
   {
-    slug: "governance-secure-environment",
-    title:
+    slug: "trusted-research-environment",
+    title: "Trusted Research Environment Design",
+    summary:
       "Designed a governance-aligned secure environment enabling multi-institutional research collaboration.",
-    excerpt:
-      "A federated data platform enabling research institutions to collaborate on sensitive datasets while maintaining strict governance and audit trails.",
     img: "https://images.pexels.com/photos/1181519/pexels-photo-1181519.jpeg?auto=compress&cs=tinysrgb&w=800",
-    date: "2024",
-    tag: "Governance",
+    theme: "Research Collaboration / TRE",
+    context: "Multi-institutional research consortium",
+    period: "2024",
   },
   {
-    slug: "federated-analytics",
-    title:
+    slug: "federated-analytics-model",
+    title: "Federated Analytics Collaboration Model",
+    summary:
       "Implemented a federated analytics model enabling insight generation without centralising sensitive data.",
-    excerpt:
-      "Cross-organisational analytics that preserves data sovereignty and privacy while delivering actionable insights across the ecosystem.",
     img: "https://images.pexels.com/photos/1181528/pexels-photo-1181528.jpeg?auto=compress&cs=tinysrgb&w=800",
-    date: "2024",
-    tag: "Analytics",
+    theme: "Federated Analytics / Privacy-Preserving Collaboration",
+    context: "Cross-organisational data ecosystem",
+    period: "2024",
   },
   {
-    slug: "finance-optimisation",
-    title: "Finance optimisation – Cost management.",
-    excerpt:
-      "Cost reduction and process optimisation for a regulated financial services organisation, aligning spend with compliance requirements.",
+    slug: "finance-cost-governance",
+    title: "Finance Optimisation & Cost Governance",
+    summary:
+      "Delivered a governance-aligned cost management model within a regulated financial services environment.",
     img: "https://images.pexels.com/photos/1181678/pexels-photo-1181678.jpeg?auto=compress&cs=tinysrgb&w=800",
-    date: "2024",
-    tag: "Finance",
+    theme: "Cost Governance / Regulated Finance",
+    context: "Regulated financial services organisation",
+    period: "2024",
   },
   {
     slug: "healthcare-data-sharing",
-    title: "Healthcare data sharing framework for clinical research.",
-    excerpt:
+    title: "Healthcare Data Sharing Framework",
+    summary:
       "Designed a consent-based framework enabling secure, compliant sharing of clinical data across NHS trusts and research partners.",
     img: "https://images.pexels.com/photos/7659574/pexels-photo-7659574.jpeg?auto=compress&cs=tinysrgb&w=800",
-    date: "2023",
-    tag: "Healthcare",
+    theme: "Healthcare / Clinical Data Collaboration",
+    context: "NHS trust and research partner network",
+    period: "2023",
   },
   {
-    slug: "regulatory-reporting",
-    title: "Regulatory reporting automation for MiFID II compliance.",
-    excerpt:
+    slug: "regulatory-reporting-automation",
+    title: "Regulatory Reporting Automation",
+    summary:
       "Automated reporting pipelines and data quality controls to meet MiFID II transaction reporting obligations with full auditability.",
     img: "https://images.pexels.com/photos/1181467/pexels-photo-1181467.jpeg?auto=compress&cs=tinysrgb&w=800",
-    date: "2023",
-    tag: "Compliance",
+    theme: "Compliance / Regulatory Reporting",
+    context: "Regulated investment services firm",
+    period: "2023",
   },
 ];
 
@@ -88,19 +91,27 @@ export function CaseStudyBlogSection() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
                 <span className="absolute left-4 top-4 rounded-full bg-[#c5f018] px-3 py-1 text-xs font-semibold text-black">
-                  {post.tag}
+                  {post.theme.split(" / ")[0]}
                 </span>
               </Link>
 
               <div className="flex flex-1 flex-col justify-center">
-                <p className="mb-2 text-xs font-medium text-zinc-500">
-                  {post.date}
-                </p>
+                <div className="mb-3 flex flex-wrap items-center gap-3 text-xs text-zinc-500">
+                  <span className="rounded-full border border-zinc-700 px-2.5 py-0.5 font-medium text-zinc-400">
+                    {post.theme}
+                  </span>
+                  {post.period && (
+                    <span className="text-zinc-600">Period: {post.period}</span>
+                  )}
+                </div>
                 <h3 className="text-xl font-semibold text-white transition-colors group-hover:text-[#c5f018] md:text-2xl">
                   <Link href={`/case-studies/${post.slug}`}>{post.title}</Link>
                 </h3>
-                <p className="mt-3 text-sm leading-relaxed text-zinc-400">
-                  {post.excerpt}
+                <p className="mt-2 text-sm leading-relaxed text-zinc-400">
+                  {post.summary}
+                </p>
+                <p className="mt-1 text-xs text-zinc-600">
+                  {post.context}
                 </p>
                 <Link
                   href={`/case-studies/${post.slug}`}

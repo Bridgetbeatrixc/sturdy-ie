@@ -5,20 +5,27 @@ import { useCallback, useEffect, useState } from "react";
 const HIGHLIGHTED_CASE_STUDIES = [
   {
     id: 1,
-    title:
+    title: "Trusted Research Environment Design",
+    summary:
       "Designed a governance-aligned secure environment enabling multi-institutional research collaboration.",
     img: "https://images.pexels.com/photos/1181519/pexels-photo-1181519.jpeg?auto=compress&cs=tinysrgb&w=1200",
+    slug: "trusted-research-environment",
   },
   {
     id: 2,
-    title:
+    title: "Federated Analytics Collaboration Model",
+    summary:
       "Implemented a federated analytics model enabling insight generation without centralising sensitive data.",
     img: "https://images.pexels.com/photos/1181528/pexels-photo-1181528.jpeg?auto=compress&cs=tinysrgb&w=1200",
+    slug: "federated-analytics-model",
   },
   {
     id: 3,
-    title: "Finance optimisation – Cost management.",
+    title: "Finance Optimisation & Cost Governance",
+    summary:
+      "Delivered a governance-aligned cost management model within a regulated financial services environment.",
     img: "https://images.pexels.com/photos/1181678/pexels-photo-1181678.jpeg?auto=compress&cs=tinysrgb&w=1200",
+    slug: "finance-cost-governance",
   },
 ];
 
@@ -79,11 +86,11 @@ export function CaseStudyCarousel() {
                     </div>
 
                     <h3 className="text-xl font-semibold text-white md:text-2xl lg:text-3xl">
-                      Case Study {item.id}
+                      {item.title}
                     </h3>
 
                     <p className="max-w-2xl text-sm leading-relaxed text-zinc-200 md:text-base">
-                      {item.title}
+                      {item.summary}
                     </p>
                   </div>
                 </div>
