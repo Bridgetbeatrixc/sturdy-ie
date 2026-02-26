@@ -6,7 +6,7 @@ export default function InsightsPage() {
     <main className="relative w-full overflow-x-hidden text-sm text-zinc-200">
       <Header />
       <section className="border-b border-zinc-900/60 bg-black">
-        <div className="mx-auto max-w-6xl px-6 py-16 md:px-10 md:py-20 lg:px-0">
+        <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 md:px-10 md:py-20 lg:px-0">
           <h1 className="text-2xl font-semibold text-white md:text-3xl">
             Insights
           </h1>

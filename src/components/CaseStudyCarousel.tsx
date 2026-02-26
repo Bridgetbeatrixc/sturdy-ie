@@ -55,7 +55,7 @@ export function CaseStudyCarousel() {
 
   return (
     <section className="relative border-b border-zinc-900/60 bg-black py-8 md:py-12">
-      <div className="mx-auto max-w-6xl px-6 md:px-10 lg:px-0">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 md:px-10 lg:px-0">
         <div className="relative aspect-[16/10] overflow-hidden rounded-lg md:aspect-[21/9]">
           <div
             className="flex h-full w-full transition-transform duration-500 ease-out will-change-transform"
@@ -76,7 +76,7 @@ export function CaseStudyCarousel() {
                   <div className="absolute inset-0 bg-gradient-to-r from-black via-black/50 to-transparent" />
                 </div>
 
-                <div className="relative z-10 flex h-full flex-1 items-center px-8 md:px-12 lg:px-16">
+                <div className="relative z-10 flex h-full flex-1 items-center px-4 sm:px-8 md:px-12 lg:px-16">
                   <div className="space-y-3">
                     <div className="flex items-center gap-3 text-xs font-medium text-zinc-300">
                       <span className="h-2 w-2 rounded-full bg-[#c5f018]" />

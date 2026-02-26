@@ -46,7 +46,7 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-50 bg-black/80 backdrop-blur-md">
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4 md:px-10 lg:px-0">
+      <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 sm:px-6 md:px-10 lg:px-0">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2">
           <div className="h-7 w-7 rounded-md border border-lime-400/40 bg-gradient-to-br from-lime-400/10 to-lime-500/0" />
@@ -93,7 +93,7 @@ export function Header() {
           {/* Dropdown panel */}
           <div
             ref={menuRef}
-            className={`absolute right-1/2 top-full translate-x-1/2 mt-2 w-[85vw] max-w-sm origin-top rounded-2xl bg-[#c5f018] shadow-2xl transition-all duration-300 ease-out ${
+            className={`absolute right-0 top-full mt-2 w-[min(85vw,24rem)] max-w-sm origin-top-right rounded-2xl bg-[#c5f018] shadow-2xl transition-all duration-300 ease-out sm:right-1/2 sm:translate-x-1/2 sm:origin-top ${
               menuOpen
                 ? "scale-y-100 opacity-100"
                 : "pointer-events-none scale-y-0 opacity-0"

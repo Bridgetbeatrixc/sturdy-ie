@@ -20,7 +20,7 @@ const EXPERTISE_ITEMS = [
 export function ExpertiseSection() {
   return (
     <section className="border-b border-zinc-900/60 bg-black">
-      <div className="mx-auto max-w-6xl px-6 py-16 md:px-10 md:py-20 lg:px-0">
+      <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 md:px-10 md:py-20 lg:px-0">
         <div className="grid gap-10 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] lg:items-center">
           {/* Left: heading and 2x2 grid */}
           <div>

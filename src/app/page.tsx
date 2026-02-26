@@ -13,7 +13,7 @@ import { FooterSection } from "@/components/FooterSection";
 
 export default function Home() {
   return (
-    <main className="relative w-full  text-sm text-zinc-200">
+    <main className="relative min-w-0 w-full max-w-full text-sm text-zinc-200">
       <Header />
       <HeroSection />
       <AboutSection />

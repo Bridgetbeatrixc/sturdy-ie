@@ -172,7 +172,7 @@ export default async function CaseStudyDetailPage({
           <div className="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-black/50" />
         </div>
 
-        <div className="relative mx-auto max-w-6xl px-6 py-20 md:px-10 md:py-28 lg:px-0">
+        <div className="relative mx-auto max-w-6xl px-4 py-20 sm:px-6 md:px-10 md:py-28 lg:px-0">
           <Link
             href="/case-studies"
             className="inline-flex items-center gap-1 text-xs font-medium text-zinc-400 transition hover:text-zinc-200"
@@ -203,7 +203,7 @@ export default async function CaseStudyDetailPage({
 
       {/* Content sections */}
       <section className="border-b border-zinc-900/60 bg-black">
-        <div className="mx-auto flex max-w-6xl flex-col gap-10 px-6 py-12 md:px-10 md:py-16 lg:px-0">
+        <div className="mx-auto flex max-w-6xl flex-col gap-10 px-4 py-12 sm:px-6 md:px-10 md:py-16 lg:px-0">
           <SectionBlock
             label="Overview & Context"
             body={study.overviewContext}
@@ -233,7 +233,7 @@ export default async function CaseStudyDetailPage({
 
       {/* CTA */}
       <section className="border-b border-zinc-900/60 bg-black">
-        <div className="mx-auto max-w-6xl px-6 py-12 text-center md:px-10 md:py-16 lg:px-0">
+        <div className="mx-auto max-w-6xl px-4 py-12 text-center sm:px-6 md:px-10 md:py-16 lg:px-0">
           <h2 className="text-xl font-semibold text-white md:text-2xl">
             Interested in a similar initiative?
           </h2>

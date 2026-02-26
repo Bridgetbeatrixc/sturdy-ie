@@ -58,7 +58,7 @@ const CASE_STUDY_POSTS = [
 export function CaseStudyBlogSection() {
   return (
     <section className="border-b border-zinc-900/60 bg-black">
-      <div className="mx-auto max-w-6xl px-6 py-16 md:px-10 md:py-20 lg:px-0">
+      <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 md:px-10 md:py-20 lg:px-0">
         <div className="mb-12">
           <div className="flex items-center gap-2">
             <span className="h-2 w-2 rounded-sm bg-[#c5f018]" />

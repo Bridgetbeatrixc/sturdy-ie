@@ -2,112 +2,10 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Header } from "@/components/Header";
 import { FooterSection } from "@/components/FooterSection";
-
-interface VentureData {
-  slug: string;
-  title: string;
-  status: string;
-  headerIntro: string;
-  ventureOverview: string;
-  problemSpace: string;
-  innovationDirection: string;
-  dataAnalytics: string;
-  collaboration: string;
-}
-
-const VENTURES: VentureData[] = [
-  {
-    slug: "preventive-health-platform",
-    title: "Preventive Health Intelligence Platform",
-    status: "Exploring",
-    headerIntro:
-      "Each initiative explores emerging opportunities across health, data, and preventive innovation, grounded in secure infrastructure and governance alignment.",
-    ventureOverview:
-      "This initiative explores how secure environments, data, and analytics can support new models of health optimisation, collaboration, or regulated innovation.",
-    problemSpace:
-      "The venture sits within a broader shift toward data-driven ecosystems, where infrastructure, governance, and analytics converge to enable next-generation preventive and performance models.",
-    innovationDirection:
-      "Development focuses on governance-aligned innovation, secure analytics, and scalable collaboration patterns that can operate credibly within regulated environments.",
-    dataAnalytics:
-      "Where relevant, initiatives incorporate biometrics, secure analytics, personalisation models, and preventive insights—while maintaining governance and trust boundaries.",
-    collaboration:
-      "Open to aligned research and innovation partners exploring pilots, co-development, or ecosystem initiatives.",
-  },
-  {
-    slug: "federated-data-ecosystem",
-    title: "Federated Data Ecosystem",
-    status: "Active",
-    headerIntro:
-      "Each initiative explores emerging opportunities across health, data, and preventive innovation, grounded in secure infrastructure and governance alignment.",
-    ventureOverview:
-      "This initiative explores how secure environments, data, and analytics can support new models of cross-institutional collaboration without centralising sensitive datasets.",
-    problemSpace:
-      "Traditional analytics require data centralisation, creating governance, privacy, and sovereignty challenges. Federated approaches preserve institutional autonomy while enabling shared insights.",
-    innovationDirection:
-      "Development focuses on privacy-preserving computation, federated learning, and standards-aligned data exchange protocols that scale across institutional boundaries.",
-    dataAnalytics:
-      "Incorporates differential privacy, secure aggregation, and governance-aware query engines to deliver insights without exposing underlying data.",
-    collaboration:
-      "Open to aligned research and innovation partners exploring pilots, co-development, or ecosystem initiatives.",
-  },
-  {
-    slug: "regulated-innovation-lab",
-    title: "Regulated Innovation Lab",
-    status: "Active",
-    headerIntro:
-      "Each initiative explores emerging opportunities across health, data, and preventive innovation, grounded in secure infrastructure and governance alignment.",
-    ventureOverview:
-      "This initiative explores how secure environments can serve as sandboxes for testing innovation patterns within highly regulated sectors.",
-    problemSpace:
-      "Regulation and innovation are often seen as opposing forces. This venture explores how governance alignment can actually accelerate credible innovation.",
-    innovationDirection:
-      "Development focuses on governance-aligned innovation, secure analytics, and scalable collaboration patterns that can operate credibly within regulated environments.",
-    dataAnalytics:
-      "Where relevant, initiatives incorporate compliance analytics, audit trail generation, and regulatory reporting automation—while maintaining trust boundaries.",
-    collaboration:
-      "Open to aligned research and innovation partners exploring pilots, co-development, or ecosystem initiatives.",
-  },
-  {
-    slug: "performance-optimisation-engine",
-    title: "Performance & Longevity Analytics",
-    status: "Exploring",
-    headerIntro:
-      "Each initiative explores emerging opportunities across health, data, and preventive innovation, grounded in secure infrastructure and governance alignment.",
-    ventureOverview:
-      "This initiative explores how secure environments, data, and analytics can support new models of human performance optimisation and longevity insights.",
-    problemSpace:
-      "The venture sits within a broader shift toward data-driven health ecosystems, where biometrics, wearables, and analytics converge to enable preventive and performance models.",
-    innovationDirection:
-      "Development focuses on personalised analytics, secure biometric data pipelines, and evidence-based optimisation models within governed boundaries.",
-    dataAnalytics:
-      "Incorporates biometrics, secure analytics, personalisation models, and preventive insights—while maintaining governance and trust boundaries.",
-    collaboration:
-      "Open to aligned research and innovation partners exploring pilots, co-development, or ecosystem initiatives.",
-  },
-  {
-    slug: "collaboration-platform",
-    title: "Secure Collaboration Platform",
-    status: "Relaunching",
-    headerIntro:
-      "Each initiative explores emerging opportunities across health, data, and preventive innovation, grounded in secure infrastructure and governance alignment.",
-    ventureOverview:
-      "This initiative explores how secure collaboration tooling can be re-engineered with end-to-end governance, auditability, and scalable trust boundaries.",
-    problemSpace:
-      "Institutional collaboration tools often lack the governance, audit, and compliance features required for regulated environments, creating friction and risk.",
-    innovationDirection:
-      "Development focuses on governance-aligned collaboration infrastructure, zero-trust architectures, and scalable permission models for cross-organisational workflows.",
-    dataAnalytics:
-      "Where relevant, initiatives incorporate activity analytics, compliance monitoring, and collaboration pattern insights—while maintaining governance and trust boundaries.",
-    collaboration:
-      "Open to aligned research and innovation partners exploring pilots, co-development, or ecosystem initiatives.",
-  },
-];
-
-const STATUS_STYLES: Record<string, string> = {
-  Exploring: "border-amber-500/40 bg-amber-500/10 text-amber-400",
-  Active: "border-[#c5f018]/40 bg-[#c5f018]/10 text-[#c5f018]",
-  Relaunching: "border-sky-400/40 bg-sky-400/10 text-sky-400",
-};
+import {
+  VENTURES_DETAIL,
+  STATUS_STYLES,
+} from "@/data/ventures";
 
 interface SectionBlockProps {
   label: string;
@@ -132,7 +30,7 @@ export default async function VentureDetailPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const venture = VENTURES.find((v) => v.slug === slug);
+  const venture = VENTURES_DETAIL.find((v) => v.slug === slug);
   if (!venture) notFound();
 
   return (
@@ -141,7 +39,7 @@ export default async function VentureDetailPage({
 
       {/* Hero */}
       <section className="border-b border-zinc-900/60 bg-black">
-        <div className="mx-auto max-w-6xl px-6 py-16 md:px-10 md:py-20 lg:px-0">
+        <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 md:px-10 md:py-20 lg:px-0">
           <Link
             href="/ventures"
             className="inline-flex items-center gap-1 text-xs font-medium text-zinc-500 transition hover:text-zinc-300"
@@ -168,7 +66,7 @@ export default async function VentureDetailPage({
 
       {/* Content sections */}
       <section className="border-b border-zinc-900/60 bg-black">
-        <div className="mx-auto flex max-w-6xl flex-col gap-10 px-6 py-12 md:px-10 md:py-16 lg:px-0">
+        <div className="mx-auto flex max-w-6xl flex-col gap-10 px-4 py-12 sm:px-6 md:px-10 md:py-16 lg:px-0">
           <SectionBlock
             label="Venture Overview"
             body={venture.ventureOverview}
@@ -191,7 +89,7 @@ export default async function VentureDetailPage({
 
       {/* CTA */}
       <section className="border-b border-zinc-900/60 bg-black">
-        <div className="mx-auto max-w-6xl px-6 py-12 text-center md:px-10 md:py-16 lg:px-0">
+        <div className="mx-auto max-w-6xl px-4 py-12 text-center sm:px-6 md:px-10 md:py-16 lg:px-0">
           <h2 className="text-xl font-semibold text-white md:text-2xl">
             Interested in collaborating?
           </h2>

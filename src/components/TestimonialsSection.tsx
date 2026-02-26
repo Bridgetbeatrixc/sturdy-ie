@@ -55,7 +55,7 @@ export function TestimonialsSection() {
 
   return (
     <section className="border-b border-zinc-900/60 bg-black">
-      <div className="mx-auto max-w-5xl px-6 py-16 md:px-10 md:py-24 lg:px-0">
+      <div className="mx-auto max-w-5xl px-4 py-16 sm:px-6 md:px-10 md:py-24 lg:px-0">
         {/* Heading */}
         <h2 className="mb-12 text-center text-3xl font-semibold text-white md:mb-16 md:text-5xl">
           What our <em className="not-italic text-[#c5f018]">clients say</em>
@@ -63,8 +63,8 @@ export function TestimonialsSection() {
 
         <div className="flex flex-col items-stretch gap-6 md:flex-row">
           {/* Avatars card */}
-          <div className="flex items-center justify-center rounded-3xl bg-zinc-900/80 px-8 py-8 md:px-10 md:py-10">
-            <div className="flex flex-row gap-6 md:flex-col">
+          <div className="flex items-center justify-center rounded-3xl bg-zinc-900/80 px-6 py-8 sm:px-8 md:px-10 md:py-10">
+            <div className="flex flex-row flex-wrap justify-center gap-4 sm:gap-6 md:flex-col md:flex-nowrap">
               {TESTIMONIALS.map((t) => {
                 const isActive = t.id === active.id;
                 return (
@@ -72,7 +72,7 @@ export function TestimonialsSection() {
                     key={t.id}
                     type="button"
                     onClick={() => setActive(t)}
-                    className={`relative h-16 w-16 shrink-0 overflow-hidden rounded-full border-2 transition-all duration-300 md:h-20 md:w-20 ${
+                    className={`relative h-14 w-14 shrink-0 overflow-hidden rounded-full border-2 transition-all duration-300 sm:h-16 sm:w-16 md:h-20 md:w-20 ${
                       isActive
                         ? "border-[#c5f018] shadow-[0_0_12px_rgba(197,240,24,0.4)]"
                         : "border-zinc-700 opacity-70 hover:opacity-100"
