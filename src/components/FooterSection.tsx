@@ -18,10 +18,60 @@ const SOCIALS = [
 
 export function FooterSection() {
   return (
-    <footer className="relative overflow-hidden bg-black">
-      {/* Background decorative lime circles */}
-      <div className="pointer-events-none absolute -left-20 -top-20 h-64 w-64 rounded-full border-[16px] border-[#c5f018]/20" />
-      <div className="pointer-events-none absolute -right-20 -bottom-20 h-64 w-64 rounded-full border-[16px] border-[#c5f018]/20" />
+    <footer
+      className="relative overflow-hidden"
+      style={{
+        background:
+          "radial-gradient(ellipse at 50% 40%, rgba(60, 80, 10, 0.45) 0%, rgba(30, 40, 5, 0.5) 35%, rgba(10, 12, 4, 0.9) 65%, #0a0a0a 100%)",
+      }}
+    >
+      {/* Decorative gradient arcs — left */}
+      <div className="pointer-events-none absolute -left-28 top-1/2 -translate-y-1/2">
+        <svg
+          width="260"
+          height="320"
+          viewBox="0 0 260 320"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <defs>
+            <linearGradient id="arcGradL1" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stopColor="#c5f018" stopOpacity="0.6" />
+              <stop offset="100%" stopColor="#3a5a00" stopOpacity="0.15" />
+            </linearGradient>
+            <linearGradient id="arcGradL2" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stopColor="#a0d010" stopOpacity="0.4" />
+              <stop offset="100%" stopColor="#2a4200" stopOpacity="0.1" />
+            </linearGradient>
+          </defs>
+          <circle cx="50" cy="160" r="120" stroke="url(#arcGradL1)" strokeWidth="18" />
+          <circle cx="50" cy="160" r="85" stroke="url(#arcGradL2)" strokeWidth="14" />
+        </svg>
+      </div>
+
+      {/* Decorative gradient arcs — right */}
+      <div className="pointer-events-none absolute -right-28 top-1/2 -translate-y-1/2">
+        <svg
+          width="260"
+          height="320"
+          viewBox="0 0 260 320"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <defs>
+            <linearGradient id="arcGradR1" x1="1" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="#c5f018" stopOpacity="0.6" />
+              <stop offset="100%" stopColor="#3a5a00" stopOpacity="0.15" />
+            </linearGradient>
+            <linearGradient id="arcGradR2" x1="1" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="#a0d010" stopOpacity="0.4" />
+              <stop offset="100%" stopColor="#2a4200" stopOpacity="0.1" />
+            </linearGradient>
+          </defs>
+          <circle cx="210" cy="160" r="120" stroke="url(#arcGradR1)" strokeWidth="18" />
+          <circle cx="210" cy="160" r="85" stroke="url(#arcGradR2)" strokeWidth="14" />
+        </svg>
+      </div>
 
       <div className="relative mx-auto max-w-6xl px-6 py-16 md:px-10 md:py-20 lg:px-0">
         {/* Tagline */}
