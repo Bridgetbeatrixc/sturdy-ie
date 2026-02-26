@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export function CollaborationCtaSection() {
   return (
     <section className="border-b border-zinc-900/60">
@@ -27,11 +29,14 @@ export function CollaborationCtaSection() {
               standards-aligned exchange are critical.
             </p>
             <button
-              type="button"
+               ><Link
+               type="button"
               className="mt-4 inline-flex items-center gap-2 rounded-lg bg-[#c5f018] px-7 py-3.5 text-sm font-semibold text-black shadow-md shadow-lime-300/20 transition hover:-translate-y-[1px] hover:bg-lime-300"
+              href="/contact"
             >
               <span>Get in touch</span>
               <span className="text-xs">&#8599;</span>
+            </Link>
             </button>
           </div>
         </div>
