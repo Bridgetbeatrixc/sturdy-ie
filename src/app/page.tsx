@@ -1,6 +1,5 @@
 import { Header } from "@/components/Header";
 import { HeroSection } from "@/components/HeroSection";
-import { AboutSection } from "@/components/AboutSection";
 import { CapabilitiesSection } from "@/components/CapabilitiesSection";
 import { ExpertiseSection } from "@/components/ExpertiseSection";
 import { GovernancePrincipleSection } from "@/components/GovernancePrincipleSection";
@@ -10,13 +9,14 @@ import { CaseStudiesSection } from "@/components/CaseStudiesSection";
 import { TestimonialsSection } from "@/components/TestimonialsSection";
 import { CollaborationCtaSection } from "@/components/CollaborationCtaSection";
 import { FooterSection } from "@/components/FooterSection";
+import { HomeAboutSection } from "@/components/HomeAboutSection";
 
 export default function Home() {
   return (
     <main className="relative min-w-0 w-full max-w-full text-sm text-zinc-200">
       <Header />
       <HeroSection />
-      <AboutSection />
+      <HomeAboutSection />
       <CapabilitiesSection />
       <ExpertiseSection />
       <GovernancePrincipleSection />

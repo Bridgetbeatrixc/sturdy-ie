@@ -1,5 +1,5 @@
 import { Header } from "@/components/Header";
-import { HomeAboutSection } from "@/components/HomeAboutSection";
+import { AboutSection } from "@/components/AboutSection";
 import { ExecutiveProfileSection } from "@/components/ExecutiveProfileSection";
 import { CardAboutSection } from "@/components/CardAboutSection";
 import { ExploreWorkSection } from "@/components/ExploreWorkSection";
@@ -9,7 +9,7 @@ export default function AboutPage() {
   return (
     <main className="relative w-full overflow-x-hidden text-sm text-zinc-200">
       <Header />
-      <HomeAboutSection />
+      <AboutSection />
       <ExecutiveProfileSection />
       <CardAboutSection />
       <ExploreWorkSection />
