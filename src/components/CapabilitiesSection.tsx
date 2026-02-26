@@ -30,14 +30,14 @@ export function CapabilitiesSection() {
             Capabilities in regulated environments
           </h2>
           <p className="hidden text-xs text-zinc-400 md:block">
-            Horizontally scroll on smaller screens to explore more.
+            Horizontally scroll to explore more.
           </p>
         </div>
-        <div className="no-scrollbar flex gap-4 overflow-x-auto pb-2">
+        <div className="flex flex-col gap-4 md:flex-row md:overflow-x-auto md:overscroll-x-contain md:pb-2 md:no-scrollbar md:scroll-touch md:min-w-0">
           {CAPABILITIES.map((card) => (
             <article
               key={card.title}
-              className="relative h-72 w-72 shrink-0 overflow-hidden rounded-none border border-zinc-800 bg-zinc-950/80 min-[400px]:h-80 min-[400px]:w-80"
+              className="relative h-56 w-full shrink-0 overflow-hidden rounded-none border border-zinc-800 bg-zinc-950/80 min-[360px]:h-64 md:h-80 md:w-80"
             >
               <div
                 className="absolute inset-0 bg-cover bg-center opacity-60"
