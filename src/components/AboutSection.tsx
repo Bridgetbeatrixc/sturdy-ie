@@ -1,7 +1,7 @@
 export function AboutSection() {
   return (
     <section className="relative z-10 border-b border-zinc-900/60 bg-black">
-      <div className="mx-auto flex max-w-6xl flex-col gap-10 px-6 py-16 md:flex-row md:px-10 md:py-20 lg:px-0">
+      <div className="mx-auto flex max-w-6xl flex-col gap-10 px-4 py-16 sm:px-6 md:flex-row md:px-10 md:py-20 lg:px-0">
         <div className="max-w-sm space-y-5">
           <div className="flex items-center gap-2">
             <span className="h-2 w-2 rounded-sm bg-[#c5f018]" />

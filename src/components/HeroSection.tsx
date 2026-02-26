@@ -7,7 +7,7 @@ export function HeroSection() {
       <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
         <div className="h-[600px] w-[600px] bg-[radial-gradient(circle,rgba(205,255,7,0.35)_0%,rgba(197,240,24,0.18)_35%,transparent_70%)] blur-3xl" />
       </div>
-      <div className="relative mx-auto max-w-6xl px-6 py-16 md:px-10 md:py-20 lg:px-0 lg:py-24">
+      <div className="relative mx-auto max-w-6xl px-4 py-16 sm:px-6 md:px-10 md:py-20 lg:px-0 lg:py-24">
         {/* outer corner arcs */}
         <div className="pointer-events-none absolute -left-100 top-16 hidden h-88 w-88 rounded-full mr-[50px] border-[50px] border-zinc-700/60 md:block" />
         <div className="pointer-events-none absolute -right-100 -bottom-10 hidden h-88 w-88 rounded-full border-[50px] border-zinc-700/60 md:block" />
@@ -88,7 +88,7 @@ export function HeroSection() {
           <div className="relative mx-auto mt-10 flex items-center justify-center lg:mt-0 lg:flex-1 lg:justify-end">
             <div className="pointer-events-none absolute inset-0 blur-3xl" />
 
-            <div className="relative h-[1000px] w-[500px] sm:h-[460px] sm:w-[320px] md:h-[500px] md:w-[360px] lg:h-[520px] lg:w-[380px]">
+            <div className="relative h-[280px] w-[220px] min-[400px]:h-[360px] min-[400px]:w-[270px] sm:h-[460px] sm:w-[320px] md:h-[500px] md:w-[360px] lg:h-[520px] lg:w-[380px]">
               <div className="relative object-contain scale-[2] h-full w-full overflow-hidden bg-transparent">
                 <Image
                   src={jasonPortrait}

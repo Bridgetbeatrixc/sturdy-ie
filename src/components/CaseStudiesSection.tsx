@@ -81,7 +81,7 @@ export function CaseStudiesSection() {
               </div>
 
               {/* Text */}
-              <div className="relative z-10 flex h-full flex-1 items-center px-8 md:px-20 lg:px-28">
+              <div className="relative z-10 flex h-full flex-1 items-center px-4 sm:px-8 md:px-20 lg:px-28">
                 <div className="space-y-4">
                   <div className="mb-4 flex items-center gap-3 text-xs font-medium text-zinc-300">
                     <span className="h-2 w-2 rounded-full bg-[#c5f018]" />
@@ -101,7 +101,7 @@ export function CaseStudiesSection() {
               </div>
 
               {/* Number */}
-              <div className="relative z-10 pr-8 md:pr-12 lg:pr-16">
+              <div className="relative z-10 pr-4 sm:pr-8 md:pr-12 lg:pr-16">
                 <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#c5f018] text-sm font-semibold text-black md:h-12 md:w-12">
                   {item.number}
                 </div>

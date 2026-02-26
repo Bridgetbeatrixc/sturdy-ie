@@ -24,7 +24,7 @@ const CAPABILITIES = [
 export function CapabilitiesSection() {
   return (
     <section className="border-b border-zinc-900/60 bg-gradient-to-b from-black to-slate-950">
-      <div className="mx-auto max-w-6xl px-6 py-16 md:px-10 md:py-20 lg:px-0">
+      <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 md:px-10 md:py-20 lg:px-0">
         <div className="mb-8 flex items-baseline justify-between gap-4">
           <h2 className="text-lg font-semibold text-white md:text-xl">
             Capabilities in regulated environments
@@ -37,7 +37,7 @@ export function CapabilitiesSection() {
           {CAPABILITIES.map((card) => (
             <article
               key={card.title}
-              className="relative h-80 w-80 shrink-0 overflow-hidden rounded-none border border-zinc-800 bg-zinc-950/80"
+              className="relative h-72 w-72 shrink-0 overflow-hidden rounded-none border border-zinc-800 bg-zinc-950/80 min-[400px]:h-80 min-[400px]:w-80"
             >
               <div
                 className="absolute inset-0 bg-cover bg-center opacity-60"

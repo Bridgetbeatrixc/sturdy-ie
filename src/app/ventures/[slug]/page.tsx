@@ -141,7 +141,7 @@ export default async function VentureDetailPage({
 
       {/* Hero */}
       <section className="border-b border-zinc-900/60 bg-black">
-        <div className="mx-auto max-w-6xl px-6 py-16 md:px-10 md:py-20 lg:px-0">
+        <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 md:px-10 md:py-20 lg:px-0">
           <Link
             href="/ventures"
             className="inline-flex items-center gap-1 text-xs font-medium text-zinc-500 transition hover:text-zinc-300"
@@ -168,7 +168,7 @@ export default async function VentureDetailPage({
 
       {/* Content sections */}
       <section className="border-b border-zinc-900/60 bg-black">
-        <div className="mx-auto flex max-w-6xl flex-col gap-10 px-6 py-12 md:px-10 md:py-16 lg:px-0">
+        <div className="mx-auto flex max-w-6xl flex-col gap-10 px-4 py-12 sm:px-6 md:px-10 md:py-16 lg:px-0">
           <SectionBlock
             label="Venture Overview"
             body={venture.ventureOverview}
@@ -191,7 +191,7 @@ export default async function VentureDetailPage({
 
       {/* CTA */}
       <section className="border-b border-zinc-900/60 bg-black">
-        <div className="mx-auto max-w-6xl px-6 py-12 text-center md:px-10 md:py-16 lg:px-0">
+        <div className="mx-auto max-w-6xl px-4 py-12 text-center sm:px-6 md:px-10 md:py-16 lg:px-0">
           <h2 className="text-xl font-semibold text-white md:text-2xl">
             Interested in collaborating?
           </h2>

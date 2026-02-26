@@ -20,11 +20,6 @@ const PRINCIPLES = [
   },
 ];
 
-const CARD_W = 260;
-const CARD_H = 200;
-const SPREAD_X = 120;
-const SPREAD_Y = 60;
-
 export function GovernancePrincipleSection() {
   const [isInView, setIsInView] = useState(false);
   const stackRef = useRef<HTMLDivElement | null>(null);
@@ -46,7 +41,7 @@ export function GovernancePrincipleSection() {
 
   return (
     <section className="border-b border-zinc-900/60 bg-black">
-      <div className="mx-auto max-w-6xl px-6 py-16 md:px-10 md:py-24 lg:px-0">
+      <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 md:px-10 md:py-24 lg:px-0">
         {/* Top: text + images */}
         <div className="flex flex-col gap-10 md:flex-row md:items-start md:gap-16">
           {/* Left column */}
@@ -78,27 +73,24 @@ export function GovernancePrincipleSection() {
           </div>
 
           {/* Right column — image stack */}
-          <div className="flex-1">
+          <div className="flex min-w-0 flex-1 justify-center">
             <div
               ref={stackRef}
-              className="relative mx-auto"
-              style={{
-                width: CARD_W + SPREAD_X * 2,
-                height: CARD_H + SPREAD_Y * 2,
-              }}
+              className="relative mx-auto w-full max-w-[500px]"
+              style={{ aspectRatio: "500/320" }}
             >
               {/* Back card — top-left when expanded, bottom-right when collapsed */}
               <div
                 className="absolute rounded-2xl bg-cover bg-center shadow-xl transition-all duration-700 ease-out"
                 style={{
-                  width: CARD_W,
-                  height: CARD_H,
-                  backgroundImage: `url('https://images.pexels.com/photos/1181715/pexels-photo-1181715.jpeg?auto=compress&cs=tinysrgb&w=800')`,
+                  width: "52%",
+                  height: "62.5%",
                   top: 0,
                   left: 0,
+                  backgroundImage: `url('https://images.pexels.com/photos/1181715/pexels-photo-1181715.jpeg?auto=compress&cs=tinysrgb&w=800')`,
                   transform: isInView
                     ? "translateX(0) translateY(0)"
-                    : `translateX(${SPREAD_X * 2}px) translateY(${SPREAD_Y * 2}px)`,
+                    : "translateX(92.3%) translateY(60%)",
                   opacity: isInView ? 0.85 : 0.3,
                 }}
               />
@@ -107,15 +99,15 @@ export function GovernancePrincipleSection() {
               <div
                 className="absolute rounded-2xl bg-cover bg-center shadow-2xl transition-all duration-700 ease-out"
                 style={{
-                  width: CARD_W,
-                  height: CARD_H,
+                  width: "52%",
+                  height: "62.5%",
+                  top: "18.75%",
+                  left: "24%",
                   backgroundImage: `url('https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg?auto=compress&cs=tinysrgb&w=800')`,
-                  top: SPREAD_Y,
-                  left: SPREAD_X,
                   transitionDelay: "150ms",
                   transform: isInView
                     ? "translateX(0) translateY(0)"
-                    : `translateX(${SPREAD_X}px) translateY(${SPREAD_Y}px)`,
+                    : "translateX(46.2%) translateY(30%)",
                   opacity: isInView ? 0.92 : 0.3,
                 }}
               />
@@ -124,11 +116,11 @@ export function GovernancePrincipleSection() {
               <div
                 className="absolute rounded-2xl bg-cover bg-center shadow-2xl transition-all duration-700 ease-out"
                 style={{
-                  width: CARD_W,
-                  height: CARD_H,
-                  backgroundImage: `url('https://images.pexels.com/photos/1526492/pexels-photo-1526492.jpeg?auto=compress&cs=tinysrgb&w=800')`,
+                  width: "52%",
+                  height: "62.5%",
                   bottom: 0,
                   right: 0,
+                  backgroundImage: `url('https://images.pexels.com/photos/1526492/pexels-photo-1526492.jpeg?auto=compress&cs=tinysrgb&w=800')`,
                   transitionDelay: "300ms",
                   transform: "translateX(0) translateY(0)",
                   opacity: 1,

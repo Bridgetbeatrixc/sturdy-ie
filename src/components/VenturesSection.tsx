@@ -3,7 +3,7 @@ const RIGHT_VENTURES = ["Lorem ipsum initiative", "Preventive ecosystems prototy
 export function VenturesSection() {
   return (
     <section className="border-b border-zinc-900/60 bg-black">
-      <div className="mx-auto max-w-6xl px-6 py-16 md:px-10 md:py-20 lg:px-0">
+      <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 md:px-10 md:py-20 lg:px-0">
         <div className="max-w-2xl">
           <h2 className="text-xl font-semibold text-white md:text-2xl">
             Ventures &amp; Initiatives

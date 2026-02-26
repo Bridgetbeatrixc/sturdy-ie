@@ -56,7 +56,7 @@ export default function VenturesPage() {
 
       {/* Hero */}
       <section className="border-b border-zinc-900/60 bg-black">
-        <div className="mx-auto max-w-6xl px-6 py-16 md:px-10 md:py-20 lg:px-0">
+        <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 md:px-10 md:py-20 lg:px-0">
           <div className="flex items-center gap-2">
             <span className="h-2 w-2 rounded-sm bg-[#c5f018]" />
             <span className="text-xs font-semibold tracking-[0.3em] text-lime-300/80">
@@ -76,7 +76,7 @@ export default function VenturesPage() {
 
       {/* Grid */}
       <section className="border-b border-zinc-900/60 bg-black">
-        <div className="mx-auto grid max-w-6xl gap-6 px-6 py-12 sm:grid-cols-2 md:px-10 md:py-16 lg:grid-cols-3 lg:px-0">
+        <div className="mx-auto grid max-w-6xl gap-6 px-4 py-12 sm:grid-cols-2 sm:px-6 md:px-10 md:py-16 lg:grid-cols-3 lg:px-0">
           {VENTURES.map((v) => (
             <Link
               key={v.slug}

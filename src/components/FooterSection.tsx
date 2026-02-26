@@ -73,7 +73,7 @@ export function FooterSection() {
         </svg>
       </div>
 
-      <div className="relative mx-auto max-w-6xl px-6 py-16 md:px-10 md:py-20 lg:px-0">
+      <div className="relative mx-auto max-w-6xl px-4 py-16 sm:px-6 md:px-10 md:py-20 lg:px-0">
         {/* Tagline */}
         <p className="mx-auto max-w-2xl text-center text-sm leading-relaxed text-zinc-300 md:text-base">
           Designing trusted environments for secure data collaboration,
@@ -95,7 +95,7 @@ export function FooterSection() {
         </div>
 
         {/* Nav links */}
-        <nav className="mt-10 flex flex-wrap items-center justify-center gap-3">
+        <nav className="mt-10 flex flex-wrap items-center justify-center gap-2 sm:gap-3">
           {FOOTER_NAV_ITEMS.map((item) => (
             <Link
               key={item.href}
