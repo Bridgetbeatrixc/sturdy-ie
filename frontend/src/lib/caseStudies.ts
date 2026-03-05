@@ -22,10 +22,7 @@ export interface CaseStudyDetail extends CaseStudyIndex {
 export async function getCaseStudiesIndex(): Promise<CaseStudyIndex[]> {
   const url = `${API_URL}/api/case-studies?limit=100&depth=0`;
   const res = await fetch(url, { cache: "no-store" });
-  if (!res.ok) {
-    const errBody = await res.text();
-    throw new Error(`Failed to fetch case studies — ${res.status} ${res.statusText}${errBody ? `: ${errBody.slice(0, 200)}` : ''}`);
-  }
+  if (!res.ok) throw new Error(`Failed to fetch case studies — ${res.status} ${res.statusText}`);
 
   const { docs } = await res.json();
   return docs.map((c: any): CaseStudyIndex => ({
@@ -42,10 +39,7 @@ export async function getCaseStudiesIndex(): Promise<CaseStudyIndex[]> {
 export async function getCaseStudyBySlug(slug: string): Promise<CaseStudyDetail | null> {
   const url = `${API_URL}/api/case-studies?where[slug][equals]=${slug}&depth=0&limit=1`;
   const res = await fetch(url, { cache: "no-store" });
-  if (!res.ok) {
-    const errBody = await res.text();
-    throw new Error(`Failed to fetch case study — ${res.status} ${res.statusText}${errBody ? `: ${errBody.slice(0, 200)}` : ''}`);
-  }
+  if (!res.ok) throw new Error(`Failed to fetch case study — ${res.status} ${res.statusText}`);
 
   const { docs } = await res.json();
   if (!docs.length) return null;

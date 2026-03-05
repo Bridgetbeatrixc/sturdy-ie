@@ -21,18 +21,13 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  serverURL: process.env.PAYLOAD_PUBLIC_SERVER_URL
-    || (process.env.RAILWAY_PUBLIC_DOMAIN ? `https://${process.env.RAILWAY_PUBLIC_DOMAIN}` : undefined)
-    || 'http://localhost:3000',
-  cors: [
-    'http://localhost:3000',
-    'http://localhost:3001',
-    'https://sturdy-ie-66rb.vercel.app',
+  cors: ['http://localhost:3000',
+         'http://localhost:3001',
+         'https://sturdy-ie-66rb.vercel.app',
   ],
-  csrf: [
-    'http://localhost:3000',
-    'http://localhost:3001',
-    'https://sturdy-ie-66rb.vercel.app',
+  csrf: ['http://localhost:3000',
+         'http://localhost:3001',
+         'https://sturdy-ie-66rb.vercel.app',
   ],
   collections: [Users, Media, Ventures, Articles, CaseStudies],
   editor: lexicalEditor(),
