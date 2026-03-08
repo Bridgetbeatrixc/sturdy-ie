@@ -20,6 +20,10 @@ export default buildConfig({
     importMap: {
       baseDir: path.resolve(dirname),
     },
+    livePreview: {
+      url: process.env.NEXT_PUBLIC_SITE_URL,
+      collections: ['articles', 'case-studies', 'ventures'],
+    },
   },
   cors: ['http://localhost:3000',
          'http://localhost:3001',

@@ -24,7 +24,22 @@ export const Articles: CollectionConfig = {
       required: true,
       unique: true,
       admin: {
-        description: 'URL-safe identifier, e.g. "reframing-three-wise-monkeys-data-governance"',
+        description: 'URL-safe identifier, e.g. "trusted-research-environment"',
+      },
+      hooks: {
+        beforeValidate: [
+          ({ value, data }) => {
+            if (!value && data?.title) {
+              return data.title
+                .toLowerCase()
+                .replace(/\s+/g, '-')
+                .replace(/[^a-z0-9-]/g, '')
+                .replace(/-+/g, '-')
+                .trim();
+            }
+            return value;
+          },
+        ],
       },
     },
     {
@@ -32,18 +47,12 @@ export const Articles: CollectionConfig = {
       type: 'select',
       required: true,
       options: [
-        { label: 'Governance & Compliance',      value: 'Governance & Compliance'      },
-        { label: 'Research Collaboration',        value: 'Research Collaboration'        },
-        { label: 'Interoperability & Standards',  value: 'Interoperability & Standards'  },
-        { label: 'Preventive Health Innovation',  value: 'Preventive Health Innovation'  },
-        { label: 'AI & Regulated Data',           value: 'AI & Regulated Data'           },
+        { label: 'Governance & Compliance', value: 'Governance & Compliance' },
+        { label: 'Research Collaboration', value: 'Research Collaboration' },
+        { label: 'Interoperability & Standards', value: 'Interoperability & Standards' },
+        { label: 'Preventive Health Innovation', value: 'Preventive Health Innovation' },
+        { label: 'AI & Regulated Data', value: 'AI & Regulated Data' },
       ],
-    },
-    {
-      name: 'date',
-      type: 'text',
-      required: true,
-      admin: { description: 'Display date, e.g. "June 2025"' },
     },
     {
       name: 'author',
@@ -52,14 +61,25 @@ export const Articles: CollectionConfig = {
       defaultValue: 'Jason Sturdy',
     },
     {
-      name: 'image',
-      type: 'text',
+      name: 'img',
+      type: 'upload',
+      relationTo: 'media',
       required: true,
-      admin: { description: 'Full image URL' },
+      admin: { description: 'Upload or select image.' },
+    },
+    {
+      name: 'date',
+      type: 'date',
+      admin: {
+        description: 'Publication date.',
+        date: {
+          pickerAppearance: 'dayOnly',
+        },
+      },
     },
     {
       name: 'excerpt',
-      type: 'textarea',
+      type: 'text',
       required: true,
       admin: { description: 'Short summary shown on the listing card.' },
     },
@@ -68,6 +88,12 @@ export const Articles: CollectionConfig = {
       type: 'checkbox',
       defaultValue: false,
       admin: { description: 'Mark as a Cornerstone Article.' },
+    },
+    {
+      name: 'featured',
+      type: 'checkbox',
+      defaultValue: false,
+      admin: { description: 'Mark as a Featured Article.' },
     },
     {
       name: 'sections',
@@ -81,10 +107,27 @@ export const Articles: CollectionConfig = {
         },
         {
           name: 'body',
-          type: 'textarea',
+          type: 'richText',
           required: true,
         },
       ],
+    },
+    // SEO
+    {
+      name: 'seoTitle',
+      label: 'SEO Title',
+      type: 'text',
+      admin: {
+        description: 'Overrides the page title in search engine results. Leave blank to use the article title.',
+      },
+    },
+    {
+      name: 'seoDescription',
+      label: 'SEO Description',
+      type: 'textarea',
+      admin: {
+        description: 'Short description for search engine results.',
+      },
     },
   ],
 };
