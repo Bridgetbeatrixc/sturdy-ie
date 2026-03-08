@@ -1,5 +1,6 @@
 import Image from "next/image";
 import jasonPortrait from "@/img/jason.png";
+import Link from "next/link";
 
 export function HeroSection() {
   return (
@@ -43,20 +44,20 @@ export function HeroSection() {
             </div>
 
             <div className="flex flex-wrap gap-4 pt-4">
-              <button
-                type="button"
+              <Link
+                href="/case-studies"
                 className="inline-flex items-center gap-2 rounded-md bg-[#c5f018] px-7 py-3 text-sm font-semibold text-black shadow-md shadow-lime-300/40 transition hover:-translate-y-[1px] hover:bg-lime-300"
               >
-                <span>Explore Case Studies</span>
+                Explore Case Studies
                 <span className="text-xs">↗</span>
-              </button>
-              <button
-                type="button"
+              </Link>
+              <Link
+                href="/ventures"
                 className="inline-flex items-center gap-2 rounded-md border border-lime-400/70 bg-transparent px-7 py-3 text-sm font-semibold text-lime-300 shadow-[0_0_0_1px_rgba(34,197,94,0.3)] transition hover:-translate-y-[1px] hover:border-lime-300 hover:bg-black/40"
               >
-                <span>View Ventures</span>
+                View Ventures
                 <span className="text-xs">↗</span>
-              </button>
+              </Link>
             </div>
 
             {/* divider line and star accent */}
@@ -99,14 +100,6 @@ export function HeroSection() {
                 />
               </div>
 
-              <div className="absolute bottom-6 left-1/2 -translate-x-1/2 text-center">
-                <p className="text-xs uppercase tracking-[0.2em] text-lime-300/80">
-                  Jason Sturdy
-                </p>
-                <p className="mt-1 text-sm text-zinc-100">
-                  Data Governance & Compliance Advisor
-                </p>
-              </div>
             </div>
           </div>
         </div>

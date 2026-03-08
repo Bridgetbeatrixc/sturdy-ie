@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
 const PRINCIPLES = [
@@ -63,13 +64,13 @@ export function GovernancePrincipleSection() {
               transparency, and accountability &mdash; enabling innovation without
               compromising institutional trust.
             </p>
-            <button
-              type="button"
+            <Link
+              href="/contact"
               className="mt-4 inline-flex items-center gap-2 rounded-full border border-zinc-600 px-6 py-3 text-sm font-medium text-zinc-100 transition hover:border-[#c5f018] hover:text-[#c5f018]"
             >
-              Contact me
+              Contact Me
               <span className="text-xs">&#8599;</span>
-            </button>
+            </Link>
           </div>
 
           {/* Right column — image stack */}

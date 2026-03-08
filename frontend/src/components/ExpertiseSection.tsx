@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 const EXPERTISE_ITEMS = [
   {
     title: "Smart strategies",
@@ -73,13 +75,13 @@ export function ExpertiseSection() {
                 project we undertake.
               </p>
             </div>
-            <button
-              type="button"
-              className="inline-flex items-center justify-center gap-2 rounded-full border border-[#c5f018] bg-transparent px-7 py-3 text-sm font-semibold text-[#c5f018] transition hover:bg-[#c5f018] hover:text-black"
+            <Link
+            href="/contact"
+            className="inline-flex items-center justify-center gap-2 rounded-full border border-[#c5f018] bg-transparent px-7 py-3 text-sm font-semibold text-[#c5f018] transition hover:bg-[#c5f018] hover:text-black"
             >
-              <span>Contact today</span>
-              <span className="text-xs">↗</span>
-            </button>
+            Contact Today
+            <span className="text-xs">↗</span>
+          </Link>
           </div>
         </div>
       </div>

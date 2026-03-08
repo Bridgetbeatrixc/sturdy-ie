@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export function HomeAboutSection() {
   return (
     <section className="relative z-10 border-b border-zinc-900/60 bg-black">
@@ -12,13 +14,13 @@ export function HomeAboutSection() {
           <h2 className="text-xl font-semibold text-white md:text-2xl">
             Standards-aligned. Audit-ready. Collaboration-enabled.
           </h2>
-          <button
-            type="button"
+          <Link
+            href="/about"
             className="inline-flex items-center gap-2 rounded-full bg-[#c5f018] px-6 py-3 text-sm font-semibold text-black shadow-md shadow-lime-300/30 transition hover:-translate-y-[1px] hover:bg-lime-300"
           >
-            <span>Read More</span>
+            Read More
             <span className="text-xs">↗</span>
-          </button>
+          </Link>
         </div>
 
         <div className="max-w-2xl space-y-4 text-[0.95rem] leading-relaxed text-zinc-300">
