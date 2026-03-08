@@ -20,7 +20,7 @@ import sharp from 'sharp'
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
 import { Ventures } from './collections/Ventures'
-import { Articles } from './collections/Articles'
+import { MyInsight } from './collections/MyInsight'
 import { CaseStudies } from './collections/CaseStudies'
 
 const filename = fileURLToPath(import.meta.url)
@@ -34,7 +34,7 @@ export default buildConfig({
     },
     livePreview: {
       url: process.env.NEXT_PUBLIC_SITE_URL,
-      collections: ['articles', 'case-studies', 'ventures'],
+      collections: ['my-insight', 'case-studies', 'ventures'],
     },
   },
   cors: [
@@ -45,21 +45,12 @@ export default buildConfig({
     'http://localhost:3000',
     'http://localhost:3001',
   ],
-  collections: [Users, Media, Ventures, Articles, CaseStudies],
+  collections: [Users, Media, Ventures, MyInsight, CaseStudies],
   editor: lexicalEditor({
-    features: ({ defaultFeatures }) => [
-      ...defaultFeatures,
-      HeadingFeature({ enabledHeadingSizes: ['h2', 'h3', 'h4'] }),
-      BoldFeature(),
-      ItalicFeature(),
-      UnderlineFeature(),
-      StrikethroughFeature(),
-      OrderedListFeature(),
-      UnorderedListFeature(),
-      LinkFeature(),
-      BlockquoteFeature(),
-      UploadFeature(),
-    ],
+  features: ({ defaultFeatures }) => [
+    ...defaultFeatures,
+    HeadingFeature({ enabledHeadingSizes: ['h2', 'h3', 'h4'] }),
+  ],
   }),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {

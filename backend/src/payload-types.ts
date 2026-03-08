@@ -70,7 +70,7 @@ export interface Config {
     users: User;
     media: Media;
     ventures: Venture;
-    articles: Article;
+    myinsights: Myinsight;
     'case-studies': CaseStudy;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
@@ -82,7 +82,7 @@ export interface Config {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     ventures: VenturesSelect<false> | VenturesSelect<true>;
-    articles: ArticlesSelect<false> | ArticlesSelect<true>;
+    myinsights: MyinsightsSelect<false> | MyinsightsSelect<true>;
     'case-studies': CaseStudiesSelect<false> | CaseStudiesSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
@@ -280,9 +280,9 @@ export interface Venture {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "articles".
+ * via the `definition` "myinsights".
  */
-export interface Article {
+export interface Myinsight {
   id: number;
   title: string;
   /**
@@ -543,8 +543,8 @@ export interface PayloadLockedDocument {
         value: number | Venture;
       } | null)
     | ({
-        relationTo: 'articles';
-        value: number | Article;
+        relationTo: 'myinsights';
+        value: number | Myinsight;
       } | null)
     | ({
         relationTo: 'case-studies';
@@ -668,9 +668,9 @@ export interface VenturesSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "articles_select".
+ * via the `definition` "myinsights_select".
  */
-export interface ArticlesSelect<T extends boolean = true> {
+export interface MyinsightsSelect<T extends boolean = true> {
   title?: T;
   slug?: T;
   category?: T;

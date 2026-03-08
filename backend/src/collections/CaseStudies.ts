@@ -6,9 +6,9 @@ export const CaseStudies: CollectionConfig = {
     useAsTitle: 'title',
     defaultColumns: ['title', 'theme', 'context'],
     livePreview: {
-      url: ({ data }) => `${process.env.NEXT_PUBLIC_SITE_URL}/ventures/${data.slug}`,
+      url: ({ data }) => `${process.env.NEXT_PUBLIC_SITE_URL}/case-studies/${data.slug}`,
     },
-    preview: (data) => `${process.env.NEXT_PUBLIC_SITE_URL}/ventures/${data.slug}`,
+    preview: (data) => `${process.env.NEXT_PUBLIC_SITE_URL}/case-studies/${data.slug}`,
   },
   access: {
     read: () => true,

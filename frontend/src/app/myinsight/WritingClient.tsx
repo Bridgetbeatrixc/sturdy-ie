@@ -4,7 +4,7 @@ import { useState, useMemo } from "react";
 import Link from "next/link";
 import { Header } from "../../components/Header";
 import { FooterSection } from "../../components/FooterSection";
-import { ArticleIndex, CATEGORY_STYLES } from "../../lib/articles";
+import { MyInsightIndex, CATEGORY_STYLES } from "../../lib/myInsight";
 
 const CATEGORIES = [
   "All",
@@ -17,13 +17,13 @@ const CATEGORIES = [
 
 const ITEMS_PER_PAGE = 6;
 
-export function WritingClient({ articles }: { articles: ArticleIndex[] }) {
+export function WritingClient({ myInsights }: { myInsights: MyInsightIndex[] }) {
   const [activeCategory, setActiveCategory] = useState("All");
   const [currentPage, setCurrentPage] = useState(1);
 
   const filtered = useMemo(
-    () => activeCategory === "All" ? articles : articles.filter((a) => a.category === activeCategory),
-    [activeCategory, articles]
+    () => activeCategory === "All" ? myInsights : myInsights.filter((a) => a.category === activeCategory),
+    [activeCategory, myInsights]
   );
 
   const totalPages = Math.ceil(filtered.length / ITEMS_PER_PAGE);
@@ -67,46 +67,46 @@ export function WritingClient({ articles }: { articles: ArticleIndex[] }) {
         </div>
       </section>
 
-      {/* Articles */}
+      {/* My Insights */}
       <section className="bg-black">
         <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 md:px-10 lg:px-0">
           <p className="mb-10 text-xs text-zinc-500">
-            Showing {Math.min((currentPage - 1) * ITEMS_PER_PAGE + 1, filtered.length)}–{Math.min(currentPage * ITEMS_PER_PAGE, filtered.length)} of {filtered.length} article{filtered.length !== 1 ? "s" : ""}
+            Showing {Math.min((currentPage - 1) * ITEMS_PER_PAGE + 1, filtered.length)}–{Math.min(currentPage * ITEMS_PER_PAGE, filtered.length)} of {filtered.length} insight{filtered.length !== 1 ? "s" : ""}
             {activeCategory !== "All" && <span> in <span className="text-white">{activeCategory}</span></span>}
           </p>
 
           {paginated.length === 0 ? (
-            <div className="py-24 text-center text-zinc-500">No articles in this category yet.</div>
+            <div className="py-24 text-center text-zinc-500">No insights in this category yet.</div>
           ) : (
             <div className="grid grid-cols-1 gap-x-8 gap-y-16 sm:grid-cols-2">
-              {paginated.map((article) => {
-                const tagStyle = CATEGORY_STYLES[article.category]?.tag || "border-zinc-700 text-zinc-400";
+              {paginated.map((myInsight) => {
+                const tagStyle = CATEGORY_STYLES[myInsight.category]?.tag || "border-zinc-700 text-zinc-400";
                 return (
-                  <Link key={article.slug} href={`/writing/${article.slug}`} className="group block">
+                  <Link key={myInsight.slug} href={`/myinsight/${myInsight.slug}`} className="group block">
                     <div className="relative overflow-hidden aspect-video bg-zinc-900 mb-5">
                       <img
-                        src={article.image}
-                        alt={article.title}
+                        src={myInsight.image}
+                        alt={myInsight.title}
                         className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                       />
-                      {article.flagship && (
+                      {myInsight.flagship && (
                         <div className="absolute top-3 left-3 rounded-full bg-[#c5f018] px-3 py-1 text-[10px] font-bold text-black">
                           Cornerstone
                         </div>
                       )}
                     </div>
                     <div className="flex items-center gap-2 text-xs text-zinc-500 mb-3">
-                      <span>{article.author}</span>
+                      <span>{myInsight.author}</span>
                       <span>-</span>
-                      <span>{article.date}</span>
+                      <span>{myInsight.date}</span>
                     </div>
                     <h2 className="text-2xl font-bold text-white leading-snug mb-3 group-hover:text-zinc-200 transition-colors">
-                      {article.title}
+                      {myInsight.title}
                     </h2>
-                    <p className="text-sm leading-relaxed text-zinc-400">{article.excerpt}</p>
+                    <p className="text-sm leading-relaxed text-zinc-400">{myInsight.excerpt}</p>
                     <div className="mt-4">
                       <span className={`inline-block rounded-full border px-3 py-1 text-xs ${tagStyle}`}>
-                        {article.category}
+                        {myInsight.category}
                       </span>
                     </div>
                   </Link>

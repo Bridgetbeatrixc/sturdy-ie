@@ -8,7 +8,7 @@ const cards = [
   },
   {
     label: "Read My Insights",
-    href: "/writing",
+    href: "/myinsights",
     image: "https://images.pexels.com/photos/3183150/pexels-photo-3183150.jpeg?auto=compress&cs=tinysrgb&w=1200",
   },
   {

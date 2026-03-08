@@ -2,6 +2,9 @@ import type { CollectionConfig } from 'payload'
 
 export const Media = {
   slug: 'media',
+  access: {
+        read: () => true,
+    },
   upload: {
     staticURL: '/media',
     staticDir: 'media',

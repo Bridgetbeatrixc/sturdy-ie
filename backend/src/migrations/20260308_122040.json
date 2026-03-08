@@ -499,7 +499,7 @@
           "name": "slug",
           "type": "varchar",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         },
         "img_id": {
           "name": "img_id",
@@ -661,8 +661,8 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.articles_sections": {
-      "name": "articles_sections",
+    "public.myinsight_sections": {
+      "name": "myinsight_sections",
       "schema": "",
       "columns": {
         "_order": {
@@ -697,8 +697,8 @@
         }
       },
       "indexes": {
-        "articles_sections_order_idx": {
-          "name": "articles_sections_order_idx",
+        "myinsight_sections_order_idx": {
+          "name": "myinsight_sections_order_idx",
           "columns": [
             {
               "expression": "_order",
@@ -712,8 +712,8 @@
           "method": "btree",
           "with": {}
         },
-        "articles_sections_parent_id_idx": {
-          "name": "articles_sections_parent_id_idx",
+        "myinsight_sections_parent_id_idx": {
+          "name": "myinsight_sections_parent_id_idx",
           "columns": [
             {
               "expression": "_parent_id",
@@ -729,10 +729,10 @@
         }
       },
       "foreignKeys": {
-        "articles_sections_parent_id_fk": {
-          "name": "articles_sections_parent_id_fk",
-          "tableFrom": "articles_sections",
-          "tableTo": "articles",
+        "myinsight_sections_parent_id_fk": {
+          "name": "myinsight_sections_parent_id_fk",
+          "tableFrom": "myinsight_sections",
+          "tableTo": "myinsight",
           "columnsFrom": [
             "_parent_id"
           ],
@@ -749,8 +749,8 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.articles": {
-      "name": "articles",
+    "public.myinsight": {
+      "name": "myinsight",
       "schema": "",
       "columns": {
         "id": {
@@ -769,11 +769,11 @@
           "name": "slug",
           "type": "varchar",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         },
         "category": {
           "name": "category",
-          "type": "enum_articles_category",
+          "type": "enum_myinsight_category",
           "typeSchema": "public",
           "primaryKey": false,
           "notNull": true
@@ -845,8 +845,8 @@
         }
       },
       "indexes": {
-        "articles_slug_idx": {
-          "name": "articles_slug_idx",
+        "myinsight_slug_idx": {
+          "name": "myinsight_slug_idx",
           "columns": [
             {
               "expression": "slug",
@@ -860,8 +860,8 @@
           "method": "btree",
           "with": {}
         },
-        "articles_img_idx": {
-          "name": "articles_img_idx",
+        "myinsight_img_idx": {
+          "name": "myinsight_img_idx",
           "columns": [
             {
               "expression": "img_id",
@@ -875,8 +875,8 @@
           "method": "btree",
           "with": {}
         },
-        "articles_updated_at_idx": {
-          "name": "articles_updated_at_idx",
+        "myinsight_updated_at_idx": {
+          "name": "myinsight_updated_at_idx",
           "columns": [
             {
               "expression": "updated_at",
@@ -890,8 +890,8 @@
           "method": "btree",
           "with": {}
         },
-        "articles_created_at_idx": {
-          "name": "articles_created_at_idx",
+        "myinsight_created_at_idx": {
+          "name": "myinsight_created_at_idx",
           "columns": [
             {
               "expression": "created_at",
@@ -907,9 +907,9 @@
         }
       },
       "foreignKeys": {
-        "articles_img_id_media_id_fk": {
-          "name": "articles_img_id_media_id_fk",
-          "tableFrom": "articles",
+        "myinsight_img_id_media_id_fk": {
+          "name": "myinsight_img_id_media_id_fk",
+          "tableFrom": "myinsight",
           "tableTo": "media",
           "columnsFrom": [
             "img_id"
@@ -947,7 +947,7 @@
           "name": "slug",
           "type": "varchar",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         },
         "summary": {
           "name": "summary",
@@ -1304,8 +1304,8 @@
           "primaryKey": false,
           "notNull": false
         },
-        "articles_id": {
-          "name": "articles_id",
+        "myinsight_id": {
+          "name": "myinsight_id",
           "type": "integer",
           "primaryKey": false,
           "notNull": false
@@ -1408,11 +1408,11 @@
           "method": "btree",
           "with": {}
         },
-        "payload_locked_documents_rels_articles_id_idx": {
-          "name": "payload_locked_documents_rels_articles_id_idx",
+        "payload_locked_documents_rels_myinsight_id_idx": {
+          "name": "payload_locked_documents_rels_myinsight_id_idx",
           "columns": [
             {
-              "expression": "articles_id",
+              "expression": "myinsight_id",
               "isExpression": false,
               "asc": true,
               "nulls": "last"
@@ -1492,12 +1492,12 @@
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
-        "payload_locked_documents_rels_articles_fk": {
-          "name": "payload_locked_documents_rels_articles_fk",
+        "payload_locked_documents_rels_myinsight_fk": {
+          "name": "payload_locked_documents_rels_myinsight_fk",
           "tableFrom": "payload_locked_documents_rels",
-          "tableTo": "articles",
+          "tableTo": "myinsight",
           "columnsFrom": [
-            "articles_id"
+            "myinsight_id"
           ],
           "columnsTo": [
             "id"
@@ -1843,8 +1843,8 @@
         "Relaunching"
       ]
     },
-    "public.enum_articles_category": {
-      "name": "enum_articles_category",
+    "public.enum_myinsight_category": {
+      "name": "enum_myinsight_category",
       "schema": "public",
       "values": [
         "Governance & Compliance",
@@ -1865,6 +1865,6 @@
     "tables": {},
     "columns": {}
   },
-  "id": "d8a39a81-9283-42e2-92ee-2bb3c529c837",
+  "id": "2918aae7-8655-4000-8557-4137f8e9e8c7",
   "prevId": "00000000-0000-0000-0000-000000000000"
 }
