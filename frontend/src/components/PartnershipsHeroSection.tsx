@@ -26,7 +26,8 @@ export function PartnershipsHeroSection() {
           {/* Right - Subtitle */}
           <div className="flex items-center justify-end">
             <p className="max-w-xl text-center text-lg leading-relaxed text-white md:text-xl">
-              Collaboration across regulated innovation, research ecosystems, and venture initiatives.
+              Collaboration across public sector, financial services, health
+              ecosystems, and regulated innovation initiatives.
             </p>
           </div>
         </div>

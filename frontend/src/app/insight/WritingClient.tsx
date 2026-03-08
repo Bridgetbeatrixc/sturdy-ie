@@ -44,7 +44,9 @@ export function WritingClient({ articles }: { articles: ArticleIndex[] }) {
         <div className="mx-auto max-w-6xl px-4 pt-24 pb-16 sm:px-6 md:px-10 lg:px-0 text-center">
           <h1 className="text-5xl font-bold text-white md:text-6xl lg:text-7xl">My Insights</h1>
           <p className="mt-6 mx-auto max-w-3xl text-base leading-relaxed text-zinc-300">
-            Exploring governance, secure collaboration, and regulated innovation — examining how institutions operationalise trust and enable research within responsible data ecosystems.
+            Executive perspectives on sovereign infrastructure, governance-led
+            transformation, secure collaboration, and standards-led
+            interoperability across regulated ecosystems.
           </p>
         </div>
       </section>

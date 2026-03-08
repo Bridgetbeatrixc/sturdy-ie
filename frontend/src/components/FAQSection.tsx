@@ -6,27 +6,27 @@ const FAQS = [
   {
     question: "1. What types of organisations do you collaborate with?",
     answer:
-      "I collaborate with research institutions, healthcare organisations, regulated industry partners, and innovation stakeholders exploring secure data environments, governance frameworks, and collaborative platform initiatives.",
+      "I collaborate with research institutions, public sector bodies, financial services, health organisations, and venture partners engaged in sovereign infrastructure, secure collaboration, and governance-aligned innovation.",
   },
   {
     question: "2. Are you offering consulting services through this site?",
     answer:
-      "This site is not positioned as a services platform. It exists to share my work, initiatives, and thinking, and to enable partnership and collaboration discussions where relevant.",
+      "This site is not a services catalogue. It exists to share my work and enable aligned collaboration.",
   },
   {
     question: '3. What are "Case Studies" referring to?',
     answer:
-      "Case studies highlight real-world environments and initiatives across secure data collaboration, governance, and regulated innovation.",
+      "Case studies describe governance-aligned delivery, sovereign infrastructure, and secure collaboration initiatives across regulated ecosystems.",
   },
   {
     question: "4. What stage are your ventures at?",
     answer:
-      "Ventures range from exploratory innovation initiatives through to active platform development. Each is presented to share direction and invite aligned collaboration where appropriate.",
+      "Ventures span exploratory initiatives through active platform development—shared to signal direction and invite aligned collaboration where relevant.",
   },
   {
     question: "5. Can organisations collaborate on ventures or research environments?",
     answer:
-      "Yes — collaboration across research, innovation, and platform initiatives is welcomed where alignment exists.",
+      "Yes. Collaboration across research environments, ventures, and platform initiatives is welcomed where there is clear alignment.",
   },
 ];
 
@@ -75,7 +75,7 @@ function FAQItem({
         }}
       >
         <div ref={contentRef}>
-          <p className="mt-4 pb-2 text-sm leading-relaxed text-white">
+          <p className="mt-4 pb-4 text-sm leading-relaxed text-white">
             {faq.answer}
           </p>
         </div>

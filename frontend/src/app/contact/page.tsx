@@ -103,17 +103,12 @@ export default function ContactPage() {
             {/* Left */}
             <div className="flex flex-col justify-center">
               <h1 className="text-5xl font-bold leading-tight text-white md:text-6xl lg:text-7xl">
-                Partnership
-                <br />
-                &amp;{" "}
-                <span className="text-[#c5f018]">Collaboration</span>
-                <br />
-                Enquiries
+                Collaboration Enquiries
               </h1>
               <p className="mt-8 max-w-lg text-sm leading-relaxed text-white">
-                If you are exploring collaboration across research, secure data
-                environments, or venture initiatives, I welcome the opportunity
-                to connect.
+                If you are exploring partnerships across sovereign
+                infrastructure, secure collaboration, regulated innovation, or
+                aligned venture initiatives, I welcome the opportunity to connect.
               </p>
             </div>
 
@@ -185,10 +180,12 @@ export default function ContactPage() {
                     }}
                   >
                     <option value="" disabled>Interest Area</option>
-                    <option value="research">Research Collaboration</option>
-                    <option value="governance">Governance & Compliance</option>
-                    <option value="product">Product & Innovation</option>
-                    <option value="venture">Venture Alignment</option>
+                    <option value="sovereign-infrastructure">Sovereign Data Infrastructure</option>
+                    <option value="governance-compliance">Governance & Compliance</option>
+                    <option value="secure-collaboration-tre">Secure Collaboration / TRE</option>
+                    <option value="interoperability-data-exchange">Interoperability & Data Exchange</option>
+                    <option value="venture-alignment">Venture Alignment</option>
+                    <option value="other">Other</option>
                   </select>
                   {errors.interestArea && (
                     <p className="mt-1 text-xs text-red-400">{errors.interestArea.message}</p>

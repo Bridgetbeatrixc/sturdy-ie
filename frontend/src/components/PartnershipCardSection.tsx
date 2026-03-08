@@ -19,22 +19,22 @@ const cards = [
   {
     title: "Research Collaboration Partnerships",
     description:
-      "Engaging with academic institutions and research bodies to design trusted environments enabling secure, compliant data collaboration.",
+      "Designing trusted environments that enable compliant collaboration, governed access, and secure analytics across partners.",
   },
   {
     title: "Platform & Infrastructure Partnerships",
     description:
-      "Collaborating on secure data platforms, federated analytics environments, and interoperability-aligned ecosystems.",
+      "Building sovereign platforms and secure environments aligned to resilience, security, and regulatory expectations.",
   },
   {
     title: "Venture Co-Development",
     description:
-      "Partnering on preventive health and data-driven optimisation initiatives, grounded in secure infrastructure and governance alignment.",
+      "Exploring preventive health and optimisation initiatives grounded in governance-first infrastructure and responsible data use.",
   },
   {
     title: "Standards & Governance Initiatives",
     description:
-      "Supporting interoperability, regulatory alignment, and governance frameworks across sensitive data ecosystems.",
+      "Supporting interoperability, assurance models, and governance frameworks that scale across complex ecosystems.",
   },
 ];
 
@@ -58,10 +58,10 @@ export function PartnershipsCardSection() {
         {/* Subtitle */}
         <p className="mx-auto max-w-5xl text-center text-base leading-relaxed text-white md:text-lg mb-16">
           I collaborate with organisations seeking to design, build, or explore
-          secure data environments, research collaboration platforms, and
-          governance-aligned innovation initiatives. Partnerships are approached
-          strategically, focusing on long-term ecosystem value rather than
-          transactional service delivery.
+          sovereign data infrastructures, secure collaboration environments,
+          and governance-aligned innovation initiatives. Partnerships are
+          approached strategically—focused on durable ecosystem value, shared
+          delivery outcomes, and trust-by-design execution.
         </p>
 
         {/* Cards Grid — 4 cards, 2 columns */}
