@@ -19,8 +19,23 @@ export interface CaseStudyDetail extends CaseStudyIndex {
   partnershipRelevance: string;
 }
 
+function lexicalToText(content: any): string {
+  if (!content?.root?.children) return "";
+
+  function extractText(node: any): string {
+    if (node.type === "text") return node.text ?? "";
+    if (node.children) return node.children.map(extractText).join("");
+    return "";
+  }
+
+  return content.root.children
+    .map((block: any) => extractText(block).trim())
+    .filter(Boolean)
+    .join("\n\n");
+}
+
 export async function getCaseStudiesIndex(): Promise<CaseStudyIndex[]> {
-  const url = `${API_URL}/api/case-studies?limit=100&depth=0`;
+  const url = `${API_URL}/api/case-studies?limit=100&depth=1`; 
   const res = await fetch(url, { cache: "no-store" });
   if (!res.ok) throw new Error(`Failed to fetch case studies — ${res.status} ${res.statusText}`);
 
@@ -28,16 +43,16 @@ export async function getCaseStudiesIndex(): Promise<CaseStudyIndex[]> {
   return docs.map((c: any): CaseStudyIndex => ({
     slug:    c.slug,
     title:   c.title,
-    summary: c.summary,
+    summary: lexicalToText(c.summary),
     theme:   c.theme,
-    context: c.context,
+    context: lexicalToText(c.context),
     period:  c.period ?? "",
-    img:     c.img,
+    img:     c.img?.url ? `${API_URL}${c.img.url}` : "", 
   }));
 }
 
 export async function getCaseStudyBySlug(slug: string): Promise<CaseStudyDetail | null> {
-  const url = `${API_URL}/api/case-studies?where[slug][equals]=${slug}&depth=0&limit=1`;
+  const url = `${API_URL}/api/case-studies?where[slug][equals]=${slug}&depth=1&limit=1`;
   const res = await fetch(url, { cache: "no-store" });
   if (!res.ok) throw new Error(`Failed to fetch case study — ${res.status} ${res.statusText}`);
 
@@ -46,18 +61,18 @@ export async function getCaseStudyBySlug(slug: string): Promise<CaseStudyDetail 
 
   const c = docs[0];
   return {
-    slug:                    c.slug,
-    title:                   c.title,
-    summary:                 c.summary,
-    theme:                   c.theme,
-    context:                 c.context,
-    period:                  c.period ?? "",
-    img:                     c.img,
-    overviewContext:         c.overviewContext ?? "",
-    environmentModel:        c.environmentModel ?? "",
-    governanceControls:      c.governanceControls ?? "",
-    standardsInteroperability: c.standardsInteroperability ?? "",
-    outcomesImpact:          c.outcomesImpact ?? "",
-    partnershipRelevance:    c.partnershipRelevance ?? "",
+    slug:                      c.slug,
+    title:                     c.title,
+    summary:                   lexicalToText(c.summary),
+    theme:                     c.theme,
+    context:                   lexicalToText(c.context),
+    period:                    c.period ?? "",
+    img:                       c.img?.url ? `${API_URL}${c.img.url}` : "",
+    overviewContext:            lexicalToText(c.overviewContext),
+    environmentModel:          lexicalToText(c.environmentModel),
+    governanceControls:        lexicalToText(c.governanceControls),
+    standardsInteroperability: lexicalToText(c.standardsInteroperability),
+    outcomesImpact:            lexicalToText(c.outcomesImpact),
+    partnershipRelevance:      lexicalToText(c.partnershipRelevance),
   };
 }

@@ -4,7 +4,11 @@ export const CaseStudies: CollectionConfig = {
   slug: 'case-studies',
   admin: {
     useAsTitle: 'title',
-    defaultColumns: ['title', 'theme', 'context', 'period'],
+    defaultColumns: ['title', 'theme', 'context'],
+    livePreview: {
+      url: ({ data }) => `${process.env.NEXT_PUBLIC_SITE_URL}/case-studies/${data.slug}`,
+    },
+    preview: (data) => `${process.env.NEXT_PUBLIC_SITE_URL}/case-studies/${data.slug}`,
   },
   access: {
     read: () => true,
@@ -24,12 +28,30 @@ export const CaseStudies: CollectionConfig = {
       required: true,
       unique: true,
       admin: {
-        description: 'URL-safe identifier, e.g. "trusted-research-environment"',
+        description: 'Auto-filled from title. You can override it manually.',
+        condition: () => true,
+      },
+      hooks: {
+        beforeValidate: [
+          ({ value, data }) => {
+            // Always regenerate from title if slug is empty
+            if (!value && data?.title) {
+              return data.title
+                .toLowerCase()
+                .replace(/\s+/g, '-')
+                .replace(/[^a-z0-9-]/g, '')
+                .replace(/-+/g, '-')
+                .trim();
+            }
+            return value;
+          },
+        ],
       },
     },
     {
       name: 'summary',
-      type: 'textarea',
+      type: 'richText',
+      label: 'Summary Outcome',
       required: true,
       admin: { description: 'Short description shown on listing cards.' },
     },
@@ -41,50 +63,69 @@ export const CaseStudies: CollectionConfig = {
     },
     {
       name: 'context',
-      type: 'text',
+      type: 'richText',
       required: true,
       admin: { description: 'e.g. "Multi-institutional research consortium"' },
     },
     {
-      name: 'period',
-      type: 'text',
-      admin: { description: 'e.g. "2024"' },
-    },
-    {
       name: 'img',
-      type: 'text',
+      type: 'upload',
+      relationTo: 'media',
       required: true,
-      admin: { description: 'Full image URL' },
+      admin: { description: 'Upload or select image.' },
     },
     {
       name: 'overviewContext',
       label: 'Overview & Context',
-      type: 'textarea',
+      type: 'richText',
     },
     {
       name: 'environmentModel',
       label: 'Environment Model',
-      type: 'textarea',
+      type: 'richText',
     },
     {
       name: 'governanceControls',
       label: 'Governance & Controls',
-      type: 'textarea',
+      type: 'richText',
     },
     {
       name: 'standardsInteroperability',
       label: 'Standards & Interoperability',
-      type: 'textarea',
+      type: 'richText',
     },
     {
       name: 'outcomesImpact',
       label: 'Outcomes & Impact',
-      type: 'textarea',
+      type: 'richText',
     },
     {
       name: 'partnershipRelevance',
       label: 'Partnership Relevance',
+      type: 'richText',
+    },
+    {
+      name: 'featured',
+      type: 'checkbox',
+      defaultValue: false,
+      admin: { description: 'Mark as a Featured Article.' },
+    },
+    // SEO
+    {
+      name: 'seoTitle',
+      label: 'SEO Title',
+      type: 'text',
+      admin: {
+        description: 'Overrides the page title in search engine results. Leave blank to use the article title.',
+      },
+    },
+    {
+      name: 'seoDescription',
+      label: 'SEO Description',
       type: 'textarea',
+      admin: {
+        description: 'Short description for search engine results.',
+      },
     },
   ],
 };

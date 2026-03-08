@@ -1,6 +1,6 @@
 const API_URL = process.env.PAYLOAD_API_URL ?? "http://localhost:3001";
 
-export interface ArticleIndex {
+export interface MyInsightIndex {
   slug: string;
   title: string;
   category: string;
@@ -11,8 +11,8 @@ export interface ArticleIndex {
   flagship: boolean;
 }
 
-export interface ArticleDetail extends ArticleIndex {
-  sections: { heading: string; body: string }[];
+export interface MyInsightDetail extends MyInsightIndex {
+  sections: { heading: string; body: any }[];
 }
 
 export const CATEGORY_STYLES: Record<string, { active: string; badge: string; tag: string }> = {
@@ -24,28 +24,37 @@ export const CATEGORY_STYLES: Record<string, { active: string; badge: string; ta
   "AI & Regulated Data":          { active: "bg-amber-500 border-amber-500 text-black",     badge: "bg-black/20 text-black",   tag: "border-amber-500/40 text-amber-400 bg-amber-500/10" },
 };
 
-export async function getArticlesIndex(): Promise<ArticleIndex[]> {
-  const url = `${API_URL}/api/articles?limit=100&depth=0&sort=-date`;
+function formatDate(date: string | null | undefined): string {
+  if (!date) return "";
+  return new Date(date).toLocaleDateString("en-GB", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
+}
+
+export async function getMyInsightsIndex(): Promise<MyInsightIndex[]> {
+  const url = `${API_URL}/api/myinsights?limit=100&depth=1&sort=-date`;
   const res = await fetch(url, { cache: "no-store" });
-  if (!res.ok) throw new Error(`Failed to fetch articles — ${res.status} ${res.statusText}`);
+  if (!res.ok) throw new Error(`Failed to fetch insights — ${res.status} ${res.statusText}`);
 
   const { docs } = await res.json();
-  return docs.map((a: any): ArticleIndex => ({
+  return docs.map((a: any): MyInsightIndex => ({
     slug:     a.slug,
     title:    a.title,
     category: a.category,
-    date:     a.date,
+    date:     formatDate(a.date),
     author:   a.author,
-    image:    a.image,
+    image:    a.img?.url ? `${API_URL}${a.img.url}` : "",
     excerpt:  a.excerpt,
     flagship: a.flagship ?? false,
   }));
 }
 
-export async function getArticleBySlug(slug: string): Promise<ArticleDetail | null> {
-  const url = `${API_URL}/api/articles?where[slug][equals]=${slug}&depth=0&limit=1`;
+export async function getMyInsightBySlug(slug: string): Promise<MyInsightDetail | null> {
+  const url = `${API_URL}/api/myinsights?where[slug][equals]=${slug}&depth=1&limit=1`;
   const res = await fetch(url, { cache: "no-store" });
-  if (!res.ok) throw new Error(`Failed to fetch article — ${res.status} ${res.statusText}`);
+  if (!res.ok) throw new Error(`Failed to fetch insight — ${res.status} ${res.statusText}`);
 
   const { docs } = await res.json();
   if (!docs.length) return null;
@@ -55,9 +64,9 @@ export async function getArticleBySlug(slug: string): Promise<ArticleDetail | nu
     slug:     a.slug,
     title:    a.title,
     category: a.category,
-    date:     a.date,
+    date:     formatDate(a.date),
     author:   a.author,
-    image:    a.image,
+    image:    a.img?.url ? `${API_URL}${a.img.url}` : "",
     excerpt:  a.excerpt,
     flagship: a.flagship ?? false,
     sections: a.sections ?? [],

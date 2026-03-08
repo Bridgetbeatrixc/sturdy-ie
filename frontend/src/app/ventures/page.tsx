@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Header } from "../../components/Header";
 import { FooterSection } from "../../components/FooterSection";
 import { getVenturesIndex, STATUS_STYLES } from "../../lib/ventures";
@@ -37,24 +38,42 @@ export default async function VenturesPage() {
             <Link
               key={v.slug}
               href={`/ventures/${v.slug}`}
-              className="group flex flex-col justify-between rounded-2xl border border-zinc-800 bg-zinc-950/80 p-6 transition hover:border-zinc-700"
+              className="group flex flex-col justify-between rounded-2xl border border-zinc-800 bg-zinc-950/80 overflow-hidden transition hover:border-zinc-700"
             >
-              <div>
-                <span
-                  className={`inline-block rounded-full border px-3 py-0.5 text-[0.65rem] font-semibold uppercase tracking-wider ${STATUS_STYLES[v.status]}`}
-                >
-                  {v.status}
-                </span>
-                <h3 className="mt-4 text-base font-semibold text-white transition-colors group-hover:text-[#c5f018]">
-                  {v.title}
-                </h3>
-                <p className="mt-2 text-xs leading-relaxed text-zinc-400">
-                  {v.overview}
-                </p>
+              {/* Thumbnail */}
+              <div className="relative aspect-video w-full overflow-hidden bg-zinc-900">
+                {v.img?.url ? (
+                  <img
+                    src={v.img.url}
+                    alt={v.img.alt || v.title}
+                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                ) : (
+                  <div className="flex h-full w-full items-center justify-center text-zinc-700 text-xs">
+                    No image
+                  </div>
+                )}
               </div>
-              <span className="mt-6 inline-flex items-center gap-1 text-xs font-medium text-[#c5f018]">
-                View details <span>→</span>
-              </span>
+
+              {/* Content */}
+              <div className="flex flex-col flex-1 justify-between p-6">
+                <div>
+                  <span
+                    className={`inline-block rounded-full border px-3 py-0.5 text-[0.65rem] font-semibold uppercase tracking-wider ${STATUS_STYLES[v.status]}`}
+                  >
+                    {v.status}
+                  </span>
+                  <h3 className="mt-4 text-base font-semibold text-white transition-colors group-hover:text-[#c5f018]">
+                    {v.title}
+                  </h3>
+                  <p className="mt-2 text-xs leading-relaxed text-zinc-400">
+                    {v.overview}
+                  </p>
+                </div>
+                <span className="mt-6 inline-flex items-center gap-1 text-xs font-medium text-[#c5f018]">
+                  View details <span>→</span>
+                </span>
+              </div>
             </Link>
           ))}
         </div>

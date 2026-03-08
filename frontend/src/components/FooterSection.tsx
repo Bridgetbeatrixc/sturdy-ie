@@ -5,7 +5,7 @@ const FOOTER_NAV_ITEMS = [
   { label: "About", href: "/about" },
   { label: "Case Studies", href: "/case-studies" },
   { label: "Ventures", href: "/ventures" },
-  { label: "My Insights", href: "/writing" },
+  { label: "My Insights", href: "/myinsights" },
   { label: "Contact", href: "/contact" },
 ];
 

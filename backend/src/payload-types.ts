@@ -70,7 +70,7 @@ export interface Config {
     users: User;
     media: Media;
     ventures: Venture;
-    articles: Article;
+    myinsights: Myinsight;
     'case-studies': CaseStudy;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
@@ -82,7 +82,7 @@ export interface Config {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     ventures: VenturesSelect<false> | VenturesSelect<true>;
-    articles: ArticlesSelect<false> | ArticlesSelect<true>;
+    myinsights: MyinsightsSelect<false> | MyinsightsSelect<true>;
     'case-studies': CaseStudiesSelect<false> | CaseStudiesSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
@@ -154,7 +154,6 @@ export interface User {
  */
 export interface Media {
   id: number;
-  alt: string;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -166,6 +165,16 @@ export interface Media {
   height?: number | null;
   focalX?: number | null;
   focalY?: number | null;
+  sizes?: {
+    thumbnail?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+  };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -175,51 +184,126 @@ export interface Venture {
   id: number;
   title: string;
   /**
-   * URL-safe identifier, e.g. "preventive-health-platform"
+   * Auto-filled from title. You can override it manually.
    */
-  slug: string;
+  slug?: string | null;
+  /**
+   * Upload or select image.
+   */
+  img: number | Media;
   status: 'Exploring' | 'Active' | 'Relaunching';
   /**
    * Short intro shown in the hero section of the detail page.
    */
-  headerIntro?: string | null;
+  shortOverview?: string | null;
   /**
    * First sentence is also used as the card summary on the index page.
    */
-  ventureOverview?: string | null;
-  problemSpace?: string | null;
-  innovationDirection?: string | null;
-  dataAnalytics?: string | null;
-  collaboration?: string | null;
+  ventureOverview?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  problemSpace?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  innovationDirection?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  dataAnalytics?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  /**
+   * Select the type of collaboration being sought.
+   */
+  collaborationSought?: ('research-partners' | 'platform-integration' | 'regulated-pilots')[] | null;
+  /**
+   * Mark as a Featured Article.
+   */
+  featured?: boolean | null;
+  /**
+   * Overrides the page title in search engine results. Leave blank to use the article title.
+   */
+  seoTitle?: string | null;
+  /**
+   * Short description for search engine results.
+   */
+  seoDescription?: string | null;
   updatedAt: string;
   createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "articles".
+ * via the `definition` "myinsights".
  */
-export interface Article {
+export interface Myinsight {
   id: number;
   title: string;
   /**
-   * URL-safe identifier, e.g. "reframing-three-wise-monkeys-data-governance"
+   * Auto-filled from title. You can override it manually.
    */
-  slug: string;
+  slug?: string | null;
   category:
     | 'Governance & Compliance'
     | 'Research Collaboration'
     | 'Interoperability & Standards'
     | 'Preventive Health Innovation'
     | 'AI & Regulated Data';
-  /**
-   * Display date, e.g. "June 2025"
-   */
-  date: string;
   author: string;
   /**
-   * Full image URL
+   * Upload or select image.
    */
-  image: string;
+  img: number | Media;
+  /**
+   * Publication date.
+   */
+  date?: string | null;
   /**
    * Short summary shown on the listing card.
    */
@@ -228,11 +312,37 @@ export interface Article {
    * Mark as a Cornerstone Article.
    */
   flagship?: boolean | null;
+  /**
+   * Mark as a Featured Article.
+   */
+  featured?: boolean | null;
   sections: {
     heading: string;
-    body: string;
+    body: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
     id?: string | null;
   }[];
+  /**
+   * Overrides the page title in search engine results. Leave blank to use the article title.
+   */
+  seoTitle?: string | null;
+  /**
+   * Short description for search engine results.
+   */
+  seoDescription?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -244,13 +354,27 @@ export interface CaseStudy {
   id: number;
   title: string;
   /**
-   * URL-safe identifier, e.g. "trusted-research-environment"
+   * Auto-filled from title. You can override it manually.
    */
-  slug: string;
+  slug?: string | null;
   /**
    * Short description shown on listing cards.
    */
-  summary: string;
+  summary: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
   /**
    * e.g. "Research Collaboration / TRE"
    */
@@ -258,21 +382,127 @@ export interface CaseStudy {
   /**
    * e.g. "Multi-institutional research consortium"
    */
-  context: string;
+  context: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
   /**
-   * e.g. "2024"
+   * Upload or select image.
    */
-  period?: string | null;
+  img: number | Media;
+  overviewContext?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  environmentModel?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  governanceControls?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  standardsInteroperability?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  outcomesImpact?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  partnershipRelevance?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
   /**
-   * Full image URL
+   * Mark as a Featured Article.
    */
-  img: string;
-  overviewContext?: string | null;
-  environmentModel?: string | null;
-  governanceControls?: string | null;
-  standardsInteroperability?: string | null;
-  outcomesImpact?: string | null;
-  partnershipRelevance?: string | null;
+  featured?: boolean | null;
+  /**
+   * Overrides the page title in search engine results. Leave blank to use the article title.
+   */
+  seoTitle?: string | null;
+  /**
+   * Short description for search engine results.
+   */
+  seoDescription?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -313,8 +543,8 @@ export interface PayloadLockedDocument {
         value: number | Venture;
       } | null)
     | ({
-        relationTo: 'articles';
-        value: number | Article;
+        relationTo: 'myinsights';
+        value: number | Myinsight;
       } | null)
     | ({
         relationTo: 'case-studies';
@@ -389,7 +619,6 @@ export interface UsersSelect<T extends boolean = true> {
  * via the `definition` "media_select".
  */
 export interface MediaSelect<T extends boolean = true> {
-  alt?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
@@ -401,6 +630,20 @@ export interface MediaSelect<T extends boolean = true> {
   height?: T;
   focalX?: T;
   focalY?: T;
+  sizes?:
+    | T
+    | {
+        thumbnail?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+      };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -409,29 +652,34 @@ export interface MediaSelect<T extends boolean = true> {
 export interface VenturesSelect<T extends boolean = true> {
   title?: T;
   slug?: T;
+  img?: T;
   status?: T;
-  headerIntro?: T;
+  shortOverview?: T;
   ventureOverview?: T;
   problemSpace?: T;
   innovationDirection?: T;
   dataAnalytics?: T;
-  collaboration?: T;
+  collaborationSought?: T;
+  featured?: T;
+  seoTitle?: T;
+  seoDescription?: T;
   updatedAt?: T;
   createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "articles_select".
+ * via the `definition` "myinsights_select".
  */
-export interface ArticlesSelect<T extends boolean = true> {
+export interface MyinsightsSelect<T extends boolean = true> {
   title?: T;
   slug?: T;
   category?: T;
-  date?: T;
   author?: T;
-  image?: T;
+  img?: T;
+  date?: T;
   excerpt?: T;
   flagship?: T;
+  featured?: T;
   sections?:
     | T
     | {
@@ -439,6 +687,8 @@ export interface ArticlesSelect<T extends boolean = true> {
         body?: T;
         id?: T;
       };
+  seoTitle?: T;
+  seoDescription?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -452,7 +702,6 @@ export interface CaseStudiesSelect<T extends boolean = true> {
   summary?: T;
   theme?: T;
   context?: T;
-  period?: T;
   img?: T;
   overviewContext?: T;
   environmentModel?: T;
@@ -460,6 +709,9 @@ export interface CaseStudiesSelect<T extends boolean = true> {
   standardsInteroperability?: T;
   outcomesImpact?: T;
   partnershipRelevance?: T;
+  featured?: T;
+  seoTitle?: T;
+  seoDescription?: T;
   updatedAt?: T;
   createdAt?: T;
 }

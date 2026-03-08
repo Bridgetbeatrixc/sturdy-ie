@@ -10,13 +10,13 @@ import { FooterSection } from "../components/FooterSection";
 import { HomeAboutSection } from "../components/HomeAboutSection";
 import { getCaseStudiesIndex } from "../lib/caseStudies";
 import { getVenturesIndex } from "../lib/ventures";
-import { getArticlesIndex } from "../lib/articles";
+import { getMyInsightsIndex } from "../lib/myInsight";
 
 export default async function Home() {
-  const [caseStudies, ventures, articles] = await Promise.all([
+  const [caseStudies, ventures, myInsights] = await Promise.all([
     getCaseStudiesIndex(),
     getVenturesIndex(),
-    getArticlesIndex(),
+    getMyInsightsIndex(),
   ]);
 
   return (
@@ -26,7 +26,7 @@ export default async function Home() {
       <HomeAboutSection />
       <CapabilitiesSection />
       <ExpertiseSection />
-      <InsightsPreviewSection articles={articles} />
+      <InsightsPreviewSection myInsights={myInsights} />
       <VenturesSection ventures={ventures} />
       <CaseStudiesSection caseStudies={caseStudies} />
       <CollaborationCtaSection />

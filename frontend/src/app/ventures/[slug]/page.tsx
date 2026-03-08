@@ -58,17 +58,28 @@ export default async function VentureDetailPage({
           <p className="mt-4 max-w-2xl text-sm leading-relaxed text-zinc-400 md:text-base">
             {venture.headerIntro}
           </p>
+
+          {/* Feature image */}
+          {venture.img?.url && (
+            <div className="mt-8 overflow-hidden rounded-xl border border-zinc-800/60">
+              <img
+                src={venture.img.url}
+                alt={venture.img.alt || venture.title}
+                className="w-full h-64 md:h-96 object-cover"
+              />
+            </div>
+          )}
         </div>
       </section>
 
       {/* Content sections */}
       <section className="border-b border-zinc-900/60 bg-black">
         <div className="mx-auto flex max-w-6xl flex-col gap-10 px-4 py-12 sm:px-6 md:px-10 md:py-16 lg:px-0">
-          <SectionBlock label="Venture Overview"        body={venture.ventureOverview}     />
-          <SectionBlock label="Problem Space"           body={venture.problemSpace}         />
-          <SectionBlock label="Innovation Direction"    body={venture.innovationDirection}  />
-          <SectionBlock label="Data & Analytics Dimension" body={venture.dataAnalytics}    />
-          <SectionBlock label="Collaboration Opportunities" body={venture.collaboration}   />
+          <SectionBlock label="Venture Overview"            body={venture.ventureOverview}    />
+          <SectionBlock label="Problem Space"               body={venture.problemSpace}        />
+          <SectionBlock label="Innovation Direction"        body={venture.innovationDirection} />
+          <SectionBlock label="Data & Analytics Dimension"  body={venture.dataAnalytics}       />
+          <SectionBlock label="Collaboration Opportunities" body={venture.collaboration}       />
         </div>
       </section>
 
