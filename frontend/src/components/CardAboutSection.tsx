@@ -3,24 +3,29 @@
 export function CardAboutSection() {
   const cards = [
     {
-      title: "Governance & Compliance",
+      title: "Governance by Design",
       description:
-        "I operationalise regulatory frameworks into governance-aligned systems with built-in assurance, auditability, and defensible technical controls.",
+        "Embedding governance and compliance into architecture, delivery, and operations from the outset.",
     },
     {
-      title: "Product & Innovation Development",
+      title: "Privacy-First Collaboration",
       description:
-        "Alongside governance and infrastructure advisory, I lead end-to-end platform and product initiatives, delivering secure data collaboration, controlled analytics, and institution-ready pilots.",
+        "Enabling secure, governed collaboration that protects sensitive data and preserves institutional control.",
     },
     {
-      title: "Research Collaboration",
+      title: "Standards-Led Interoperability",
       description:
-        "I enable secure cross-border research collaboration using Trusted Research Environments, federated models, and structured multi-party governance.",
+        "Designing for interoperability using established standards so data can be shared and understood across boundaries.",
     },
     {
-      title: "Venture Alignment",
+      title: "Institutional Trust",
       description:
-        "In parallel, I engage in venture initiatives in precision nutrition and data-driven health optimisation, exploring how secure data infrastructure, biometrics, and personalised analytics enable next-generation preventive health models.",
+        "Building platforms and processes that earn and sustain trust through transparency, auditability, and accountability.",
+    },
+    {
+      title: "Responsible Innovation",
+      description:
+        "Advancing innovation in alignment with regulatory expectations, ethics, and long-term operational resilience.",
     },
   ];
 
@@ -98,8 +103,11 @@ export function CardAboutSection() {
       `}</style>
 
       <div className="relative mx-auto max-w-7xl px-6 py-24 md:px-10 lg:px-0">
-        {/* 4-column card grid */}
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <h2 className="mb-12 text-2xl font-bold text-white md:text-3xl">
+          Operating <span className="text-[#c5f018]">Principles</span>
+        </h2>
+        {/* Card grid */}
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {cards.map((card) => (
             <div
               key={card.title}
