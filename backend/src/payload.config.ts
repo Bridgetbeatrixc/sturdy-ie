@@ -16,7 +16,7 @@ import path from 'path'
 import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
 import sharp from 'sharp'
-
+import { s3Storage } from '@payloadcms/storage-s3'
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
 import { Ventures } from './collections/Ventures'
@@ -25,6 +25,9 @@ import { CaseStudies } from './collections/CaseStudies'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
+console.log('S3 BUCKET:', process.env.S3_BUCKET)
+console.log('S3 ENDPOINT:', process.env.S3_ENDPOINT)
+console.log('S3 ACCESS KEY:', process.env.S3_ACCESS_KEY)
 
 export default buildConfig({
   admin: {
@@ -47,10 +50,10 @@ export default buildConfig({
   ],
   collections: [Users, Media, Ventures, MyInsight, CaseStudies],
   editor: lexicalEditor({
-  features: ({ defaultFeatures }) => [
-    ...defaultFeatures,
-    HeadingFeature({ enabledHeadingSizes: ['h2', 'h3', 'h4'] }),
-  ],
+    features: ({ defaultFeatures }) => [
+      ...defaultFeatures,
+      HeadingFeature({ enabledHeadingSizes: ['h2', 'h3', 'h4'] }),
+    ],
   }),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
@@ -62,5 +65,19 @@ export default buildConfig({
     },
   }),
   sharp,
-  plugins: [],
+  plugins: [
+    s3Storage({
+      collections: { media: true },
+      bucket: process.env.S3_BUCKET!,
+      config: {
+        region: 'auto',
+        endpoint: process.env.S3_ENDPOINT,
+        forcePathStyle: true,
+        credentials: {
+          accessKeyId: process.env.S3_ACCESS_KEY!,
+          secretAccessKey: process.env.S3_SECRET_KEY!,
+        },
+      },
+    }),
+  ],
 })

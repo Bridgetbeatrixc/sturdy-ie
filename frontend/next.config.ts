@@ -9,9 +9,18 @@ const nextConfig: NextConfig = {
         port: "3001",
         pathname: "/**",
       },
+      ...(process.env.PAYLOAD_DOMAIN
+        ? [
+            {
+              protocol: "https" as const,
+              hostname: process.env.PAYLOAD_DOMAIN,
+              pathname: "/**",
+            },
+          ]
+        : []),
       {
         protocol: "https",
-        hostname: process.env.PAYLOAD_DOMAIN ?? "",
+        hostname: "pub-25bc5e46522a4dca8af55c1c2bd5dd40.r2.dev",
         pathname: "/**",
       },
     ],

@@ -50,7 +50,7 @@ function lexicalToPlainText(content: any): string {
 function parseImage(img: any): VentureImage | null {
   if (!img || typeof img !== 'object') return null;
   return {
-    url:    img.url ? `${API_URL}${img.url}` : '', // 👈 prepend API_URL
+    url:    img.url ?? '',
     alt:    img.alt ?? '',
     width:  img.width ?? 1200,
     height: img.height ?? 630,
@@ -59,7 +59,7 @@ function parseImage(img: any): VentureImage | null {
 
 export async function getVenturesIndex(): Promise<VentureIndex[]> {
   const res = await fetch(
-    `${API_URL}/api/ventures?limit=100&depth=1`, // 👈 depth=1
+    `${API_URL}/api/ventures?limit=100&depth=1`,
     { next: { revalidate: 60 } }
   );
   if (!res.ok) throw new Error("Failed to fetch ventures");
@@ -77,7 +77,7 @@ export async function getVenturesIndex(): Promise<VentureIndex[]> {
 
 export async function getVentureBySlug(slug: string): Promise<VentureDetail | null> {
   const res = await fetch(
-    `${API_URL}/api/ventures?where[slug][equals]=${slug}&depth=1&limit=1`, // 👈 depth=1
+    `${API_URL}/api/ventures?where[slug][equals]=${slug}&depth=1&limit=1`,
     { next: { revalidate: 60 } }
   );
   if (!res.ok) throw new Error("Failed to fetch venture");
@@ -87,15 +87,15 @@ export async function getVentureBySlug(slug: string): Promise<VentureDetail | nu
 
   const v = docs[0];
   return {
-    slug:              v.slug,
-    title:             v.title,
-    status:            v.status,
-    headerIntro:       v.shortOverview ?? "",
-    ventureOverview:   lexicalToPlainText(v.ventureOverview),
-    problemSpace:      lexicalToPlainText(v.problemSpace),
+    slug:                v.slug,
+    title:               v.title,
+    status:              v.status,
+    headerIntro:         v.shortOverview ?? "",
+    ventureOverview:     lexicalToPlainText(v.ventureOverview),
+    problemSpace:        lexicalToPlainText(v.problemSpace),
     innovationDirection: lexicalToPlainText(v.innovationDirection),
-    dataAnalytics:     lexicalToPlainText(v.dataAnalytics),
-    collaboration:     v.collaboration ?? "",
-    img:               parseImage(v.img),
+    dataAnalytics:       lexicalToPlainText(v.dataAnalytics),
+    collaboration:       v.collaboration ?? "",
+    img:                 parseImage(v.img),
   };
 }

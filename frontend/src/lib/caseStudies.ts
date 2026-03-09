@@ -35,7 +35,7 @@ function lexicalToText(content: any): string {
 }
 
 export async function getCaseStudiesIndex(): Promise<CaseStudyIndex[]> {
-  const url = `${API_URL}/api/case-studies?limit=100&depth=1`; 
+  const url = `${API_URL}/api/case-studies?limit=100&depth=1`;
   const res = await fetch(url, { cache: "no-store" });
   if (!res.ok) throw new Error(`Failed to fetch case studies — ${res.status} ${res.statusText}`);
 
@@ -47,7 +47,7 @@ export async function getCaseStudiesIndex(): Promise<CaseStudyIndex[]> {
     theme:   c.theme,
     context: lexicalToText(c.context),
     period:  c.period ?? "",
-    img:     c.img?.url ? `${API_URL}${c.img.url}` : "", 
+    img:     c.img?.url ?? "",
   }));
 }
 
@@ -67,7 +67,7 @@ export async function getCaseStudyBySlug(slug: string): Promise<CaseStudyDetail 
     theme:                     c.theme,
     context:                   lexicalToText(c.context),
     period:                    c.period ?? "",
-    img:                       c.img?.url ? `${API_URL}${c.img.url}` : "",
+    img:                       c.img?.url ?? "",
     overviewContext:            lexicalToText(c.overviewContext),
     environmentModel:          lexicalToText(c.environmentModel),
     governanceControls:        lexicalToText(c.governanceControls),
