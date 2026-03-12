@@ -17,14 +17,14 @@ const CAPABILITIES = [
 
 export function CapabilitiesSection() {
   return (
-    <section className="overflow-visible">
-      <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-0 lg:overflow-x-auto"
+    <section className="overflow-visible mx-auto max-w-8xl md:justify-center md:px-16">
+      <div className=" px-4 py-10 sm:px-6 lg:px-0 lg:overflow-x-auto"
       style={{ opacity: 0, animation: 'fadeUp 0.8s ease-out 0.2s forwards' }}>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:flex lg:flex-row">
           {CAPABILITIES.map((card, index) => (
             <div
               key={index}
-              className="group w-full lg:w-80 lg:shrink-0 p-7 border border-white/15 transition-all duration-600 cursor-pointer hover:-translate-y-10"
+              className="group w-full lg:w-87 lg:shrink-0 p-7 border border-white/15 transition-all duration-600 cursor-pointer hover:-translate-y-10"
             >
               <article className={`relative h-56 w-full overflow-hidden rounded-lg bg-zinc-950/80 min-[360px]:h-64 sm:h-80 md:h-96 lg:h-110 ${index === 3 || index === 0 ? 'pt-40' : ''}`}>
                 <div

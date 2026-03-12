@@ -21,38 +21,35 @@ const EXPERTISE_ITEMS = [
 
 export function ExpertiseSection() {
   return (
-    <section className="border-b border-zinc-900/60 bg-black">
-      <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 md:px-10 md:py-20 lg:px-0">
-        <div className="grid gap-10 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] lg:items-center">
+    <section className="mx-auto max-w-8xl px-8 py-8 md:py-16 justify-center bg-black">
+      <div className="flex flex-row gap-20">
+        <div className="grid lg:w-1/2 lg:grid-cols lg:items-center">
           {/* Left: heading and 2x2 grid */}
           <div>
-            <div className="mb-4 flex items-center gap-2 text-xs font-medium text-zinc-300">
-              <span className="h-2 w-2 rounded-full bg-[#c5f018]" />
-              <span>Core Expertise</span>
+            <div className="mb-4 flex items-center gap-2 text-xs font-medium text-white">
+              <span className="h-2 w-2 rounded-full bg-[#c5f018]"
+                style={{ animation: 'dotPulse 1s ease-in-out infinite' }} />
+              <span className="text-lg">
+                Expertise</span>
             </div>
-            <h2 className="text-3xl font-semibold leading-tight text-white md:text-4xl">
-              Governance-led transformation in regulated ecosystems
+            <h2 className="text-3xl font-semibold leading-tight text-[#c5f018] md:text-5xl">
+              Governance-led <span className="text-white font-light">transformation in regulated ecosystems</span>
             </h2>
-            <p className="mt-4 max-w-xl text-sm leading-relaxed text-zinc-300 md:text-base">
-              I design governance-aligned environments that enable organisations to
-              modernise securely, collaborate responsibly, and operationalise
-              sensitive data at scale.
-            </p>
 
             <div className="mt-10 grid gap-5 sm:grid-cols-2">
               {EXPERTISE_ITEMS.map((item) => (
                 <article
                   key={item.title}
-                  className="flex h-full flex-col justify-between rounded-3xl border border-zinc-800 bg-zinc-900/80 px-6 py-7 shadow-[0_0_0_1px_rgba(24,24,27,0.6)]"
+                  className="flex h-full flex-col justify-between rounded-xl border border-zinc-800 bg-zinc-800/80 px-6 py-7"
                 >
-                  <div className="mb-6 flex h-10 w-10 items-center justify-center rounded-full border border-[#c5f018]/70 bg-[#c5f018]/10">
-                    <span className="h-5 w-5 rounded-full border border-[#c5f018]" />
+                  <div className="mb-8 flex h-14 w-14 items-center justify-center rounded-full border border-[#c5f018]/70 bg-[#c5f018]/10">
+                    <span className="h-5 w-5 rounded-xl border border-[#c5f018]" />
                   </div>
                   <div className="space-y-2">
-                    <h3 className="text-base font-semibold text-white">
+                    <h3 className="text-3xl text-white">
                       {item.title}
                     </h3>
-                    <p className="text-xs leading-relaxed text-zinc-300 md:text-sm">
+                    <p className="text-sm leading-relaxed md:text-lg">
                       {item.body}
                     </p>
                   </div>
@@ -60,24 +57,25 @@ export function ExpertiseSection() {
               ))}
             </div>
           </div>
-
-          {/* Right: image, copy and CTA */}
-          <div className="space-y-6 lg:space-y-8">
-            <div className="overflow-hidden rounded-3xl border border-zinc-800 bg-zinc-900">
-              <div className="h-64 w-full bg-[url('https://images.pexels.com/photos/1181567/pexels-photo-1181567.jpeg?auto=compress&cs=tinysrgb&w=1200')] bg-cover bg-center md:h-80" />
-            </div>
-            <p className="text-sm leading-relaxed text-zinc-300 md:text-base">
-              Executive delivery across public sector, financial services, and
-              health—bridging innovation ambition with regulator-grade execution.
-            </p>
-            <Link
-              href="/partnerships"
-              className="inline-flex items-center justify-center gap-2 rounded-full border border-[#c5f018] bg-transparent px-7 py-3 text-sm font-semibold text-[#c5f018] transition hover:bg-[#c5f018] hover:text-black"
-            >
-              Discuss Collaboration
-              <span className="text-xs">↗</span>
-            </Link>
+        </div>
+        {/* Right: image, copy and CTA */}
+        <div className="space-y-8 overflow-hidden lg:w-1/2">
+          <div className="rounded-2xl border border-zinc-800 bg-zinc-900">
+            <div className="h-100 w-full bg-[url('https://images.pexels.com/photos/1181567/pexels-photo-1181567.jpeg?auto=compress&cs=tinysrgb&w=1200')] bg-cover bg-center md:h-80" />
           </div>
+          <p className="text-sm leading-relaxed text-white md:text-base">
+            Executive delivery across public sector, financial services, and
+            health—bridging innovation ambition with regulator-grade execution.
+          </p>
+          <Link
+            href="/partnerships"
+            className="inline-flex items-center justify-center gap-2 text-xl rounded-lg border border-[#c5f018] bg-transparent px-6 py-5 text-sm font-semibold text-[#c5f018] transition duration-500 hover:bg-[#c5f018] hover:text-black"
+          >
+            Discuss Collaboration
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M3 13L13 3M13 3H5M13 3V11" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+          </Link>
         </div>
       </div>
     </section>

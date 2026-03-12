@@ -4,14 +4,14 @@ import Link from "next/link";
 
 export function HeroSection() {
   return (
-    <section className="relative overflow-hidden border-b border-zinc-900/60 bg-neutral-950">
+    <section className="relative overflow-hidden bg-neutral-950">
       <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_60%_at_50%_90%,rgba(197,240,24,0.55)_0%,rgba(160,210,0,0.55)_20%,transparent_65%)]" />
       </div>
-      <div className="relative mx-auto max-w-7xl px-4 py-16 sm:px-6 md:px-10 md:py-20 lg:px-6 lg:py-24">
+      <div className="relative mx-auto max-w-8xl px-4 py-24 px-16">
         {/* outer corner arcs */}
-        <div className="pointer-events-none absolute -left-100 top-16 hidden h-88 w-88 rounded-full mr-[50px] border-[50px] border-zinc-700/60 md:block" />
-        <div className="pointer-events-none absolute -right-100 -bottom-10 hidden h-88 w-88 rounded-full border-[50px] border-zinc-700/60 md:block" />
+        <div className="pointer-events-none absolute -left-50 bottom-100 hidden h-90 w-90 rounded-full mr-[50px] border-[50px] border-zinc-700/60 md:block" />
+        <div className="pointer-events-none absolute -right-50 top-100 hidden h-90 w-90 rounded-full border-[50px] border-zinc-700/60 md:block" />
 
         <div className="relative flex flex-col items-start gap-12 lg:flex-row lg:items-center lg:justify-between">
           {/* Left copy */}
@@ -51,7 +51,7 @@ export function HeroSection() {
             </div>
 
             {/* divider line and star accent */}
-            <div className="relative mt-10 flex items-center w-3xl lg:w-xl">
+            <div className="relative mt-10 flex items-center lg:w-3xl w-xs lg:w-2xl">
               <div className="h-[1px] flex-1 bg-zinc-400 transition-all duration-1000 ease-out animate-[grow_1s_ease-out_forwards] origin-left"
                 style={{ animation: 'grow 1s ease-out forwards' }} />
               <div className="flex h-12 w-12 items-center justify-center opacity-0"
@@ -69,10 +69,10 @@ export function HeroSection() {
           </div>
 
           {/* Right image */}
-          <div className="relative mx-auto mt-10 flex items-center justify-center lg:mt-0 lg:-ml-34 lg:flex-1">
+          <div className="relative mx-auto mt-10 flex items-center justify-center lg:mt-0 md:mr-20 lg:-ml-34 lg:flex-1">
             <div className="pointer-events-none absolute inset-0 blur-3xl" />
 
-            <div className="relative h-[280px] w-[220px] min-[400px]:h-[360px] min-[400px]:w-[270px] sm:h-[460px] sm:w-[320px] md:h-[500px] md:w-[360px] lg:h-[430px] lg:w-[280px]">
+            <div className="relative h-[280px] w-[220px] min-[400px]:h-[360px] min-[400px]:w-[270px] sm:h-[460px] sm:w-[320px] md:h-[550px] md:w-[400px] lg:h-[430px] lg:w-[280px]">
               <div className="relative object-contain scale-[2] h-full w-full overflow-hidden bg-transparent" style={{ animation: 'fadeUp 0.8s ease-out 0.4s both' }}
               >
                 <Image
