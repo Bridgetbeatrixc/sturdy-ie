@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { MyInsightIndex, CATEGORY_STYLES } from "../lib/myInsight";
+import { MyInsightIndex} from "../lib/myInsight";
 
 function StackedImages() {
   const ref = useRef<HTMLDivElement>(null);
