@@ -1,91 +1,75 @@
 "use client";
-import { useRef, useEffect } from "react";
 
 const CAPABILITIES = [
   {
-    title: "Enterprise-scale transformation leadership",
-    subtitle: "Delivery of mission-critical programmes across regulated ecosystems.",
     img: "https://images.pexels.com/photos/6801648/pexels-photo-6801648.jpeg?auto=compress&cs=tinysrgb&w=800",
   },
   {
-    title: "Sovereign data infrastructure delivery",
-    subtitle: "Trusted platforms designed for resilience, security, and control.",
     img: "https://images.pexels.com/photos/1181675/pexels-photo-1181675.jpeg?auto=compress&cs=tinysrgb&w=800",
   },
   {
-    title: "Secure collaboration & TRE environments",
-    subtitle: "Governed access models enabling compliant research and analytics.",
     img: "https://images.pexels.com/photos/1181467/pexels-photo-1181467.jpeg?auto=compress&cs=tinysrgb&w=800",
   },
   {
-    title: "Federated analytics & privacy-preserving models",
-    subtitle: "Cross-organisation insight without centralising sensitive datasets.",
     img: "https://images.pexels.com/photos/1181243/pexels-photo-1181243.jpeg?auto=compress&cs=tinysrgb&w=800",
-  },
-  {
-    title: "Governance automation & regulatory assurance (RegTech)",
-    subtitle: "Auditability, policy enforcement, traceability embedded by design.",
-    img: "https://images.pexels.com/photos/18105/pexels-photo.jpg?auto=compress&cs=tinysrgb&w=800",
   },
 ];
 
 export function CapabilitiesSection() {
-  const scrollRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const el = scrollRef.current;
-    if (!el) return;
-
-    const onWheel = (e: WheelEvent) => {
-      if (e.deltaY === 0) return;
-      e.preventDefault();
-      el.scrollBy({ left: e.deltaY, behavior: "smooth" });
-    };
-
-    el.addEventListener("wheel", onWheel, { passive: false });
-    return () => el.removeEventListener("wheel", onWheel);
-  }, []);
-
   return (
-    <section className="border-b border-zinc-900/60 bg-gradient-to-b from-black to-slate-950">
-      <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 md:px-10 md:py-20 lg:px-0">
-        <div className="mb-8 flex items-baseline justify-between gap-4">
-          <h2 className="text-lg font-semibold text-white md:text-xl">
-            Capabilities in regulated environments
-          </h2>
-          <p className="hidden text-xs text-zinc-400 md:block">
-            Scroll right to explore more.
-          </p>
-        </div>
-        <div
-          ref={scrollRef}
-          style={{ scrollbarWidth: "none", msOverflowStyle: "none" } as React.CSSProperties}
-          className="flex flex-col gap-4 md:flex-row md:overflow-x-auto md:overscroll-x-contain md:scroll-touch md:min-w-0 [&::-webkit-scrollbar]:hidden"
-        >
-          {CAPABILITIES.map((card) => (
-            <article
-              key={card.title}
-              className="relative h-56 w-full shrink-0 overflow-hidden rounded-none border border-zinc-800 bg-zinc-950/80 min-[360px]:h-64 md:h-80 md:w-80"
+    <section className="overflow-visible">
+      <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-0 lg:overflow-x-auto"
+      style={{ opacity: 0, animation: 'fadeUp 0.8s ease-out 0.2s forwards' }}>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:flex lg:flex-row">
+          {CAPABILITIES.map((card, index) => (
+            <div
+              key={index}
+              className="group w-full lg:w-80 lg:shrink-0 p-7 border border-white/15 transition-all duration-600 cursor-pointer hover:-translate-y-10"
             >
-              <div
-                className="absolute inset-0 bg-cover bg-center opacity-60"
-                style={{ backgroundImage: `url(${card.img})` }}
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent" />
-              <div className="relative flex h-full flex-col justify-between p-5">
-                <span className="h-3 w-3 rounded-sm bg-[#c5f018]" />
-                <div>
-                  <h3 className="text-base font-semibold text-white md:text-lg">
-                    {card.title}
-                  </h3>
-                  {card.subtitle && (
-                    <p className="mt-2 text-xs leading-relaxed text-zinc-400 md:text-sm">
-                      {card.subtitle}
-                    </p>
+              <article className={`relative h-56 w-full overflow-hidden rounded-lg bg-zinc-950/80 min-[360px]:h-64 sm:h-80 md:h-96 lg:h-110 ${index === 3 || index === 0 ? 'pt-40' : ''}`}>
+                <div
+                  className="absolute inset-0 bg-cover bg-center opacity-60 lg:shrink-0 transition-all duration-500 group-hover:opacity-80 group-hover:scale-105"
+                  style={{ backgroundImage: `url(${card.img})` }}
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent" />
+                <div className="relative flex h-full flex-col justify-between p-5">
+
+                  {index === 1 && (
+                    <div className="relative flex h-full flex-col justify-between">
+                      <div className="flex items-center overflow-hidden gap-4">
+                        <span className="h-3 w-3 bg-[#c5f018]" />
+                        <span className="text-2xl text-white">Ireland</span>
+                      </div>
+                      <div className="self-end text-right">
+                        <p className="text-lg text-white">27 Greenfield Ave,</p>
+                        <p className="text-lg text-white">Dublin, Ireland</p>
+                      </div>
+                    </div>
                   )}
+
+                  {index === 0 && (
+                    <>
+                      <div className="absolute inset-6 border border-white/60 pointer-events-none" />
+                      <div className="absolute bottom-6 left-6 right-6 bg-white p-8 flex justify-end gap-4">
+                        <span className="text-3xl font-semibold text-black">90%</span>
+                        <span className="text-sm text-black leading-tight">Customer<br />satisfaction</span>
+                      </div>
+                    </>
+                  )}
+
+                  {index === 3 && (
+                    <>
+                      <div className="absolute inset-6 border border-white/60 pointer-events-none" />
+                      <div className="absolute bottom-6 left-6 right-6 bg-white p-8 flex justify-end gap-4">
+                        <span className="text-3xl font-semibold text-black">90%</span>
+                        <span className="text-sm text-black leading-tight">Customer<br />satisfaction</span>
+                      </div>
+                    </>
+                  )}
+
                 </div>
-              </div>
-            </article>
+              </article>
+            </div>
           ))}
         </div>
       </div>
