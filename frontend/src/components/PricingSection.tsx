@@ -116,7 +116,7 @@ export function PricingSection() {
   const headerInView = useInView(headerRef, { once: true, margin: "0px 0px -60px 0px" });
 
   return (
-    <section className="relative mx-auto flex max-w-8xl flex-col py-8 md:py-24 px-4 md:px-0">
+    <section className="relative mx-auto flex max-w-8xl flex-col py-8 md:py-24 px-4 md:px-4 lg:px-4">
 
       {/* Header */}
       <motion.div

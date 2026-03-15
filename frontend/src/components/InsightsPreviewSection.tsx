@@ -80,7 +80,7 @@ export function InsightsPreviewSection({ myInsights }: { myInsights: MyInsightIn
   const featured = myInsights.slice(0, 3);
 
   return (
-    <section ref={ref} className="mx-auto max-w-8xl justify-center px-4 py-8 md:px-0 bg-black">
+    <section ref={ref} className="mx-auto max-w-8xl justify-center px-4 py-8 md:px-4 lg:px-4 bg-black">
       <div className="flex flex-col lg:flex-row gap-10 lg:gap-20">
         <div className="mb-10 lg:w-1/2">
           {/* Label — animated */}

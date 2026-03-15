@@ -9,7 +9,7 @@ export function TeamSection() {
   const isInView = useInView(ref, { once: true, margin: "0px 0px -60px 0px" });
 
   return (
-    <section id="team" className="mx-auto max-w-8xl py-16 md:py-24 px-4 md:px-0">
+    <section id="team" className="mx-auto max-w-8xl py-16 md:py-24 px-4 md:px-4 lg:px-4">
 
       {/* Label */}
       <motion.div

@@ -125,7 +125,7 @@ export function ServicesSection() {
           />
         )}
 
-        <div className="relative h-full mx-auto max-w-8xl px-4 sm:px-8 md:px-0 flex items-center">
+        <div className="relative h-full mx-auto max-w-8xl py-2 md:py-12 lg:py-12 px-4 sm:px-8 md:px-4 lg:px-0 flex items-center">
           <div className="flex flex-col lg:flex-row gap-10 lg:gap-20 w-full">
 
             <div className="w-full lg:w-1/2">

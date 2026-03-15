@@ -26,7 +26,7 @@ const VENTURES = [
 
 export function VenturesSection() {
   return (
-    <section className="mx-auto max-w-8xl bg-black py-8 px-4 md:px-0">
+    <section className="mx-auto max-w-8xl bg-black py-8 px-4 md:px-4 lg:px-4">
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {VENTURES.map((v) => (
           <Link

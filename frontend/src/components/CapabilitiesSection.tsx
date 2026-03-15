@@ -44,14 +44,14 @@ export function CapabilitiesSection() {
         animation: visible ? 'fadeUp 2s forwards' : 'none',
       }}
     >
-      <div className="grid grid-cols-1 lg:grid-cols-4">
+      <div className="grid grid-cols-2 lg:grid-cols-4">
         {CAPABILITIES.map((card, index) => (
           <div
             key={index}
             className="group border border-white/15 p-3 sm:p-5 transition-all duration-500 cursor-pointer hover:-translate-y-4"
           >
             <article
-              className={`relative w-full overflow-hidden rounded-lg bg-zinc-950/80 h-56 sm:h-72 md:h-80 lg:h-[28rem] ${
+              className={`relative w-full overflow-hidden rounded-lg bg-zinc-950/80 h-64 sm:h-80 md:h-96 lg:h-[28rem] ${
                 index === 3 || index === 0 ? "pt-32 lg:pt-40" : ""
               }`}
             >
@@ -78,8 +78,8 @@ export function CapabilitiesSection() {
                 {(index === 0 || index === 3) && (
                   <>
                     <div className="absolute inset-4 sm:inset-6 border border-white/60 pointer-events-none" />
-                    <div className="absolute bottom-4 sm:bottom-6 left-4 sm:left-6 right-4 sm:right-6 bg-white p-4 sm:p-6 flex justify-end gap-3">
-                      <span className="text-2xl sm:text-3xl font-semibold text-black">90%</span>
+                    <div className="absolute bottom-4 sm:bottom-6 left-4 sm:left-6 right-4 sm:right-6 bg-white p-3 sm:p-6 flex justify-end gap-3">
+                      <span className="text-xl sm:text-2xl lg:text-3xl font-semibold text-black">90%</span>
                       <span className="text-xs sm:text-sm text-black leading-tight">Customer<br />satisfaction</span>
                     </div>
                   </>

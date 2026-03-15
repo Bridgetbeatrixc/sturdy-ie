@@ -61,7 +61,7 @@ export function TestimonialsSection() {
   const buttonInView = useInView(buttonRef, { once: true, margin: "0px 0px -60px 0px" });
 
   return (
-    <section className="py-8 mx-auto max-w-8xl px-4 md:px-0">
+    <section className="py-8 mx-auto max-w-8xl px-4 md:px-4 lg:px-4">
       <div className="flex justify-center items-center gap-2 py-4">
         <span
           className="h-2 w-2 rounded-sm bg-[#c5f018]"
