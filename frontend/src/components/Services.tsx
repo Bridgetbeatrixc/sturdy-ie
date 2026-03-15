@@ -1,4 +1,7 @@
-import Link from "next/link";
+"use client";
+
+import { useRef } from "react";
+import { motion, useScroll, useTransform } from "motion/react";
 
 const SERVICES_ITEMS = [
   {
@@ -47,55 +50,96 @@ const SERVICES_ITEMS = [
   },
 ];
 
-export function ServicesSection() {
+const total = SERVICES_ITEMS.length;
+
+function ServiceCard({
+  item,
+  index,
+  scrollYProgress,
+}: {
+  item: typeof SERVICES_ITEMS[0];
+  index: number;
+  scrollYProgress: ReturnType<typeof useScroll>["scrollYProgress"];
+}) {
+  const revealStart = index / total;
+  const revealEnd = revealStart + 0.5 / total;
+
+  const opacity = useTransform(scrollYProgress, [revealStart, revealEnd], [0, 1]);
+  const y = useTransform(scrollYProgress, [revealStart, revealEnd], [60, 0]);
+
   return (
-    <section className="bg-black px-4 py-8 sm:px-8 md:px-0 md:py-16">
-      <div className="mx-auto max-w-8xl">
-        <div
-          className="flex flex-col lg:flex-row gap-10 lg:gap-20"
-          style={{ opacity: 0, animation: 'fadeUp 0.8s ease-out 0.2s forwards' }}
-        >
-          {/* Left */}
-          <div className="w-full lg:w-1/2">
-            <div className="mb-4 flex items-center gap-2 text-white">
-              <span className="h-2 w-2 rounded-full bg-[#c5f018]"
-                style={{ animation: 'dotPulse 1s ease-in-out infinite' }} />
-              <span className="md:text-lg text-sm">Lorem ipsum</span>
-            </div>
-            <h2 className="text-2xl font-semibold leading-tight text-[#c5f018] md:text-5xl">
-              Discover <span className="text-white font-light">the range of</span>
-            </h2>
-            <div className="mt-12 h-64 sm:h-120 lg:h-[510px] w-full rounded-2xl bg-[url('https://images.pexels.com/photos/1181567/pexels-photo-1181567.jpeg?auto=compress&cs=tinysrgb&w=1200')] bg-cover bg-center" />
-          </div>
-
-          {/* Right */}
-          <div className="w-full lg:w-1/2 space-y-4">
-            {SERVICES_ITEMS.map((item) => (
-  <div
-    key={item.title}
-    className="group flex flex-col items-center md:flex-row md:items-center gap-4 md:gap-12 rounded-lg md:rounded-2xl border border-[#677f06] p-6 md:p-0"
-  >
-    {/* Icon box */}
-    <div className="flex-shrink-0 flex h-14 w-14 md:h-38 md:w-40 items-center justify-center rounded-xl md:rounded-l-2xl md:rounded-r-none bg-[#c5f018] text-black">
-      <div className="w-7 h-7 md:w-14 md:h-14">
-        {item.icon}
+    <motion.div
+      style={{ opacity, y }}
+      className="group flex flex-col items-center md:flex-row md:items-center gap-4 md:gap-12 rounded-lg md:rounded-2xl border border-[#677f06] p-6 md:p-0"
+    >
+      <div className="flex-shrink-0 flex h-14 w-14 md:h-38 md:w-40 items-center justify-center rounded-xl md:rounded-l-2xl md:rounded-r-none bg-[#c5f018] text-black">
+        <div className="w-7 h-7 md:w-14 md:h-14">{item.icon}</div>
       </div>
-    </div>
-    {/* Text */}
-    <div className="space-y-2 md:space-y-4 text-center md:text-left md:px-0 md:pb-0">
-      <h3 className="md:text-2xl text-base font-medium text-white">
-        {item.title}
-      </h3>
-      <p className="md:text-sm text-xs leading-relaxed text-zinc-300">
-        {item.body}
-      </p>
-    </div>
-  </div>
-))}
-          </div>
+      <div className="space-y-2 md:space-y-4 text-center md:text-left md:px-0 md:pb-0">
+        <h3 className="md:text-2xl text-base font-medium text-white">{item.title}</h3>
+        <p className="md:text-sm text-xs leading-relaxed text-zinc-300">{item.body}</p>
+      </div>
+    </motion.div>
+  );
+}
 
+export function ServicesSection() {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end end"],
+  });
+
+  const gradientOpacity = useTransform(
+    scrollYProgress,
+    [1 / total, 1],
+    [0, 1]
+  );
+
+  return (
+    <div ref={containerRef} style={{ height: `${100 * (total + 1)}vh` }}>
+      <div className="sticky top-0 h-screen overflow-hidden">
+
+        <motion.div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            opacity: gradientOpacity,
+            background:
+              "radial-gradient(ellipse at 50% 90%, rgba(103, 147, 20, 0.55) 30%, rgba(45,68,5,0.35) 50%, transparent 70%)",
+          }}
+        />
+
+        <div className="relative h-full mx-auto max-w-8xl px-4 sm:px-8 md:px-0 flex items-center">
+          <div className="flex flex-col lg:flex-row gap-10 lg:gap-20 w-full">
+            <div className="w-full lg:w-1/2">
+              <div className="mb-4 flex items-center gap-2 text-white">
+                <span
+                  className="h-2 w-2 rounded-full bg-[#c5f018]"
+                  style={{ animation: "dotPulse 1s ease-in-out infinite" }}
+                />
+                <span className="md:text-lg text-sm">Lorem ipsum</span>
+              </div>
+              <h2 className="text-2xl font-semibold leading-tight text-[#c5f018] md:text-5xl">
+                Discover <span className="text-white font-light">the range of</span>
+              </h2>
+              <div className="mt-12 h-64 sm:h-80 lg:h-[420px] w-full rounded-2xl bg-[url('https://images.pexels.com/photos/1181567/pexels-photo-1181567.jpeg?auto=compress&cs=tinysrgb&w=1200')] bg-cover bg-center" />
+            </div>
+
+            <div className="w-full lg:w-1/2 space-y-4">
+              {SERVICES_ITEMS.map((item, index) => (
+                <ServiceCard
+                  key={item.title}
+                  item={item}
+                  index={index}
+                  scrollYProgress={scrollYProgress}
+                />
+              ))}
+            </div>
+
+          </div>
         </div>
       </div>
-    </section>
+    </div>
   );
 }

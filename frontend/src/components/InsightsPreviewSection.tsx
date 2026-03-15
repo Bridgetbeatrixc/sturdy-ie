@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { MyInsightIndex} from "../lib/myInsight";
+import { MyInsightIndex } from "../lib/myInsight";
 
 function StackedImages() {
   const ref = useRef<HTMLDivElement>(null);
@@ -28,43 +28,31 @@ function StackedImages() {
 
   return (
     <div ref={ref} className="relative w-full h-[400px] lg:h-[450px]">
-      {/* first img */}
       <div
         className="absolute bg-cover bg-center"
         style={{
           backgroundImage: "url('https://images.pexels.com/photos/3184418/pexels-photo-3184418.jpeg?auto=compress&cs=tinysrgb&w=800')",
-          width: '50%',
-          height: '45%',
-          left: `${lerp(30, 0)}%`,
-          top: `${lerp(30, 0)}%`,
-          zIndex: 5,
-          borderRadius: '10px',
+          width: '50%', height: '45%',
+          left: `${lerp(30, 0)}%`, top: `${lerp(30, 0)}%`,
+          zIndex: 5, borderRadius: '10px',
         }}
       />
-      {/* second img */}
       <div
         className="absolute bg-cover bg-center"
         style={{
           backgroundImage: "url('https://images.pexels.com/photos/1181675/pexels-photo-1181675.jpeg?auto=compress&cs=tinysrgb&w=800')",
-          width: '50%',
-          height: '45%',
-          left: `${lerp(33, 15)}%`,
-          top: `${lerp(33, 22)}%`,
-          zIndex: 10,
-          borderRadius: '10px',
+          width: '50%', height: '45%',
+          left: `${lerp(33, 15)}%`, top: `${lerp(33, 22)}%`,
+          zIndex: 10, borderRadius: '10px',
         }}
       />
-      {/* third img */}
       <div
         className="absolute bg-cover bg-center"
         style={{
           backgroundImage: "url('https://images.pexels.com/photos/323780/pexels-photo-323780.jpeg?auto=compress&cs=tinysrgb&w=800')",
-          width: '50%',
-          height: '45%',
-          left: `${lerp(36, 38)}%`,
-          top: `${lerp(36, 45)}%`,
-          zIndex: 15,
-          borderRadius: '10px',
+          width: '50%', height: '45%',
+          left: `${lerp(36, 38)}%`, top: `${lerp(36, 45)}%`,
+          zIndex: 15, borderRadius: '10px',
         }}
       />
     </div>
@@ -72,29 +60,65 @@ function StackedImages() {
 }
 
 export function InsightsPreviewSection({ myInsights }: { myInsights: MyInsightIndex[] }) {
+  const ref = useRef<HTMLElement>(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.2 }
+    );
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, []);
+
   const featured = myInsights.slice(0, 3);
 
   return (
-    <section className="mx-auto max-w-8xl justify-center px-4 py-8 md:px-0 bg-black">
+    <section ref={ref} className="mx-auto max-w-8xl justify-center px-4 py-8 md:px-0 bg-black">
       <div className="flex flex-col lg:flex-row gap-10 lg:gap-20">
         <div className="mb-10 lg:w-1/2">
-          <div className="mb-4 flex items-center gap-2 text-xs font-medium text-zinc-300"
-            style={{ opacity: 0, animation: 'fadeUp 0.8s ease-out 0.2s forwards' }}>
-            <span className="h-2 w-2 rounded-full bg-[#c5f018]"
-              style={{ animation: 'dotPulse 1s ease-in-out infinite' }} />
+          {/* Label — animated */}
+          <div
+            className="mb-4 flex items-center gap-2 text-xs font-medium text-zinc-300"
+            style={{
+              opacity: 0,
+              animation: visible ? 'fadeUp 2s forwards' : 'none',
+            }}
+          >
+            <span
+              className="h-2 w-2 rounded-full bg-[#c5f018]"
+              style={{ animation: 'dotPulse 1s ease-in-out infinite' }}
+            />
             <span className="text-sm md:text-lg">My Insights</span>
           </div>
+
+          {/* Heading — no animation */}
           <h2 className="text-2xl font-semibold text-[#c5f018] md:text-5xl leading-tight">
             Executive <span className="text-white font-light">Perspectives <br />on Governance, Infrastructure, <br />and Regulated Innovation</span>
           </h2>
+
+          {/* Description — no animation */}
           <p className="mt-4 max-w-2xl text-sm leading-relaxed text-zinc-300">
             Short, structured perspectives drawn from building and governing
             mission-critical platforms across regulated ecosystems—covering
             sovereign infrastructure, secure collaboration, and standards-led
             interoperability.
           </p>
-          <div className="mt-10"
-            style={{ opacity: 0, animation: 'fadeUp 0.8s ease-out 0.2s forwards' }}>
+
+          {/* Button — animated */}
+          <div
+            className="mt-10"
+            style={{
+              opacity: 0,
+              animation: visible ? 'fadeUp 2s forwards' : 'none',
+            }}
+          >
             <Link
               href="/contact"
               className="inline-flex items-center justify-center gap-2 text-lg md:text-xl rounded-lg border border-[#c5f018] bg-transparent px-6 py-5 text-sm font-semibold text-[#c5f018] transition duration-500 hover:bg-[#c5f018] hover:text-black"
@@ -106,6 +130,7 @@ export function InsightsPreviewSection({ myInsights }: { myInsights: MyInsightIn
             </Link>
           </div>
         </div>
+
         <div className="lg:w-1/2">
           <StackedImages />
         </div>

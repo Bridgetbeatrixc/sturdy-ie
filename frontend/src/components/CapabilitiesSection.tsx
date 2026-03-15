@@ -1,5 +1,7 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
+
 const CAPABILITIES = [
   {
     img: "https://images.pexels.com/photos/6801648/pexels-photo-6801648.jpeg?auto=compress&cs=tinysrgb&w=800",
@@ -16,12 +18,32 @@ const CAPABILITIES = [
 ];
 
 export function CapabilitiesSection() {
+  const ref = useRef<HTMLElement>(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.2 }
+    );
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <section
+      ref={ref}
       className="mx-auto max-w-8xl"
-      style={{ opacity: 0, animation: "fadeUp 0.8s ease-out 0.2s forwards" }}
+      style={{
+        opacity: visible ? undefined : 0,
+        animation: visible ? 'fadeUp 2s forwards' : 'none',
+      }}
     >
-      {/* Mobile/Tablet: 2-col grid | Desktop: 4-col equal flex */}
       <div className="grid grid-cols-1 lg:grid-cols-4">
         {CAPABILITIES.map((card, index) => (
           <div
