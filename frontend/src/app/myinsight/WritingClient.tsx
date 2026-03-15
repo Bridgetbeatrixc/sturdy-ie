@@ -27,10 +27,13 @@ export function WritingClient({ myInsights = [] }: { myInsights?: MyInsightIndex
       <Header />
 
       {/* Header */}
-      <section className="bg-black">
-        <div className="mx-auto max-w-6xl px-4 pt-24 pb-16 sm:px-6 md:px-10 lg:px-0 text-center">
-          <p className="text-sm text-[#c5f018] mb-2">• Our blogs</p>
-          <h1 className="text-4xl font-bold md:text-5xl lg:text-6xl">
+      <section className="mx-auto max-w-8xl">
+        <div className=" px-4 pt-24 pb-16 sm:px-6 md:px-10 lg:px-0 text-center">
+          <p className="flex items-center justify-center gap-2 text-sm text-white mb-1">
+                <span className="h-2 w-2 rounded-full bg-[#c5f018]" />
+                My Insights
+              </p>
+          <h1 className="text-3xl font-light md:text-6xl lg:text-6xl">
             <span className="text-white">Expert advisory </span>
             <span className="text-[#c5f018]">updates</span>
           </h1>

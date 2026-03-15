@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import { motion, useInView } from "motion/react";
 
 const FAQS = [
   {
@@ -34,10 +35,14 @@ function FAQItem({
   faq,
   isOpen,
   onClick,
+  index,
+  sectionInView,
 }: {
   faq: { question: string; answer: string };
   isOpen: boolean;
   onClick: () => void;
+  index: number;
+  sectionInView: boolean;
 }) {
   const contentRef = useRef<HTMLDivElement>(null);
   const [height, setHeight] = useState(0);
@@ -50,12 +55,15 @@ function FAQItem({
   }, [isOpen]);
 
   return (
-    <div
-      className="rounded-2xl bg-zinc-900 px-8 py-6 cursor-pointer"
+    <motion.div
+      initial={{ opacity: 0, y: 40 }}
+      animate={sectionInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
+      transition={{ duration: 0.8, ease: "easeOut", delay: index * 0.12 }}
+      className="rounded-2xl bg-zinc-900 px-8 py-12 cursor-pointer"
       onClick={onClick}
     >
       <div className="flex items-center justify-between gap-6">
-        <span className="text-xl font-semibold text-white md:text-2xl">
+        <span className="text-2xl font-light text-white md:text-4xl">
           {faq.question}
         </span>
         <span
@@ -66,7 +74,6 @@ function FAQItem({
         </span>
       </div>
 
-      {/* Animated answer */}
       <div
         style={{
           height: height,
@@ -75,45 +82,53 @@ function FAQItem({
         }}
       >
         <div ref={contentRef}>
-          <p className="mt-4 pb-4 text-sm leading-relaxed text-white">
+          <p className="mt-4 pb-4 font-light text-lg leading-relaxed text-white">
             {faq.answer}
           </p>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
 
 export function FAQSection() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "0px 0px -80px 0px" });
 
   return (
-    <section className="relative z-10 bg-black">
-      <div className="mx-auto max-w-6xl px-4 py-24 sm:px-6 md:px-10 lg:px-0">
-        {/* Heading */}
-        <div className="mb-16 text-center">
-          <h2 className="text-xl font-bold text-white md:text-3xl">
-            Collaboration &amp; Engagement{" "}
-            <span className="text-[#c5f018]">FAQs</span>
-          </h2>
-          <p className="mt-4 text-lg leading-relaxed text-white">
-            Questions about collaboration, research environments, ventures, and
-            partnerships are
-            <br className="hidden sm:block" /> addressed below.
-          </p>
-        </div>
+    <section ref={ref} className="relative z-10 mx-auto max-w-8xl px-10 md:px-20 mb-20">
 
-        {/* Accordion */}
-        <div className="flex flex-col gap-4">
-          {FAQS.map((faq, i) => (
-            <FAQItem
-              key={i}
-              faq={faq}
-              isOpen={openIndex === i}
-              onClick={() => setOpenIndex(openIndex === i ? null : i)}
-            />
-          ))}
-        </div>
+      {/* Heading */}
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+        transition={{ duration: 1, ease: "easeOut", delay: 0 }}
+        className="mb-16 text-center"
+      >
+        <h2 className="text-3xl font-light text-white md:text-6xl">
+          Collaboration &amp; Engagement{" "}
+          <span className="text-[#c5f018] font-semibold">FAQs</span>
+        </h2>
+        <p className="mt-4 text-lg leading-relaxed text-white">
+          Questions about collaboration, research environments, ventures, and
+          partnerships are
+          <br className="hidden sm:block" /> addressed below.
+        </p>
+      </motion.div>
+
+      {/* Accordion — each item staggers in */}
+      <div className="flex flex-col gap-4">
+        {FAQS.map((faq, i) => (
+          <FAQItem
+            key={i}
+            faq={faq}
+            isOpen={openIndex === i}
+            onClick={() => setOpenIndex(openIndex === i ? null : i)}
+            index={i}
+            sectionInView={isInView}
+          />
+        ))}
       </div>
     </section>
   );

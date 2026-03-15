@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import { motion, useScroll, useTransform } from "motion/react";
 
 const SERVICES_ITEMS = [
@@ -56,10 +56,12 @@ function ServiceCard({
   item,
   index,
   scrollYProgress,
+  isMobile,
 }: {
   item: typeof SERVICES_ITEMS[0];
   index: number;
   scrollYProgress: ReturnType<typeof useScroll>["scrollYProgress"];
+  isMobile: boolean;
 }) {
   const revealStart = index / total;
   const revealEnd = revealStart + 0.5 / total;
@@ -69,7 +71,7 @@ function ServiceCard({
 
   return (
     <motion.div
-      style={{ opacity, y }}
+      style={isMobile ? {} : { opacity, y }}
       className="group flex flex-col items-center md:flex-row md:items-center gap-4 md:gap-12 rounded-lg md:rounded-2xl border border-[#677f06] p-6 md:p-0"
     >
       <div className="flex-shrink-0 flex h-14 w-14 md:h-38 md:w-40 items-center justify-center rounded-xl md:rounded-l-2xl md:rounded-r-none bg-[#c5f018] text-black">
@@ -85,6 +87,14 @@ function ServiceCard({
 
 export function ServicesSection() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [isMobile, setIsMobile] = useState(true);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 1024);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -98,20 +108,26 @@ export function ServicesSection() {
   );
 
   return (
-    <div ref={containerRef} style={{ height: `${100 * (total + 1)}vh` }}>
-      <div className="sticky top-0 h-screen overflow-hidden">
+    <div
+      ref={containerRef}
+      style={{ height: isMobile ? "auto" : `${100 * (total + 1)}vh` }}
+    >
+      <div className={isMobile ? "" : "sticky top-0 h-fit mb-8 overflow-hidden"}>
 
-        <motion.div
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            opacity: gradientOpacity,
-            background:
-              "radial-gradient(ellipse at 50% 90%, rgba(103, 147, 20, 0.55) 30%, rgba(45,68,5,0.35) 50%, transparent 70%)",
-          }}
-        />
+        {!isMobile && (
+          <motion.div
+            className="absolute inset-0 pointer-events-none"
+            style={{
+              opacity: gradientOpacity,
+              background:
+                "radial-gradient(ellipse at 50% 90%, rgba(103, 147, 20, 0.55) 30%, rgba(45,68,5,0.35) 50%, transparent 70%)",
+            }}
+          />
+        )}
 
         <div className="relative h-full mx-auto max-w-8xl px-4 sm:px-8 md:px-0 flex items-center">
           <div className="flex flex-col lg:flex-row gap-10 lg:gap-20 w-full">
+
             <div className="w-full lg:w-1/2">
               <div className="mb-4 flex items-center gap-2 text-white">
                 <span
@@ -133,6 +149,7 @@ export function ServicesSection() {
                   item={item}
                   index={index}
                   scrollYProgress={scrollYProgress}
+                  isMobile={isMobile}
                 />
               ))}
             </div>

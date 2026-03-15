@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Link from "next/link";
+import { motion, useInView } from "motion/react";
 
 type Testimonial = {
   id: number;
@@ -54,6 +55,11 @@ const TESTIMONIALS: Testimonial[] = [
 export function TestimonialsSection() {
   const [active, setActive] = useState<Testimonial>(TESTIMONIALS[0]);
 
+  const headingRef = useRef(null);
+  const buttonRef = useRef(null);
+  const headingInView = useInView(headingRef, { once: true, margin: "0px 0px -60px 0px" });
+  const buttonInView = useInView(buttonRef, { once: true, margin: "0px 0px -60px 0px" });
+
   return (
     <section className="py-8 mx-auto max-w-8xl px-4 md:px-0">
       <div className="flex justify-center items-center gap-2 py-4">
@@ -63,9 +69,17 @@ export function TestimonialsSection() {
         />
         <span className="text-sm md:text-lg text-white">Testimonials</span>
       </div>
-      <h2 className="mb-12 text-center text-3xl font-light text-white md:mb-16 md:text-6xl">
+
+      {/* Animated heading */}
+      <motion.h2
+        ref={headingRef}
+        initial={{ opacity: 0, y: 40 }}
+        animate={headingInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
+        transition={{ duration: 1.2, ease: "easeOut" }}
+        className="mb-12 text-center text-3xl font-light text-white md:mb-16 md:text-6xl"
+      >
         What our <span className="font-semibold text-[#c5f018]">clients say</span>
-      </h2>
+      </motion.h2>
 
       <div className="flex flex-col items-stretch gap-6 md:flex-row">
         {/* Avatars card */}
@@ -78,10 +92,11 @@ export function TestimonialsSection() {
                   key={t.id}
                   type="button"
                   onClick={() => setActive(t)}
-                  className={`relative h-14 w-14 shrink-0 overflow-hidden rounded-full border-2 transition-all duration-300 sm:h-16 sm:w-16 md:h-20 md:w-20 ${isActive
-                    ? "border-[#c5f018] shadow-[0_0_12px_rgba(197,240,24,0.4)]"
-                    : "border-zinc-700 opacity-70 hover:opacity-100"
-                    }`}
+                  className={`relative h-14 w-14 shrink-0 overflow-hidden rounded-full border-2 transition-all duration-300 sm:h-16 sm:w-16 md:h-20 md:w-20 ${
+                    isActive
+                      ? "border-[#c5f018] shadow-[0_0_12px_rgba(197,240,24,0.4)]"
+                      : "border-zinc-700 opacity-70 hover:opacity-100"
+                  }`}
                   aria-label={`View testimonial from ${t.name}`}
                 >
                   <div
@@ -96,25 +111,18 @@ export function TestimonialsSection() {
 
         {/* Testimonial card */}
         <div className="flex-[1] rounded-3xl border border-[#c5f018] p-[1px]">
-          <div className="flex h-full flex-col justify-between rounded-[1.4rem] bg-gradient-to-b from-[#395407] to-[#090d00] px-8 py-10 md:px-10 md:py-12 relative overflow-hidden"> 
+          <div className="flex h-full flex-col justify-between rounded-[1.4rem] bg-gradient-to-b from-[#395407] to-[#090d00] px-8 py-10 md:px-10 md:py-12 relative overflow-hidden">
             <div className="pointer-events-none absolute -top-20 left-1/2 -translate-x-1/2 w-80 h-48 bg-[radial-gradient(circle,rgba(197,240,24,0.65)_0%,transparent_70%)] blur-2xl" />
             <div className="relative p-4 md:p-10">
-              <h3 className="text-2xl font-light text-white md:text-4xl">
-                {active.name}
-              </h3>
-              <p className="mt-2 md:mt-4 text-sm font-light text-[#c5f018] md:text-base">
-                {active.title}
-              </p>
-              <p className="mt-8 text-sm leading-relaxed text-zinc-200 md:text-lg md:leading-relaxed">
-                {active.quote}
-              </p>
+              <h3 className="text-2xl font-light text-white md:text-4xl">{active.name}</h3>
+              <p className="mt-2 md:mt-4 text-sm font-light text-[#c5f018] md:text-base">{active.title}</p>
+              <p className="mt-8 text-sm leading-relaxed text-zinc-200 md:text-lg md:leading-relaxed">{active.quote}</p>
             </div>
             <div className="relative mt-10 flex px-8 md:px-10 items-center gap-1.5">
               {Array.from({ length: 5 }).map((_, idx) => (
                 <span
                   key={idx}
-                  className={`inline-block text-4xl ${idx < active.stars ? "text-[#c5f018]" : "text-zinc-600"
-                    }`}
+                  className={`inline-block text-4xl ${idx < active.stars ? "text-[#c5f018]" : "text-zinc-600"}`}
                 >
                   ★
                 </span>
@@ -130,28 +138,34 @@ export function TestimonialsSection() {
         >
           <div className="pointer-events-none absolute inset-0" />
           <div className="relative space-y-6">
-            {/* Icon */}
             <div className="flex items-center">
               <img src="/contact.svg" alt="Contact icon" className="h-16 w-16" />
             </div>
             <div>
-              <h3 className="text-2xl font-light text-white md:text-3xl">
-                Need consulting?
-              </h3>
+              <h3 className="text-2xl font-light text-white md:text-3xl">Need consulting?</h3>
               <p className="mt-3 text-sm leading-relaxed text-white">
                 Get expert guidance with clear direction to choose the right solution.
               </p>
             </div>
           </div>
-          <Link
-            href="/contact"
-            className="relative flex gap-2 mt-4 md:mt-0 justify-center items-center rounded-lg bg-[#c5f018] px-6 py-4 text-sm md:text-lg font-medium text-black transition duration-300 hover:border hover:border-white hover:text-[#c5f018] hover:bg-black"
+
+          {/* Animated contact button */}
+          <motion.div
+            ref={buttonRef}
+            initial={{ opacity: 0, y: 40 }}
+            animate={buttonInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
+            transition={{ duration: 1.2, ease: "easeOut", delay: 0.2 }}
           >
-            Contact Us 
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M3 13L13 3M13 3H5M13 3V11" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-          </Link>
+            <Link
+              href="/contact"
+              className="relative flex gap-2 mt-4 md:mt-0 justify-center items-center rounded-lg bg-[#c5f018] px-6 py-4 text-sm md:text-lg font-medium text-black transition duration-300 hover:border hover:border-white hover:text-[#c5f018] hover:bg-black"
+            >
+              Contact Us
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M3 13L13 3M13 3H5M13 3V11" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </Link>
+          </motion.div>
         </div>
       </div>
     </section>

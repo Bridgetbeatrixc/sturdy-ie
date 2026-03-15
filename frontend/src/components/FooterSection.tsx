@@ -1,4 +1,7 @@
+"use client";
 import Link from "next/link";
+import { useRef } from "react";
+import { motion, useInView } from "motion/react";
 
 const FOOTER_NAV_ITEMS = [
   { label: "Home", href: "/" },
@@ -49,8 +52,12 @@ const SOCIALS = [
 ];
 
 export function FooterSection() {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "0px 0px -60px 0px" });
+
   return (
     <footer
+      ref={ref}
       className="relative overflow-hidden mx-auto w-full  max-w-8xl rounded-xl border border-zinc-500"
       style={{
         background: "radial-gradient(ellipse at 50% 20%, rgba(74, 110, 8, 0.95) 0%, rgba(45, 68, 5, 0.85) 40%, rgba(20, 30, 3, 0.9) 60%, #0a0a0a 100%)",
@@ -98,22 +105,38 @@ export function FooterSection() {
 
       <div className="py-8 md:py-16">
         {/* Logo */}
-        <div className="flex justify-center mb-10">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+          transition={{ duration: 1, ease: "easeOut", delay: 0 }}
+          className="flex justify-center mb-10"
+        >
           <Link href="/" className="flex items-center gap-2">
             <span className="text-2xl md:text-4xl font-medium tracking-wide text-zinc-300">
               Jason<span className="font-semibold text-white">Sturdy</span>
             </span>
           </Link>
-        </div>
+        </motion.div>
 
         {/* Tagline */}
-        <p className="mx-auto max-w-xs md:max-w-2xl text-center text-sm leading-relaxed text-white md:text-base">
+        <motion.p
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+          transition={{ duration: 1, ease: "easeOut", delay: 0.15 }}
+          className="mx-auto max-w-xs md:max-w-2xl text-center text-sm leading-relaxed text-white md:text-base"
+        >
           Designing sovereign data infrastructures and secure collaboration
           environments for regulated ecosystems.
-        </p>
+        </motion.p>
 
         {/* Social icons */}
-        <div className="mt-10 md:mt-20 flex items-center justify-center gap-6 md:gap-10">
+ 
+          <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+          transition={{ duration: 1, ease: "easeOut", delay: 0.15 }}
+          className="mt-10 md:mt-20 flex items-center justify-center gap-6 md:gap-10"
+        >
           {SOCIALS.map((social) => (
             <a
               key={social.label}
@@ -126,10 +149,16 @@ export function FooterSection() {
               {social.icon}
             </a>
           ))}
-        </div>
+          </motion.div>
+    
 
         {/* Nav links */}
-        <nav className="mt-10 md:mt-20 z-5 flex flex-wrap items-center justify-center gap-2 sm:gap-8">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+          transition={{ duration: 1, ease: "easeOut", delay: 0.45 }}
+          className="mt-10 md:mt-20 flex flex-wrap items-center justify-center gap-2 sm:gap-8"
+        >
           {FOOTER_NAV_ITEMS.map((item) => (
             <Link
               key={item.href}
@@ -139,14 +168,19 @@ export function FooterSection() {
               {item.label}
             </Link>
           ))}
-        </nav>
+        </motion.div>
 
         {/* Divider + copyright */}
-        <div className="mt-10 md:mt-16 mx-auto max-w-xs md:max-w-6xl px-8 border-t border-[rgba(219,255,73,0.9)] pt-6 pb-8">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+          transition={{ duration: 1, ease: "easeOut", delay: 0.6 }}
+          className="mt-10 md:mt-16 mx-auto max-w-xs md:max-w-6xl px-8 border-t border-[rgba(219,255,73,0.9)] pt-6 pb-8"
+        >
           <p className="text-center mt-6 md:mt-8 text-sm md:text-lg text-white">
             Copyright &copy; All Rights Reserved Jason Sturdy
           </p>
-        </div>
+        </motion.div>
       </div>
     </footer>
   );

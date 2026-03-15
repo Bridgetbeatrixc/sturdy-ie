@@ -21,12 +21,15 @@ export function CaseStudyBlogSection({ caseStudies }: { caseStudies: CaseStudyIn
   };
 
   return (
-    <section className="border-b border-zinc-900/60 bg-black">
-      <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 md:px-10 md:py-20 lg:px-0">
+    <section className="mx-auto max-w-8xl">
+      <div className=" px-4 py-16 sm:px-6 md:px-10 md:py-20 lg:px-0">
         {/* Header - matches WritingClient */}
         <div className="mb-12 text-center">
-          <p className="text-sm text-[#c5f018] mb-2">• Our case studies</p>
-          <h2 className="text-4xl font-bold md:text-5xl lg:text-6xl">
+          <div className="mb-4 flex justify-center items-center gap-2 text-white">
+              <span className="h-2 w-2 rounded-full bg-[#c5f018]"/>
+              <span className="text-sm md:text-lg">Case Studies</span>
+            </div>
+          <h2 className="text-2xl font-light md:text-7xl lg:text-7xl">
             <span className="text-white">Case studies &amp; </span>
             <span className="text-[#c5f018]">delivery examples</span>
           </h2>
@@ -36,7 +39,7 @@ export function CaseStudyBlogSection({ caseStudies }: { caseStudies: CaseStudyIn
         {paginated.length === 0 ? (
           <div className="py-24 text-center text-zinc-500">No case studies yet.</div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-12">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-12 gap-y-12">
             {paginated.map((post) => (
               <Link
                 key={post.slug}

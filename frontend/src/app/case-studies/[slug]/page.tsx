@@ -65,7 +65,7 @@ export default async function CaseStudyDetailPage({
             if (!body?.trim()) return null;
             return (
               <section key={key}>
-                <h2 className="text-[48px] font-bold text-white mb-5">
+                <h2 className="text-[48px] font-light text-white mb-5">
                   {heading}
                 </h2>
                 <div className="space-y-5">
@@ -105,17 +105,17 @@ export default async function CaseStudyDetailPage({
                 <span className="h-2 w-2 rounded-full bg-[#c5f018]" />
                 Case studies
               </p>
-              <h2 className="text-[36px] font-bold text-white">
+              <h2 className="text-6xl mt-6 font-light text-white">
                 Recent <span className="text-[#c5f018]">case studies</span>
               </h2>
             </div>
             <Link
               href="/case-studies"
-              className="inline-flex items-center gap-2 rounded-lg bg-[#c5f018] px-6 py-3 text-sm font-semibold text-black transition hover:bg-[#d4ff2a] self-start sm:self-auto"
+              className="inline-flex items-center gap-2 rounded-lg bg-[#c5f018] px-6 py-3 text-lg font-semibold text-black self-start sm:self-auto transition duration-300 hover:border hover:border-white hover:text-[#c5f018] hover:bg-black"
             >
               View more
-              <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" />
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M3 13L13 3M13 3H5M13 3V11" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </Link>
           </div>

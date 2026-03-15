@@ -1,31 +1,55 @@
+"use client";
+
+import { useRef } from "react";
+import { motion, useInView } from "motion/react";
 import { TEAM } from "@/lib/team";
 
 export function TeamSection() {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "0px 0px -60px 0px" });
+
   return (
     <section id="team" className="mx-auto max-w-8xl py-16 md:py-24 px-4 md:px-0">
+
       {/* Label */}
-      <div className="flex items-center justify-center gap-2 py-4">
+      <motion.div
+        ref={ref}
+        initial={{ opacity: 0, y: 30 }}
+        animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+        transition={{ duration: 1.2, ease: "easeOut" }}
+        className="flex items-center justify-center gap-2 py-4"
+      >
         <span
           className="h-2 w-2 shrink-0 rounded-full bg-[#c5f018]"
           style={{ animation: "dotPulse 1s ease-in-out infinite" }}
         />
         <span className="text-sm md:text-lg">Our team</span>
-      </div>
+      </motion.div>
 
       {/* Title */}
-      <h2 className="text-center text-2xl font-light leading-tight text-white md:text-6xl">
+      <motion.h2
+        initial={{ opacity: 0, y: 30 }}
+        animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+        transition={{ duration: 1.2, ease: "easeOut", delay: 0.15 }}
+        className="text-center text-2xl font-light leading-tight text-white md:text-6xl"
+      >
         Trusted consulting{" "}
         <span className="text-[#c5f018] font-semibold">experts</span>
-      </h2>
+      </motion.h2>
 
       {/* Description */}
-      <p className="mx-auto mt-6 max-w-4xl text-center text-sm leading-relaxed md:text-lg">
+      <motion.p
+        initial={{ opacity: 0, y: 30 }}
+        animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+        transition={{ duration: 1.2, ease: "easeOut", delay: 0.3 }}
+        className="mx-auto mt-6 max-w-4xl text-center text-sm leading-relaxed md:text-lg"
+      >
         Our consulting team brings together industry expertise, strategic
         thinking, and proven leadership to help businesses solve challenges,
         seize opportunities, and achieve lasting success.
-      </p>
+      </motion.p>
 
-      {/* Team grid */}
+      {/* Team grid — no animation */}
       <div className="mt-8 md:mt-20 grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4">
         {TEAM.map((member) => (
           <div
@@ -41,7 +65,6 @@ export function TeamSection() {
               <h3 className="text-2xl md:text-4xl font-light text-white">{member.name}</h3>
               <p className="mt-2 text-sm text-[#c5f018]">{member.role}</p>
             </div>
-            {/* Hover overlay */}
             <div className="absolute inset-0 flex flex-col items-center justify-center rounded-2xl bg-zinc-900 border-0.5 border-[#c5f018] bg-black p-6 text-center opacity-0 transition-opacity duration-300 group-hover:opacity-100">
               <h3 className="text-2xl font-light text-white md:text-3xl">{member.name}</h3>
               <p className="mt-2 text-sm font-medium text-[#c5f018]">{member.role}</p>

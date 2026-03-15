@@ -1,6 +1,8 @@
 "use client";
 
 import Link from "next/link";
+import { useRef } from "react";
+import { motion, useInView } from "motion/react";
 
 const CARDS = [
   {
@@ -24,6 +26,9 @@ const CARDS = [
 ];
 
 export function ContactUsCtaSection() {
+  const buttonRef = useRef(null);
+  const buttonInView = useInView(buttonRef, { once: true, margin: "0px 0px -60px 0px" });
+
   return (
     <section className="relative w-full px-4 sm:px-8 md:px-16">
       <div
@@ -33,15 +38,25 @@ export function ContactUsCtaSection() {
         }}
       >
         <div className="relative text-center px-4">
-          <Link
-            href="/contact"
-            className="inline-flex gap-2 items-center justify-center rounded-lg bg-[#c5f018] px-6 sm:px-10 py-3 sm:py-4 text-sm md:text-xl sm:text-lg font-medium text-black transition duration-300 hover:border hover:border-white hover:text-[#c5f018] hover:bg-black"
+
+          {/* Animated button */}
+          <motion.div
+            ref={buttonRef}
+            initial={{ opacity: 0, scale: 0.7 }}
+            animate={buttonInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.7 }}
+            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+            className="inline-block"
           >
-            Contact Us
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M3 13L13 3M13 3H5M13 3V11" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          </Link>
+            <Link
+              href="/contact"
+              className="inline-flex gap-2 items-center justify-center rounded-lg bg-[#c5f018] px-6 sm:px-10 py-3 sm:py-4 text-sm md:text-xl sm:text-lg font-medium text-black transition duration-300 hover:border hover:border-white hover:text-[#c5f018] hover:bg-black"
+            >
+              Contact Us
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M3 13L13 3M13 3H5M13 3V11" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </Link>
+          </motion.div>
 
           <h2 className="mt-6 sm:mt-8 text-lg sm:text-4xl md:text-5xl lg:text-6xl font-light leading-tight text-white">
             Let&apos;s find the right solution
@@ -50,10 +65,7 @@ export function ContactUsCtaSection() {
           </h2>
 
           <div className="relative mt-10 sm:mt-16 md:mt-24">
-
-            {/* Divider behind cards */}
             <div className="absolute bottom-4 sm:bottom-6 left-0 right-0 flex items-center px-2 sm:px-4 z-0">
-              {/* left star */}
               <div
                 className="flex h-8 w-8 sm:h-12 sm:w-12 items-center justify-center shrink-0"
                 style={{ opacity: 0, animation: 'fade-in-star-left 4s ease-out infinite' }}
@@ -64,14 +76,10 @@ export function ContactUsCtaSection() {
                   <span className="absolute w-full h-[2px] sm:h-[3px] bg-[#c5f018] -rotate-60" />
                 </div>
               </div>
-
-              {/* line */}
               <div
                 className="h-[0.5px] flex-1 bg-white origin-left"
                 style={{ opacity: 0, transform: 'scaleX(0)', animation: 'slide-in-line 4s ease-out infinite' }}
               />
-
-              {/* right star */}
               <div
                 className="flex h-8 w-8 sm:h-12 sm:w-12 items-center justify-center shrink-0"
                 style={{ opacity: 0, animation: 'fade-in-star-right 4s ease-out infinite' }}
@@ -84,7 +92,6 @@ export function ContactUsCtaSection() {
               </div>
             </div>
 
-            {/* Cards */}
             <div className="relative flex flex-row items-end justify-center overflow-visible z-10">
               {CARDS.map((card, i) => (
                 <div
@@ -106,7 +113,6 @@ export function ContactUsCtaSection() {
                 </div>
               ))}
             </div>
-
           </div>
         </div>
       </div>

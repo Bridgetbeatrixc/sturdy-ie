@@ -90,7 +90,7 @@ function CaseStudyCard({
   );
 }
 
-const STICKY_SCROLL_HEIGHT_VH = 100;
+const STICKY_SCROLL_HEIGHT_VH = 300;
 
 export function CaseStudiesSection({
   caseStudies,
@@ -118,7 +118,7 @@ export function CaseStudiesSection({
       const rect = wrapper.getBoundingClientRect();
       const vh = window.innerHeight;
 
-      const stickyScrollRange = vh * (STICKY_SCROLL_HEIGHT_VH / 100);
+      const stickyScrollRange = vh * (STICKY_SCROLL_HEIGHT_VH / 300);
 
       // Horizontal scrolling begins only once section reaches top
       const progress = Math.max(
