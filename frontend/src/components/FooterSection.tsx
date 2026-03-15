@@ -57,7 +57,7 @@ export function FooterSection() {
       }}
     >
       {/* Decorative gradient arcs — left */}
-      <div className="-z-10 pointer-events-none absolute -left-28 top-1/6 -translate-y-1/2">
+      <div className="hidden md:block pointer-events-none absolute -left-20 bottom-80 top-1/6 -translate-y-1/2">
         <svg
           width="300"
           height="330"
@@ -77,7 +77,7 @@ export function FooterSection() {
       </div>
 
       {/* Decorative gradient arcs — right */}
-      <div className="-z-10 pointer-events-none absolute -right-28 top-1/2 -translate-y-1/2">
+      <div className="hidden md:block pointer-events-none absolute -right-28 top-1/2 -translate-y-1/2">
         <svg
           width="340"
           height="400"
