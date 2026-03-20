@@ -2,7 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Header } from "../../../components/Header";
 import { FooterSection } from "../../../components/FooterSection";
-import { getMyInsightBySlug, getMyInsightsIndex } from "../../../lib/myInsight";
+import { getMyInsightBySlug, CATEGORY_STYLES } from "../../../lib/myInsight";
 
 // Converts Lexical JSON to renderable paragraphs
 function renderLexical(content: any): string[] {
@@ -30,59 +30,63 @@ export default async function MyInsightDetailPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const [myInsight, allInsights] = await Promise.all([
-    getMyInsightBySlug(slug),
-    getMyInsightsIndex(),
-  ]);
+  const myInsight = await getMyInsightBySlug(slug);
   if (!myInsight) notFound();
 
-  const recentInsights = allInsights.filter((i) => i.slug !== slug).slice(0, 2);
+  const tagStyle = CATEGORY_STYLES[myInsight.category]?.tag ?? "border-zinc-700 text-zinc-400";
 
   return (
-    <main className="relative w-full overflow-x-hidden bg-black text-zinc-200">
+    <main className="relative px-2 lg:px-6 md:px-6 w-full overflow-x-hidden bg-black text-zinc-200">
       <Header />
 
+      {/* Hero image */}
+      <div className="relative h-64 w-full overflow-hidden bg-zinc-900 md:h-[420px]">
+        {myInsight.image && (
+          <img src={myInsight.image} alt={myInsight.title} className="h-full w-full object-cover opacity-50" />
+        )}
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
+      </div>
+
       <div className="mx-auto max-w-8xl px-4 sm:px-6 lg:px-0">
-        {/* Centered header: title, tagline, author */}
-        <div className="pt-16 pb-8 text-center">
-          <h1 className="text-[64px] text-white leading-tight">
-            {myInsight.title}
-          </h1>
-          <p className="mt-6 text-[16px] leading-relaxed text-white max-w-2xl mx-auto">
-            {myInsight.excerpt}
-          </p>
-          <div className="mt-6 flex items-center justify-center gap-3">
-            <div className="h-10 w-10 rounded-full bg-zinc-700 flex items-center justify-center text-sm font-medium text-white">
-              {myInsight.author?.charAt(0) ?? "?"}
-            </div>
-            <div className="text-left">
-              <span className="block text-sm font-medium text-white">{myInsight.author}</span>
-              <span className="text-xs text-white">{myInsight.date}</span>
-            </div>
-          </div>
+        {/* Back */}
+        <div className="py-8">
+          <Link href="/myinsights" className="inline-flex items-center gap-2 text-lg text-zinc-500 hover:text-white transition-colors">
+            ← My Insights
+          </Link>
         </div>
 
-        {/* Hero image */}
-        <div className="relative w-full overflow-hidden bg-zinc-900 mb-14">
-          {myInsight.image && (
-            <img src={myInsight.image} alt={myInsight.title} className="w-full aspect-[1160/480] object-cover" />
+        {/* Meta */}
+        <div className="flex flex-wrap items-center gap-3 mb-6">
+          <span className={`rounded-full border px-3 py-1 text-xs font-medium ${tagStyle}`}>{myInsight.category}</span>
+          {myInsight.flagship && (
+            <span className="rounded-full bg-[#c5f018] px-3 py-1 text-[10px] font-bold text-black">Cornerstone Article</span>
           )}
+          <span className="text-xs text-zinc-500">{myInsight.date}</span>
+          <span className="text-zinc-700">-</span>
+          <span className="text-xs text-zinc-500">{myInsight.author}</span>
         </div>
+
+        {/* Title */}
+        <h1 className="text-3xl font-semibold text-white leading-tight mb-12 md:text-4xl lg:text-5xl">
+          {myInsight.title}
+        </h1>
+
+        <div className="h-px w-full bg-zinc-800 mb-14" />
 
         {/* Body */}
-        <article className="space-y-14">
+        <article className="space-y-14 pb-24">
           {myInsight.sections.map((section, i) => (
             <section key={i}>
-              <h2 className="text-[48px] font-light text-white mb-5">
+              <h2 className="text-[11px] font-bold uppercase tracking-widest text-[#c5f018] mb-5">
                 {section.heading}
               </h2>
               <div className="space-y-5">
                 {typeof section.body === "string"
                   ? section.body.split("\n\n").map((para: string, j: number) => (
-                    <p key={j} className="text-[16px] leading-8 text-white">{para.trim()}</p>
+                    <p key={j} className="text-base leading-8 text-zinc-300">{para.trim()}</p>
                   ))
                   : renderLexical(section.body).map((para, j) => (
-                    <p key={j} className="text-[16px] leading-8 text-white">{para}</p>
+                    <p key={j} className="text-base leading-8 text-zinc-300">{para}</p>
                   ))
                 }
               </div>
@@ -90,14 +94,15 @@ export default async function MyInsightDetailPage({
           ))}
 
           {/* CTA */}
-          <div className="rounded-2xl border border-zinc-800 bg-zinc-900/60 p-10 text-center">
-            <h3 className="text-[48px] font-bold text-white mb-3">Interested in collaborating?</h3>
-            <p className="text-sm text-zinc-400 mb-6 leading-relaxed max-w-md mx-auto">
+          <div className="mb-10 rounded-2xl border border-zinc-800 bg-zinc-900/60 p-10 text-center">
+            <h3 className="text-2xl md:text-5xl lg:text-5xl font-light text-white mb-6">Interested in 
+              <span className="text-[#c5f018]"> collaborating?</span></h3>
+            <p className="text-sm text-zinc-400 mb-6 leading-relaxed max-w-2xl mx-auto">
               If this perspective resonates and you are exploring collaboration across research, governance, or secure data environments, I welcome the conversation.
             </p>
             <Link
               href="/contact"
-              className="inline-flex items-center gap-2 rounded-lg bg-[#c5f018] px-8 py-3 text-sm font-semibold text-black transition hover:bg-[#d4ff2a]"
+              className="inline-flex items-center gap-2 rounded-lg bg-[#c5f018] px-8 py-5 text-lg font-semibold text-black transition hover:bg-[#d4ff2a]"
             >
               Discuss collaboration
               <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -106,47 +111,6 @@ export default async function MyInsightDetailPage({
             </Link>
           </div>
         </article>
-
-        {/* Recent articles */}
-        <section className="pt-20 pb-24">
-          <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-10">
-            <div>
-              <p className="flex items-center gap-2 text-sm text-white mb-1">
-                <span className="h-2 w-2 rounded-full bg-[#c5f018]" />
-                Our blogs
-              </p>
-              <h2 className="text-6xl mt-6 font-light text-white">
-                Recent <span className="text-[#c5f018]">articles</span>
-              </h2>
-            </div>
-            <Link
-              href="/myinsights"
-              className="inline-flex items-center gap-2 rounded-lg bg-[#c5f018] px-6 py-3 text-lg font-semibold text-black self-start sm:self-auto transition duration-300 hover:border hover:border-white hover:text-[#c5f018] hover:bg-black"
-            >
-              View more
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M3 13L13 3M13 3H5M13 3V11" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </Link>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-            {recentInsights.map((insight) => (
-              <Link key={insight.slug} href={`/myinsight/${insight.slug}`} className="group block">
-                <div className="relative overflow-hidden aspect-video bg-zinc-900 mb-4">
-                  <img
-                    src={insight.image}
-                    alt={insight.title}
-                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-                </div>
-                <p className="text-[16px] text-zinc-500 mb-2">{insight.author} • {insight.date}</p>
-                <h3 className="text-[36px] font-bold text-white leading-snug group-hover:text-zinc-200 transition-colors">
-                  {insight.title}
-                </h3>
-              </Link>
-            ))}
-          </div>
-        </section>
       </div>
 
       <FooterSection />

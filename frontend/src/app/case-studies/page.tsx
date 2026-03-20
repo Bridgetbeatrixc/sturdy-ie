@@ -8,7 +8,7 @@ export default async function CaseStudiesPage() {
   const caseStudies = await getCaseStudiesIndex();
 
   return (
-    <main className="relative w-full text-sm text-zinc-200">
+    <main className="relative w-full py-12 text-sm text-zinc-200">
       <Header />
       <CaseStudyCarousel caseStudies={caseStudies} />
       <CaseStudyBlogSection caseStudies={caseStudies} />

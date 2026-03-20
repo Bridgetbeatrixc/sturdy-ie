@@ -4,105 +4,146 @@ import { useState, useMemo } from "react";
 import Link from "next/link";
 import { Header } from "../../components/Header";
 import { FooterSection } from "../../components/FooterSection";
-import { MyInsightIndex } from "../../lib/myInsight";
+import { MyInsightIndex, CATEGORY_STYLES } from "../../lib/myInsight";
+
+const CATEGORIES = [
+  "All",
+  "Governance & Compliance",
+  "Research Collaboration",
+  "Interoperability & Standards",
+  "Preventive Health Innovation",
+  "AI & Regulated Data",
+];
 
 const ITEMS_PER_PAGE = 6;
 
-export function WritingClient({ myInsights = [] }: { myInsights?: MyInsightIndex[] }) {
+export function WritingClient({ myInsights }: { myInsights: MyInsightIndex[] }) {
+  const [activeCategory, setActiveCategory] = useState("All");
   const [currentPage, setCurrentPage] = useState(1);
 
-  const totalPages = Math.ceil(myInsights.length / ITEMS_PER_PAGE);
+  const filtered = useMemo(
+    () => activeCategory === "All" ? myInsights : myInsights.filter((a) => a.category === activeCategory),
+    [activeCategory, myInsights]
+  );
+
+  const totalPages = Math.ceil(filtered.length / ITEMS_PER_PAGE);
   const paginated = useMemo(() => {
     const start = (currentPage - 1) * ITEMS_PER_PAGE;
-    return myInsights.slice(start, start + ITEMS_PER_PAGE);
-  }, [myInsights, currentPage]);
+    return filtered.slice(start, start + ITEMS_PER_PAGE);
+  }, [filtered, currentPage]);
 
-  const handlePageChange = (page: number) => {
-    setCurrentPage(page);
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
+  const handleCategoryChange = (cat: string) => { setActiveCategory(cat); setCurrentPage(1); };
+  const handlePageChange = (page: number) => { setCurrentPage(page); window.scrollTo({ top: 0, behavior: "smooth" }); };
 
   return (
-    <main className="relative w-full overflow-x-hidden bg-black text-zinc-200">
+    <main className="relative w-full overflow-x-hidden text-sm text-zinc-200">
       <Header />
 
-      {/* Header */}
-      <section className="mx-auto max-w-8xl">
-        <div className=" px-4 pt-24 pb-16 sm:px-6 md:px-10 lg:px-0 text-center">
-          <p className="flex items-center justify-center gap-2 text-sm text-white mb-1">
-                <span className="h-2 w-2 rounded-full bg-[#c5f018]" />
-                My Insights
-              </p>
-          <h1 className="text-3xl font-light md:text-6xl lg:text-6xl">
-            <span className="text-white">Expert advisory </span>
-            <span className="text-[#c5f018]">updates</span>
-          </h1>
+      {/* Hero */}
+      <section className="mx-auto max-w-8xl pt-24 pb-16 sm:px-6 lg:px-0 text-center">
+          <h1 className="text-5xl font-light text-white md:text-6xl lg:text-7xl">My 
+            <span className="text-[#c5f018]"> Insights</span></h1>
+          <p className="mt-6 mx-auto max-w-3xl text-base leading-relaxed text-zinc-300">
+            Executive perspectives on sovereign infrastructure, governance-led
+            transformation, secure collaboration, and standards-led
+            interoperability across regulated ecosystems.
+          </p>
+      </section>
+
+      {/* Category filter */}
+      <section className="bg-black/95 backdrop-blur-md sticky top-0 z-20">
+        <div className="mx-auto max-w-8xl px-4 py-4 sm:px-6 md:px-10 lg:px-0">
+          <p className="text-lg font-bold uppercase tracking-[0.1em] text-white mb-3">Categories</p>
+          <select
+            value={activeCategory}
+            onChange={(e) => handleCategoryChange(e.target.value)}
+            className="w-full sm:w-auto rounded-lg border border-zinc-700 bg-zinc-900 px-4 py-2.5 text-xs font-semibold text-zinc-200 transition hover:border-zinc-500 focus:outline-none focus:border-zinc-400 cursor-pointer"
+          >
+            {CATEGORIES.map((label) => (
+              <option key={label} value={label}>{label}</option>
+            ))}
+          </select>
         </div>
       </section>
 
-      {/* Article grid */}
+      {/* My Insights */}
       <section className="bg-black">
-        <div className="mx-auto max-w-8xl px-4 pb-20 sm:px-6 md:px-10 lg:px-0">
+        <div className="mx-auto max-w-8xl px-4 py-16 sm:px-6 md:px-10 lg:px-0">
+          <p className="mb-10 text-xs text-zinc-500">
+            Showing {Math.min((currentPage - 1) * ITEMS_PER_PAGE + 1, filtered.length)}–{Math.min(currentPage * ITEMS_PER_PAGE, filtered.length)} of {filtered.length} insight{filtered.length !== 1 ? "s" : ""}
+            {activeCategory !== "All" && <span> in <span className="text-white">{activeCategory}</span></span>}
+          </p>
+
           {paginated.length === 0 ? (
-            <div className="py-24 text-center text-zinc-500">No insights yet.</div>
+            <div className="py-24 text-center text-zinc-500">No insights in this category yet.</div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-12">
-              {paginated.map((myInsight) => (
-                <Link
-                  key={myInsight.slug}
-                  href={`/myinsight/${myInsight.slug}`}
-                  className="group block overflow-hidden"
-                >
-                  <div className="relative overflow-hidden rounded-lg aspect-[440/500] bg-zinc-800">
-                    <img
-                      src={myInsight.image}
-                      alt={myInsight.title}
-                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    />
-                    <span className="absolute top-3 left-3 rounded-full bg-[#c5f018] px-3 py-1 text-xs font-semibold text-black">
-                      {myInsight.category}
-                    </span>
-                  </div>
-                  <div className="pt-4">
-                    <p className="text-[16px] text-white mb-2">
-                      {myInsight.author} • {myInsight.date}
-                    </p>
-                    <h2 className="text-[36px] text-white leading-snug group-hover:text-zinc-200 transition-colors">
+            <div className="grid grid-cols-1 gap-x-8 gap-y-16 sm:grid-cols-2">
+              {paginated.map((myInsight) => {
+                const tagStyle = CATEGORY_STYLES[myInsight.category]?.tag || "border-zinc-700 text-zinc-400";
+                return (
+                  <Link key={myInsight.slug} href={`/myinsight/${myInsight.slug}`} className="group block">
+                    <div className="relative overflow-hidden aspect-video bg-zinc-900 mb-5">
+                      <img
+                        src={myInsight.image}
+                        alt={myInsight.title}
+                        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      />
+                      {myInsight.flagship && (
+                        <div className="absolute top-3 left-3 rounded-full bg-[#c5f018] px-3 py-1 text-[10px] font-bold text-black">
+                          Cornerstone
+                        </div>
+                      )}
+                    </div>
+                    <div className="flex items-center gap-2 text-xs text-zinc-500 mb-3">
+                      <span>{myInsight.author}</span>
+                      <span>-</span>
+                      <span>{myInsight.date}</span>
+                    </div>
+                    <h2 className="text-2xl font-bold text-white leading-snug mb-3 group-hover:text-zinc-200 transition-colors">
                       {myInsight.title}
                     </h2>
-                  </div>
-                </Link>
-              ))}
+                    <p className="text-sm leading-relaxed text-zinc-400">{myInsight.excerpt}</p>
+                    <div className="mt-4">
+                      <span className={`inline-block rounded-full border px-3 py-1 text-xs ${tagStyle}`}>
+                        {myInsight.category}
+                      </span>
+                    </div>
+                  </Link>
+                );
+              })}
             </div>
           )}
 
           {/* Pagination */}
           {totalPages > 1 && (
-            <div className="mt-16 flex justify-center">
-              <div className="flex items-center gap-4">
-                {currentPage > 1 && (
+            <div className="mt-20 flex items-center justify-between">
+              <button
+                onClick={() => handlePageChange(currentPage - 1)}
+                disabled={currentPage === 1}
+                className="flex items-center gap-2 rounded-xl border border-zinc-700 bg-zinc-900 px-6 py-3 text-sm text-white transition hover:border-zinc-500 disabled:opacity-30 disabled:cursor-not-allowed"
+              >
+                ← Previous
+              </button>
+              <div className="flex items-center gap-2">
+                {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
                   <button
-                    onClick={() => handlePageChange(currentPage - 1)}
-                    className="flex items-center gap-2 rounded-lg border border-white bg-zinc-900 px-6 py-3 text-sm text-white transition hover:bg-zinc-800"
+                    key={page}
+                    onClick={() => handlePageChange(page)}
+                    className={`h-9 w-9 rounded-lg text-sm font-medium transition ${
+                      page === currentPage ? "bg-[#c5f018] text-black" : "border border-zinc-700 bg-zinc-900 text-zinc-400 hover:border-zinc-500 hover:text-white"
+                    }`}
                   >
-                    <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <line x1="19" y1="12" x2="5" y2="12" /><polyline points="12 19 5 12 12 5" />
-                    </svg>
-                    Previous page
+                    {page}
                   </button>
-                )}
-                {currentPage < totalPages && (
-                  <button
-                    onClick={() => handlePageChange(currentPage + 1)}
-                    className="flex items-center gap-2 rounded-lg border border-white bg-zinc-900 px-6 py-3 text-sm text-white transition hover:bg-zinc-800"
-                  >
-                    Next page
-                    <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" />
-                    </svg>
-                  </button>
-                )}
+                ))}
               </div>
+              <button
+                onClick={() => handlePageChange(currentPage + 1)}
+                disabled={currentPage === totalPages}
+                className="flex items-center gap-2 rounded-xl border border-zinc-700 bg-zinc-900 px-6 py-3 text-sm text-white transition hover:border-zinc-500 disabled:opacity-30 disabled:cursor-not-allowed"
+              >
+                Next page →
+              </button>
             </div>
           )}
         </div>

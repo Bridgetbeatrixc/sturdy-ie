@@ -2,16 +2,24 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Header } from "../../../components/Header";
 import { FooterSection } from "../../../components/FooterSection";
-import { getCaseStudyBySlug, getCaseStudiesIndex } from "../../../lib/caseStudies";
+import { getCaseStudyBySlug } from "../../../lib/caseStudies";
 
-const SECTIONS = [
-  { key: "overviewContext", heading: "Overview & Context" },
-  { key: "environmentModel", heading: "Environment Model" },
-  { key: "governanceControls", heading: "Governance & Controls" },
-  { key: "standardsInteroperability", heading: "Standards & Interoperability" },
-  { key: "outcomesImpact", heading: "Outcomes & Impact" },
-  { key: "partnershipRelevance", heading: "Partnership Relevance" },
-] as const;
+interface SectionBlockProps {
+  label: string;
+  body: string;
+}
+
+function SectionBlock({ label, body }: SectionBlockProps) {
+  return (
+    <div className="border-t border-zinc-800/60 pt-8">
+      <h2 className="flex items-center gap-2 text-sm font-semibold text-white">
+        <span className="h-2 w-2 rounded-sm bg-[#c5f018]" />
+        {label}
+      </h2>
+      <p className="mt-3 text-sm leading-relaxed text-zinc-300">{body}</p>
+    </div>
+  );
+}
 
 export default async function CaseStudyDetailPage({
   params,
@@ -19,75 +27,73 @@ export default async function CaseStudyDetailPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const [study, allStudies] = await Promise.all([
-    getCaseStudyBySlug(slug),
-    getCaseStudiesIndex(),
-  ]);
+  const study = await getCaseStudyBySlug(slug);
   if (!study) notFound();
 
-  const recentStudies = allStudies.filter((s) => s.slug !== slug).slice(0, 2);
-
   return (
-    <main className="relative w-full overflow-x-hidden bg-black text-zinc-200">
+    <main className="relative px-2 lg:px-6 md:px-6 w-full overflow-x-hidden text-sm text-zinc-200">
       <Header />
 
-      <div className="mx-auto max-w-8xl px-4 sm:px-6 lg:px-0">
-        {/* Centered header: title, summary, metadata (matches My Insight slug) */}
-        <div className="pt-16 pb-8 text-center">
-          <h1 className="text-[64px] text-white leading-tight">
+      {/* Hero */}
+      <section className="relative border-b border-zinc-900/60 bg-black">
+        <div className="absolute inset-0">
+          <div
+            className="h-full w-full bg-cover bg-center"
+            style={{ backgroundImage: `url(${study.img})` }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-black/50" />
+        </div>
+
+        <div className="relative mx-auto max-w-8xl px-4 py-20 sm:px-6 md:px-10 md:py-28 lg:px-0">
+          <Link
+            href="/case-studies"
+            className="inline-flex items-center gap-1 text-lg font-medium text-zinc-400 transition hover:text-zinc-200"
+          >
+            ← Case studies
+          </Link>
+
+          <div className="mt-6 flex flex-wrap items-center gap-3 text-xs">
+            <span className="rounded-full border border-[#c5f018]/40 bg-[#c5f018]/10 px-3 py-0.5 font-semibold text-[#c5f018]">
+              {study.theme}
+            </span>
+            <span className="text-zinc-500">Environment: {study.context}</span>
+            {study.period && (
+              <span className="text-zinc-600">Period: {study.period}</span>
+            )}
+          </div>
+
+          <h1 className="mt-5 max-w-8xl text-2xl font-semibold text-white md:text-3xl lg:text-4xl">
             {study.title}
           </h1>
-          <p className="mt-6 text-[16px] leading-relaxed text-white max-w-2xl mx-auto">
+          <p className="mt-4 max-w-8xl text-sm leading-relaxed text-zinc-300 md:text-base">
             {study.summary}
           </p>
-          <div className="mt-6 flex items-center justify-center gap-3">
-            <div className="h-10 w-10 rounded-full bg-zinc-700 flex items-center justify-center text-sm font-medium text-white">
-              {(study.theme || "?").charAt(0)}
-            </div>
-            <div className="text-left">
-              <span className="block text-sm font-medium text-white">{study.theme}</span>
-              <span className="text-xs text-white">{study.period || "—"}</span>
-            </div>
-          </div>
         </div>
+      </section>
 
-        {/* Hero image (matches My Insight slug) */}
-        <div className="relative w-full overflow-hidden bg-zinc-900 mb-14">
-          {study.img && (
-            <img src={study.img} alt={study.title} className="w-full aspect-[1160/480] object-cover" />
-          )}
+      {/* Content sections */}
+      <section className="border-b border-zinc-900/60 bg-black">
+        <div className="mx-auto flex max-w-8xl flex-col gap-10 px-4 py-12 sm:px-6 md:px-10 md:py-16 lg:px-0">
+          <SectionBlock label="Overview & Context"          body={study.overviewContext}           />
+          <SectionBlock label="Environment Model"           body={study.environmentModel}          />
+          <SectionBlock label="Governance & Controls"       body={study.governanceControls}        />
+          <SectionBlock label="Standards & Interoperability" body={study.standardsInteroperability} />
+          <SectionBlock label="Outcomes & Impact"           body={study.outcomesImpact}            />
+          <SectionBlock label="Partnership Relevance"       body={study.partnershipRelevance}      />
         </div>
+      </section>
 
-        {/* Body sections (matches My Insight slug structure) */}
-        <article className="space-y-14">
-          {SECTIONS.map(({ key, heading }) => {
-            const body = (study as unknown as Record<string, string>)[key];
-            if (!body?.trim()) return null;
-            return (
-              <section key={key}>
-                <h2 className="text-[48px] font-light text-white mb-5">
-                  {heading}
-                </h2>
-                <div className="space-y-5">
-                  {body.split("\n\n").map((para: string, j: number) => (
-                    <p key={j} className="text-[16px] leading-8 text-white">
-                      {para.trim()}
-                    </p>
-                  ))}
-                </div>
-              </section>
-            );
-          })}
-
-          {/* CTA (matches My Insight slug) */}
-          <div className="rounded-2xl border border-zinc-800 bg-zinc-900/60 p-10 text-center">
-            <h3 className="text-[48px] font-bold text-white mb-3">Interested in collaborating?</h3>
-            <p className="text-sm text-zinc-400 mb-6 leading-relaxed max-w-md mx-auto">
-              If this perspective resonates and you are exploring collaboration across research, governance, or secure data environments, I welcome the conversation.
+      {/* CTA */}
+          <div className="mx-auto max-w-6xl py-12 md:py-16 lg:py-16 mb-10 rounded-2xl border border-zinc-800 bg-zinc-900/60 p-10 text-center">
+            <h3 className="text-2xl md:text-5xl lg:text-5xl font-light text-white mb-6">Interested in a similar 
+              <span className="text-[#c5f018]"> initiative?</span></h3>
+            <p className="text-sm text-zinc-400 mb-6 leading-relaxed max-w-2xl mx-auto">
+              Open to discussions with institutions exploring governance-aligned
+            collaboration, secure environments, or regulated innovation partnerships.
             </p>
             <Link
               href="/contact"
-              className="inline-flex items-center gap-2 rounded-lg bg-[#c5f018] px-8 py-3 text-sm font-semibold text-black transition hover:bg-[#d4ff2a]"
+              className="inline-flex items-center gap-2 rounded-lg bg-[#c5f018] px-8 py-5 text-lg font-semibold text-black transition hover:bg-[#d4ff2a]"
             >
               Discuss collaboration
               <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -95,51 +101,6 @@ export default async function CaseStudyDetailPage({
               </svg>
             </Link>
           </div>
-        </article>
-
-        {/* Recent case studies (matches My Insight "Recent articles" block) */}
-        <section className="pt-20 pb-24">
-          <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-10">
-            <div>
-              <p className="flex items-center gap-2 text-sm text-white mb-1">
-                <span className="h-2 w-2 rounded-full bg-[#c5f018]" />
-                Case studies
-              </p>
-              <h2 className="text-6xl mt-6 font-light text-white">
-                Recent <span className="text-[#c5f018]">case studies</span>
-              </h2>
-            </div>
-            <Link
-              href="/case-studies"
-              className="inline-flex items-center gap-2 rounded-lg bg-[#c5f018] px-6 py-3 text-lg font-semibold text-black self-start sm:self-auto transition duration-300 hover:border hover:border-white hover:text-[#c5f018] hover:bg-black"
-            >
-              View more
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M3 13L13 3M13 3H5M13 3V11" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </Link>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-            {recentStudies.map((cs) => (
-              <Link key={cs.slug} href={`/case-studies/${cs.slug}`} className="group block">
-                <div className="relative overflow-hidden aspect-video bg-zinc-900 mb-4">
-                  <img
-                    src={cs.img}
-                    alt={cs.title}
-                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-                </div>
-                <p className="text-[16px] text-zinc-500 mb-2">
-                  {[cs.theme, cs.period].filter(Boolean).join(" • ")}
-                </p>
-                <h3 className="text-[36px] font-bold text-white leading-snug group-hover:text-zinc-200 transition-colors">
-                  {cs.title}
-                </h3>
-              </Link>
-            ))}
-          </div>
-        </section>
-      </div>
 
       <FooterSection />
     </main>
