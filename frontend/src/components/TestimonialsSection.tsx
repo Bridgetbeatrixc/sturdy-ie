@@ -1,76 +1,105 @@
 "use client";
 
+import type { ReactNode } from "react";
 import { useState, useRef } from "react";
 import Link from "next/link";
 import { motion, useInView } from "motion/react";
 
-type Testimonial = {
-  id: number;
-  name: string;
-  title: string;
-  quote: string;
-  img: string;
-  stars: number;
+const iconBtnProps = {
+  width: "100%",
+  height: "100%",
+  viewBox: "0 0 24 24",
+  fill: "none" as const,
+  stroke: "currentColor",
+  strokeWidth: 1.5,
+  strokeLinecap: "round" as const,
+  strokeLinejoin: "round" as const,
 };
 
-const TESTIMONIALS: Testimonial[] = [
+function IconTrust() {
+  return (
+    <svg {...iconBtnProps} aria-hidden>
+      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+    </svg>
+  );
+}
+
+function IconStandards() {
+  return (
+    <svg {...iconBtnProps} aria-hidden>
+      <path d="m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z" />
+      <path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65" />
+      <path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65" />
+    </svg>
+  );
+}
+
+function IconResilience() {
+  return (
+    <svg {...iconBtnProps} aria-hidden>
+      <ellipse cx="12" cy="5" rx="9" ry="3" />
+      <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3" />
+      <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5" />
+    </svg>
+  );
+}
+
+type Principle = {
+  id: number;
+  title: string;
+  body: string;
+  icon: ReactNode;
+  bars: number;
+};
+
+const PRINCIPLES: Principle[] = [
   {
     id: 1,
-    name: "Poppy Eleanor",
-    title: "Client Manager",
-    quote:
-      "Their client-focused approach strengthened our communication and trust. Every interaction was smooth, thoughtful, and aligned with our needs, helping our team operate with greater clarity, confidence, and long-lasting momentum.",
-    img: "https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=400",
-    stars: 4,
+    title: "Trust",
+    body: "Systems must embed governance and accountability",
+    icon: <IconTrust />,
+    bars: 1,
   },
   {
     id: 2,
-    name: "Michael Harris",
-    title: "Programme Director",
-    quote:
-      "A deep understanding of governance, regulation, and delivery. They consistently translated complex requirements into practical, implementable solutions.",
-    img: "https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg?auto=compress&cs=tinysrgb&w=400",
-    stars: 5,
+    title: "Standards",
+    body: "Interoperability depends on shared frameworks",
+    icon: <IconStandards />,
+    bars: 2,
   },
   {
     id: 3,
-    name: "Amrita Patel",
-    title: "Chief Data Officer",
-    quote:
-      "Their work enabled us to accelerate sensitive data collaboration without compromising privacy, ethics, or regulatory obligations.",
-    img: "https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=400",
-    stars: 5,
-  },
-  {
-    id: 4,
-    name: "Liam O'Connor",
-    title: "Head of Innovation",
-    quote:
-      "A rare blend of strategic thinking and delivery discipline, helping our teams align on governance while still moving quickly.",
-    img: "https://images.pexels.com/photos/1516680/pexels-photo-1516680.jpeg?auto=compress&cs=tinysrgb&w=400",
-    stars: 4,
+    title: "Resilience",
+    body: "Infrastructure must support long-term capability",
+    icon: <IconResilience />,
+    bars: 3,
   },
 ];
 
 export function TestimonialsSection() {
-  const [active, setActive] = useState<Testimonial>(TESTIMONIALS[0]);
+  const [active, setActive] = useState<Principle>(PRINCIPLES[0]);
 
   const headingRef = useRef(null);
   const buttonRef = useRef(null);
-  const headingInView = useInView(headingRef, { once: true, margin: "0px 0px -60px 0px" });
-  const buttonInView = useInView(buttonRef, { once: true, margin: "0px 0px -60px 0px" });
+  const headingInView = useInView(headingRef, {
+    once: true,
+    margin: "0px 0px -60px 0px",
+  });
+  const buttonInView = useInView(buttonRef, {
+    once: true,
+    margin: "0px 0px -60px 0px",
+  });
 
   return (
-    <section className="py-8 mx-auto max-w-8xl px-4 md:px-4 lg:px-4">
-      <div className="flex justify-center items-center gap-2 py-4">
+    <section className="mx-auto max-w-8xl px-4 py-8 md:px-4 md:py-12 lg:px-4">
+      <div className="flex items-center justify-center gap-2 py-4">
         <span
           className="h-2 w-2 rounded-sm bg-[#c5f018]"
-          style={{ animation: 'dotPulse 1s ease-in-out infinite' }}
+          style={{ animation: "dotPulse 1s ease-in-out infinite" }}
         />
-        <span className="text-sm md:text-lg text-white">Testimonials</span>
+        <span className="text-sm text-white md:text-lg">Principles</span>
       </div>
 
-      {/* Animated heading */}
       <motion.h2
         ref={headingRef}
         initial={{ opacity: 0, y: 40 }}
@@ -78,91 +107,119 @@ export function TestimonialsSection() {
         transition={{ duration: 1.2, ease: "easeOut" }}
         className="mb-12 text-center text-3xl font-light text-white md:mb-16 md:text-6xl"
       >
-        What our <span className="font-semibold text-[#c5f018]">clients say</span>
+        <span className="font-semibold text-[#c5f018]">Ideas</span>
+        <span className="text-white"> That Guide My Work</span>
       </motion.h2>
 
       <div className="flex flex-col items-stretch gap-6 md:flex-row">
-        {/* Avatars card */}
+        {/* Icon selectors (replaces avatar column) */}
         <div className="flex items-center justify-center rounded-3xl bg-zinc-900/80 px-6 py-8 sm:px-8 md:px-10 md:py-10">
           <div className="flex flex-row flex-wrap justify-center gap-4 sm:gap-6 md:flex-col md:flex-nowrap">
-            {TESTIMONIALS.map((t) => {
-              const isActive = t.id === active.id;
+            {PRINCIPLES.map((p) => {
+              const isActive = p.id === active.id;
               return (
                 <button
-                  key={t.id}
+                  key={p.id}
                   type="button"
-                  onClick={() => setActive(t)}
-                  className={`relative h-14 w-14 shrink-0 overflow-hidden rounded-full border-2 transition-all duration-300 sm:h-16 sm:w-16 md:h-20 md:w-20 ${
+                  onClick={() => setActive(p)}
+                  className={`relative flex h-14 w-14 shrink-0 items-center justify-center rounded-full border-2 p-3 transition-all duration-300 sm:h-16 sm:w-16 md:h-20 md:w-20 ${
                     isActive
-                      ? "border-[#c5f018] shadow-[0_0_12px_rgba(197,240,24,0.4)]"
-                      : "border-zinc-700 opacity-70 hover:opacity-100"
+                      ? "border-[#c5f018] bg-[#c5f018]/15 text-[#c5f018] shadow-[0_0_12px_rgba(197,240,24,0.35)]"
+                      : "border-zinc-700 bg-zinc-800/80 text-zinc-400 opacity-80 hover:opacity-100"
                   }`}
-                  aria-label={`View testimonial from ${t.name}`}
+                  aria-label={`Show principle: ${p.title}`}
+                  aria-pressed={isActive}
                 >
-                  <div
-                    className="h-full w-full bg-cover bg-center"
-                    style={{ backgroundImage: `url(${t.img})` }}
-                  />
+                  {p.icon}
                 </button>
               );
             })}
           </div>
         </div>
 
-        {/* Testimonial card */}
+        {/* Active principle — same shell as testimonial card */}
         <div className="flex-[1] rounded-3xl border border-[#c5f018] p-[1px]">
-          <div className="flex h-full flex-col justify-between rounded-[1.4rem] bg-gradient-to-b from-[#395407] to-[#090d00] px-8 py-10 md:px-10 md:py-12 relative overflow-hidden">
-            <div className="pointer-events-none absolute -top-20 left-1/2 -translate-x-1/2 w-80 h-48 bg-[radial-gradient(circle,rgba(197,240,24,0.65)_0%,transparent_70%)] blur-2xl" />
+          <div className="relative flex h-full min-h-[280px] flex-col justify-between overflow-hidden rounded-[1.4rem] bg-gradient-to-b from-[#395407] to-[#090d00] px-8 py-10 md:min-h-0 md:px-10 md:py-12">
+            <div className="pointer-events-none absolute -top-20 left-1/2 h-48 w-80 -translate-x-1/2 bg-[radial-gradient(circle,rgba(197,240,24,0.65)_0%,transparent_70%)] blur-2xl" />
             <div className="relative p-4 md:p-10">
-              <h3 className="text-2xl font-light text-white md:text-4xl">{active.name}</h3>
-              <p className="mt-2 md:mt-4 text-sm font-light text-[#c5f018] md:text-base">{active.title}</p>
-              <p className="mt-8 text-sm leading-relaxed text-zinc-200 md:text-lg md:leading-relaxed">{active.quote}</p>
-            </div>
-            <div className="relative mt-10 flex px-8 md:px-10 items-center gap-1.5">
-              {Array.from({ length: 5 }).map((_, idx) => (
-                <span
-                  key={idx}
-                  className={`inline-block text-4xl ${idx < active.stars ? "text-[#c5f018]" : "text-zinc-600"}`}
-                >
-                  ★
-                </span>
-              ))}
+              <div className="mb-4 flex items-center justify-between gap-4">
+                <p className="text-sm font-medium uppercase tracking-wider text-[#c5f018]">
+                  Principle
+                </p>
+                <div className="flex gap-1">
+                  {[1, 2, 3].map((i) => (
+                    <div
+                      key={i}
+                      className={`h-6 w-[3px] rounded-full ${
+                        i <= active.bars ? "bg-[#c5f018]" : "bg-white/20"
+                      }`}
+                    />
+                  ))}
+                </div>
+              </div>
+              <h3 className="text-2xl font-light text-white md:text-4xl">
+                {active.title}
+              </h3>
+              <p className="mt-6 text-sm leading-relaxed text-zinc-200 md:text-lg md:leading-relaxed">
+                {active.body}
+              </p>
             </div>
           </div>
         </div>
 
-        {/* Need consulting card */}
+        {/* Discuss collaboration (replaces Need consulting) */}
         <div
-          className="flex-[1] max-w-sm flex flex-col justify-between rounded-3xl px-8 py-10 md:px-10 md:py-12 relative overflow-hidden bg-cover bg-center"
+          className="relative flex max-w-sm flex-[1] flex-col justify-between overflow-hidden rounded-3xl bg-cover bg-center px-8 py-10 md:px-10 md:py-12"
           style={{ backgroundImage: "url('/bg-contact.png')" }}
         >
-          <div className="pointer-events-none absolute inset-0" />
-          <div className="relative space-y-6">
+          <div className="pointer-events-none absolute inset-0 bg-black/20" />
+          <div className="relative z-[1] space-y-6">
             <div className="flex items-center">
-              <img src="/contact.svg" alt="Contact icon" className="h-16 w-16" />
+              <img
+                src="/contact.svg"
+                alt=""
+                className="h-16 w-16"
+                aria-hidden
+              />
             </div>
             <div>
-              <h3 className="text-2xl font-light text-white md:text-3xl">Need consulting?</h3>
+              <h3 className="text-2xl font-light text-white md:text-3xl">
+                Discuss Collaboration
+              </h3>
               <p className="mt-3 text-sm leading-relaxed text-white">
-                Get expert guidance with clear direction to choose the right solution.
+                I welcome discussions with organisations working on digital
+                infrastructure and data systems
               </p>
             </div>
           </div>
 
-          {/* Animated contact button */}
           <motion.div
             ref={buttonRef}
+            className="relative z-[1]"
             initial={{ opacity: 0, y: 40 }}
             animate={buttonInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
             transition={{ duration: 1.2, ease: "easeOut", delay: 0.2 }}
           >
             <Link
               href="/contact"
-              className="relative flex gap-2 mt-4 md:mt-0 justify-center items-center rounded-lg bg-[#c5f018] px-6 py-4 text-sm md:text-lg font-medium text-black transition duration-300 hover:border hover:border-white hover:text-[#c5f018] hover:bg-black"
+              className="relative mt-6 flex items-center justify-center gap-2 rounded-lg bg-[#c5f018] px-6 py-4 text-sm font-medium text-black transition duration-300 hover:border hover:border-white hover:bg-black hover:text-[#c5f018] md:mt-0 md:text-lg"
             >
-              Contact Us
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M3 13L13 3M13 3H5M13 3V11" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              Contact
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 16 16"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                aria-hidden
+              >
+                <path
+                  d="M3 13L13 3M13 3H5M13 3V11"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
               </svg>
             </Link>
           </motion.div>

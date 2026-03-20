@@ -99,16 +99,18 @@ export function InsightsPreviewSection({ myInsights }: { myInsights: MyInsightIn
           </div>
 
           {/* Heading — no animation */}
-          <h2 className="text-2xl font-semibold text-[#c5f018] md:text-5xl leading-tight">
-            Executive <span className="text-white font-light">Perspectives <br />on Governance, Infrastructure, <br />and Regulated Innovation</span>
+          <h2 className="text-2xl font-semibold leading-tight text-[#c5f018] md:text-5xl">
+            Executive{" "}
+            <span className="font-light text-white">
+              Perspectives on Governance, Infrastructure, and Regulated
+              Innovation
+            </span>
           </h2>
 
           {/* Description — no animation */}
-          <p className="mt-4 max-w-2xl text-sm leading-relaxed text-zinc-300">
-            Short, structured perspectives drawn from building and governing
-            mission-critical platforms across regulated ecosystems—covering
-            sovereign infrastructure, secure collaboration, and standards-led
-            interoperability.
+          <p className="mt-4 max-w-2xl text-sm leading-relaxed text-zinc-300 md:text-base">
+            Short perspectives drawn from building and governing
+            mission-critical platforms across regulated ecosystems.
           </p>
 
           {/* Button — animated */}

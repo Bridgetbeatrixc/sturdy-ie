@@ -1,24 +1,87 @@
 "use client";
 
+import type { ReactNode } from "react";
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 
-const EXPERTISE_ITEMS = [
+const iconProps = {
+  width: "100%",
+  height: "100%",
+  viewBox: "0 0 24 24",
+  fill: "none" as const,
+  stroke: "currentColor",
+  strokeWidth: 1.5,
+  strokeLinecap: "round" as const,
+  strokeLinejoin: "round" as const,
+};
+
+function IconGovernance() {
+  return (
+    <svg {...iconProps} aria-hidden>
+      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+    </svg>
+  );
+}
+
+function IconInfrastructure() {
+  return (
+    <svg {...iconProps} aria-hidden>
+      <ellipse cx="12" cy="5" rx="9" ry="3" />
+      <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3" />
+      <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5" />
+    </svg>
+  );
+}
+
+function IconCollaboration() {
+  return (
+    <svg {...iconProps} aria-hidden>
+      <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+      <circle cx="9" cy="7" r="4" />
+      <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+      <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+    </svg>
+  );
+}
+
+function IconInteroperability() {
+  return (
+    <svg {...iconProps} aria-hidden>
+      {/* Bidirectional exchange: right arrow (top) + left arrow (bottom) */}
+      <path d="M7 9h9" />
+      <path d="m14 6 3 3-3 3" />
+      <path d="M17 15H8" />
+      <path d="m10 18-3-3 3-3" />
+    </svg>
+  );
+}
+
+type ExpertiseItem = {
+  title: string;
+  body: string;
+  icon: ReactNode;
+};
+
+const EXPERTISE_ITEMS: ExpertiseItem[] = [
   {
     title: "Governance & Compliance",
-    body: "Operationalising regulatory frameworks into deployable environments with assurance, auditability, and defensible controls.",
+    body: "Operationalising regulatory frameworks into deployable environments",
+    icon: <IconGovernance />,
   },
   {
     title: "Sovereign Data Infrastructure",
-    body: "Designing mission-critical platforms aligned to resilience, security, and long-term operational integrity.",
+    body: "Designing platforms aligned to resilience and long-term integrity",
+    icon: <IconInfrastructure />,
   },
   {
     title: "Secure Collaboration",
-    body: "Enabling cross-organisation collaboration through governed access models, secure environments, and trust boundaries.",
+    body: "Enabling trusted collaboration across organisations",
+    icon: <IconCollaboration />,
   },
   {
     title: "Interoperability & Data Exchange",
-    body: "Implementing standards-led architectures so data can be securely shared, understood, and reused across ecosystems.",
+    body: "Standards-led architectures enabling secure data sharing",
+    icon: <IconInteroperability />,
   },
 ];
 
@@ -84,8 +147,11 @@ export function ExpertiseSection() {
                     animation: visible ? `fadeUp 1.5s ease-out ${0.2 + i * 0.3}s forwards` : 'none',
                   }}
                 >
-                  <div className="mb-6 flex h-10 w-10 sm:h-14 sm:w-14 items-center justify-center rounded-full border border-[#c5f018]/70 bg-[#c5f018]/10">
-                    <span className="h-4 w-4 sm:h-5 sm:w-5 rounded-xl border border-[#c5f018]" />
+                  <div
+                    className="mb-6 flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[#c5f018]/70 bg-[#c5f018]/10 text-[#c5f018] sm:h-14 sm:w-14"
+                    aria-hidden
+                  >
+                    <div className="h-5 w-5 sm:h-7 sm:w-7">{item.icon}</div>
                   </div>
                   <div className="space-y-2">
                     <h3 className="text-base sm:text-lg md:text-xl lg:text-2xl text-white leading-snug">
@@ -109,7 +175,7 @@ export function ExpertiseSection() {
                 animation: visible ? 'slideUpReveal 1.2s cubic-bezier(0.22, 1, 0.36, 1) 0.2s forwards' : 'none',
               }}
             >
-              <div className="h-64 sm:h-80 md:h-96 lg:h-[500px] xl:h-[700px] w-full bg-[url('https://images.pexels.com/photos/1181567/pexels-photo-1181567.jpeg?auto=compress&cs=tinysrgb&w=1200')] bg-cover bg-center" />
+              <div className="h-64 sm:h-80 md:h-96 lg:h-[500px] xl:h-[700px] w-full bg-[url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&auto=format&fit=crop&q=80')] bg-cover bg-center" />
             </div>
 
             <p
@@ -120,7 +186,7 @@ export function ExpertiseSection() {
               }}
             >
               Executive delivery across public sector, financial services, and
-              health—bridging innovation ambition with regulator-grade execution.
+              health
             </p>
 
             <Link

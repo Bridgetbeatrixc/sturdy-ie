@@ -4,203 +4,255 @@ import Link from "next/link";
 import { useRef, useState } from "react";
 import { motion, useInView } from "motion/react";
 
+/** One author avatar everywhere — same URL, same circular treatment */
+const AUTHOR = {
+  name: "Jason Sturdy",
+  avatar:
+    "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=120&h=120&auto=format&fit=crop&q=80",
+} as const;
+
+const authorAvatarClassName =
+  "h-9 w-9 shrink-0 rounded-full object-cover ring-2 ring-[#c5f018]/30 sm:h-10 sm:w-10";
+
 const FEATURED_POST = {
-    img: "https://images.pexels.com/photos/3182773/pexels-photo-3182773.jpeg?auto=compress&cs=tinysrgb&w=800",
-    title: "From conversations to transformations",
-    author: {
-        name: "Nova Wren",
-        avatar: "https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg?auto=compress&cs=tinysrgb&w=100",
-    },
-    date: "May 18, 2025",
-    href: "/blog/conversations-to-transformations",
+  img: "https://images.unsplash.com/photo-1633265486064-086b219458ec?w=800&auto=format&fit=crop&q=80",
+  title: "Designing Trust Into Digital Infrastructure",
+  date: "Thought leadership",
+  href: "/myinsight/designing-trust-into-digital-infrastructure",
 };
 
 const SMALL_POSTS = [
-    {
-        img: "https://images.pexels.com/photos/1181435/pexels-photo-1181435.jpeg?auto=compress&cs=tinysrgb&w=400",
-        title: "Real talk: consulting for real growth",
-        author: {
-            name: "Arlen Mendez",
-            avatar: "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=100",
-        },
-        date: "June 25, 2025",
-        href: "/blog/consulting-for-real-growth",
-    },
-    {
-        img: "https://images.pexels.com/photos/3182812/pexels-photo-3182812.jpeg?auto=compress&cs=tinysrgb&w=400",
-        title: "Why modern businesses rely",
-        author: {
-            name: "Grace Ellis",
-            avatar: "https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&w=100",
-        },
-        date: "June 18, 2025",
-        href: "/blog/why-modern-businesses-rely",
-    },
+  {
+    img: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&auto=format&fit=crop&q=80",
+    title: "Governance in Regulated Data Ecosystems",
+    date: "Thought leadership",
+    href: "/myinsight/governance-in-regulated-data-ecosystems",
+  },
+  {
+    img: "https://images.unsplash.com/photo-1639322537504-6427a16b0a28?w=400&auto=format&fit=crop&q=80",
+    title: "Standards and the Future of Data Exchange",
+    date: "Thought leadership",
+    href: "/myinsight/standards-and-the-future-of-data-exchange",
+  },
 ];
 
 const CalendarIcon = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M8 2v4" /><path d="M16 2v4" />
-        <rect width="18" height="18" x="3" y="4" rx="2" />
-        <path d="M3 10h18" />
-        <path d="M8 14h.01" /><path d="M12 14h.01" /><path d="M16 14h.01" />
-        <path d="M8 18h.01" /><path d="M12 18h.01" /><path d="M16 18h.01" />
-    </svg>
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="18"
+    height="18"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <path d="M8 2v4" />
+    <path d="M16 2v4" />
+    <rect width="18" height="18" x="3" y="4" rx="2" />
+    <path d="M3 10h18" />
+    <path d="M8 14h.01" />
+    <path d="M12 14h.01" />
+    <path d="M16 14h.01" />
+    <path d="M8 18h.01" />
+    <path d="M12 18h.01" />
+    <path d="M16 18h.01" />
+  </svg>
 );
 
+function AuthorRow() {
+  return (
+    <div className="flex items-center gap-2">
+      <img
+        src={AUTHOR.avatar}
+        alt={AUTHOR.name}
+        className={authorAvatarClassName}
+      />
+      <span className="text-sm font-light text-[#c5f018] sm:text-base">
+        {AUTHOR.name}
+      </span>
+    </div>
+  );
+}
+
 export function BlogSection() {
-    const imgRef = useRef<HTMLDivElement>(null);
-    const [hovered, setHovered] = useState(false);
-    const [pos, setPos] = useState({ x: 0, y: 0 });
+  const imgRef = useRef<HTMLDivElement>(null);
+  const [hovered, setHovered] = useState(false);
+  const [pos, setPos] = useState({ x: 0, y: 0 });
 
-    const headerRef = useRef(null);
-    const headerInView = useInView(headerRef, { once: true, margin: "0px 0px -60px 0px" });
+  const headerRef = useRef(null);
+  const headerInView = useInView(headerRef, {
+    once: true,
+    margin: "0px 0px -60px 0px",
+  });
 
-    const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-        const rect = imgRef.current?.getBoundingClientRect();
-        if (!rect) return;
-        setPos({ x: e.clientX - rect.left, y: e.clientY - rect.top });
-    };
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = imgRef.current?.getBoundingClientRect();
+    if (!rect) return;
+    setPos({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+  };
 
-    return (
-        <section className="w-max-8xl px-8 md:px-16 py-10 md:py-16">
-            <div className="flex flex-col items-start justify-between mb-8 md:mb-16">
+  return (
+    <section className="mx-auto max-w-8xl px-8 py-10 md:px-16 md:py-16">
+      <div className="mb-8 flex flex-col items-start justify-between md:mb-16">
+        <motion.div
+          ref={headerRef}
+          initial={{ opacity: 0, y: 30 }}
+          animate={headerInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+          transition={{ duration: 1.2, ease: "easeOut" }}
+          className="mb-4 flex items-center gap-2 text-xs font-medium text-zinc-300"
+        >
+          <span
+            className="h-2 w-2 rounded-full bg-[#c5f018]"
+            style={{ animation: "dotPulse 1s ease-in-out infinite" }}
+          />
+          <span className="text-sm md:text-lg">My Insights</span>
+        </motion.div>
 
-                {/* Label — animated */}
-                <motion.div
-                    ref={headerRef}
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={headerInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-                    transition={{ duration: 1.2, ease: "easeOut" }}
-                    className="mb-4 flex items-center gap-2 text-xs font-medium text-zinc-300"
-                >
-                    <span
-                        className="h-2 w-2 rounded-full bg-[#c5f018]"
-                        style={{ animation: 'dotPulse 1s ease-in-out infinite' }}
-                    />
-                    <span className="text-sm md:text-lg">My Insights</span>
-                </motion.div>
+        <div className="flex w-full flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
+          <div className="min-w-0 flex-1">
+            <motion.h2
+              initial={{ opacity: 0, y: 30 }}
+              animate={headerInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+              transition={{ duration: 1.2, ease: "easeOut", delay: 0.15 }}
+              className="text-2xl font-light leading-tight text-white md:text-5xl lg:text-6xl"
+            >
+              <span className="text-white">Thought </span>
+              <span className="font-semibold text-[#c5f018]">Leadership</span>
+            </motion.h2>
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={headerInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+              transition={{ duration: 1.2, ease: "easeOut", delay: 0.22 }}
+              className="mt-4 max-w-2xl text-sm leading-relaxed text-zinc-400 md:text-lg"
+            >
+              Articles exploring digital infrastructure, governance, and data
+              ecosystems
+            </motion.p>
+          </div>
 
-                <div className="flex flex-row items-center justify-between w-full">
-                    {/* Title — animated */}
-                    <motion.h2
-                        initial={{ opacity: 0, y: 30 }}
-                        animate={headerInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-                        transition={{ duration: 1.2, ease: "easeOut", delay: 0.15 }}
-                        className="text-2xl md:text-6xl font-light text-white leading-tight"
-                    >
-                        Expert advisory{" "}
-                        <span className="text-[#c5f018] font-semibold">updates</span>
-                    </motion.h2>
-
-                    {/* View All button — animated */}
-                    <motion.div
-                        initial={{ opacity: 0, scale: 0.7 }}
-                        animate={headerInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.7 }}
-                        transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.3 }}
-                    >
-                        <Link
-                            href="/myinsight"
-                            className="shrink-0 inline-flex gap-2 items-center justify-center rounded-lg bg-[#c5f018] px-4 sm:px-6 py-3 sm:py-4 text-sm md:text-lg font-medium text-black transition duration-300 hover:border hover:border-white hover:text-[#c5f018] hover:bg-black"
-                        >
-                            View All
-                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M3 13L13 3M13 3H5M13 3V11" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                            </svg>
-                        </Link>
-                    </motion.div>
-                </div>
-            </div>
-
-            {/* Featured post */}
-            <Link href={FEATURED_POST.href} className="block group mb-4 border border-[#68800a] rounded-xl">
-                <div className="relative flex flex-col sm:flex-row rounded-xl overflow-hidden bg-zinc-900 transition-colors duration-300">
-                    <div
-                        ref={imgRef}
-                        className="relative w-full sm:w-[40%] shrink-0 overflow-hidden cursor-none"
-                        onMouseMove={handleMouseMove}
-                        onMouseEnter={() => setHovered(true)}
-                        onMouseLeave={() => setHovered(false)}
-                    >
-                        <img
-                            src={FEATURED_POST.img}
-                            alt={FEATURED_POST.title}
-                            className="w-full h-48 sm:h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                        />
-                        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all duration-300" />
-                        <div
-                            className="absolute pointer-events-none top-0 left-0"
-                            style={{
-                                transform: `translate(${pos.x - 32}px, ${pos.y - 32}px)`,
-                                opacity: hovered ? 1 : 0,
-                                transition: 'opacity 0.3s ease, transform 0.06s linear',
-                                willChange: 'transform',
-                            }}
-                        >
-                            <div className="relative flex items-center justify-center w-20 h-20 rounded-full bg-black/40 backdrop-blur-sm">
-                                <div className="absolute inset-0 rounded-full border-2 border-[#c5f018] shadow-[0_0_24px_6px_rgba(197,240,24,0.65)]" />
-                                <svg width="24" height="24" viewBox="0 0 16 16" fill="none">
-                                    <path d="M3 13L13 3M13 3H5M13 3V11" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                                </svg>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="flex flex-col justify-between p-4 sm:p-5 lg:p-8 flex-1">
-                        <h3 className="text-xl sm:text-2xl lg:text-5xl font-light text-white leading-tight">
-                            {FEATURED_POST.title}
-                        </h3>
-                        <div className="mt-4 flex flex-col xs:flex-row xs:items-center gap-3 xs:justify-between">
-                            <div className="flex items-center gap-2">
-                                <img
-                                    src={FEATURED_POST.author.avatar}
-                                    alt={FEATURED_POST.author.name}
-                                    className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg object-cover shrink-0"
-                                />
-                                <span className="text-[#c5f018] font-light text-sm sm:text-base">{FEATURED_POST.author.name}</span>
-                            </div>
-                            <div className="flex items-center gap-2 text-xs sm:text-sm">
-                                <CalendarIcon />
-                                <span>{FEATURED_POST.date}</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+          <motion.div
+            initial={{ opacity: 0, scale: 0.7 }}
+            animate={
+              headerInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.7 }
+            }
+            transition={{
+              duration: 0.8,
+              ease: [0.22, 1, 0.36, 1],
+              delay: 0.3,
+            }}
+            className="shrink-0 self-start lg:self-center"
+          >
+            <Link
+              href="/myinsights"
+              className="inline-flex shrink-0 items-center justify-center gap-2 rounded-lg bg-[#c5f018] px-4 py-3 text-sm font-medium text-black transition duration-300 hover:border hover:border-white hover:bg-black hover:text-[#c5f018] sm:px-6 sm:py-4 md:text-lg"
+            >
+              View All
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 16 16"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                aria-hidden
+              >
+                <path
+                  d="M3 13L13 3M13 3H5M13 3V11"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
             </Link>
+          </motion.div>
+        </div>
+      </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {SMALL_POSTS.map((post, i) => (
-                    <Link key={i} href={post.href} className="group block">
-                        <div className="flex flex-row border border-[#68800a] rounded-xl overflow-hidden transition-colors duration-300 h-full">
-                            <div className="relative w-28 sm:w-32 lg:w-75 shrink-0 overflow-hidden">
-                                <img
-                                    src={post.img}
-                                    alt={post.title}
-                                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                                />
-                            </div>
-                            <div className="flex flex-col justify-between p-3 sm:p-4 lg:p-8 flex-1 min-w-0">
-                                <h3 className="text-sm sm:text-base lg:text-2xl font-light text-white leading-snug line-clamp-2">
-                                    {post.title}
-                                </h3>
-                                <div className="mt-2 sm:mt-3">
-                                    <div className="flex items-center gap-2">
-                                        <img
-                                            src={post.author.avatar}
-                                            alt={post.author.name}
-                                            className="w-6 h-6 sm:w-7 sm:h-7 rounded-full object-cover shrink-0"
-                                        />
-                                        <span className="text-[#c5f018] text-xs sm:text-sm font-light truncate">{post.author.name}</span>
-                                    </div>
-                                    <div className="flex items-center gap-2 mt-2 text-xs sm:text-sm">
-                                        <CalendarIcon />
-                                        <span>{post.date}</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </Link>
-                ))}
+      <Link
+        href={FEATURED_POST.href}
+        className="group mb-4 block rounded-xl border border-[#68800a]"
+      >
+        <div className="relative flex flex-col overflow-hidden rounded-xl bg-zinc-900 transition-colors duration-300 sm:flex-row">
+          <div
+            ref={imgRef}
+            className="relative w-full shrink-0 cursor-none overflow-hidden sm:w-[40%]"
+            onMouseMove={handleMouseMove}
+            onMouseEnter={() => setHovered(true)}
+            onMouseLeave={() => setHovered(false)}
+          >
+            <img
+              src={FEATURED_POST.img}
+              alt={FEATURED_POST.title}
+              className="h-48 w-full object-cover transition-transform duration-500 group-hover:scale-105 sm:h-full sm:min-h-[220px]"
+            />
+            <div className="absolute inset-0 bg-black/0 transition-all duration-300 group-hover:bg-black/40" />
+            <div
+              className="pointer-events-none absolute left-0 top-0"
+              style={{
+                transform: `translate(${pos.x - 32}px, ${pos.y - 32}px)`,
+                opacity: hovered ? 1 : 0,
+                transition: "opacity 0.3s ease, transform 0.06s linear",
+                willChange: "transform",
+              }}
+            >
+              <div className="relative flex h-16 w-16 items-center justify-center rounded-full bg-black/40 backdrop-blur-sm sm:h-20 sm:w-20">
+                <div className="absolute inset-0 rounded-full border-2 border-[#c5f018] shadow-[0_0_24px_6px_rgba(197,240,24,0.65)]" />
+                <svg width="24" height="24" viewBox="0 0 16 16" fill="none">
+                  <path
+                    d="M3 13L13 3M13 3H5M13 3V11"
+                    stroke="white"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </div>
             </div>
-        </section>
-    );
+          </div>
+          <div className="flex flex-1 flex-col justify-between p-4 sm:p-5 lg:p-8">
+            <h3 className="text-xl font-light leading-tight text-white sm:text-2xl lg:text-5xl">
+              {FEATURED_POST.title}
+            </h3>
+            <div className="mt-4 flex flex-col gap-3 xs:flex-row xs:items-center xs:justify-between">
+              <AuthorRow />
+              <div className="flex items-center gap-2 text-xs sm:text-sm">
+                <CalendarIcon />
+                <span>{FEATURED_POST.date}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </Link>
+
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        {SMALL_POSTS.map((post, i) => (
+          <Link key={i} href={post.href} className="group block">
+            <div className="flex h-full flex-row overflow-hidden rounded-xl border border-[#68800a] transition-colors duration-300">
+              <div className="relative w-28 shrink-0 overflow-hidden sm:w-32 lg:w-75">
+                <img
+                  src={post.img}
+                  alt={post.title}
+                  className="h-full w-full min-h-[120px] object-cover transition-transform duration-500 group-hover:scale-105 sm:min-h-[140px]"
+                />
+              </div>
+              <div className="flex min-w-0 flex-1 flex-col justify-between p-3 sm:p-4 lg:p-8">
+                <h3 className="line-clamp-2 text-sm font-light leading-snug text-white sm:text-base lg:text-2xl">
+                  {post.title}
+                </h3>
+                <div className="mt-2 sm:mt-3">
+                  <AuthorRow />
+                  <div className="mt-2 flex items-center gap-2 text-xs sm:text-sm">
+                    <CalendarIcon />
+                    <span>{post.date}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </Link>
+        ))}
+      </div>
+    </section>
+  );
 }

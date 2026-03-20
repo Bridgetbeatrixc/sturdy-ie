@@ -3,10 +3,10 @@
 import { useRef, useState, useEffect } from "react";
 import { motion, useScroll, useTransform } from "motion/react";
 
-const SERVICES_ITEMS = [
+const STANDARDS_ITEMS = [
   {
-    title: "Governance & Compliance",
-    body: "Operationalising regulatory frameworks into deployable environments with assurance, auditability, and defensible controls.",
+    title: "GDPR & Data Protection Frameworks",
+    body: "Ensuring lawful and accountable data governance",
     icon: (
       <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
         <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
@@ -14,43 +14,39 @@ const SERVICES_ITEMS = [
     ),
   },
   {
-    title: "Sovereign Data Infrastructure",
-    body: "Designing mission-critical platforms aligned to resilience, security, and long-term operational integrity.",
+    title: "FAIR Data Principles",
+    body: "Supporting interoperable and reusable data",
     icon: (
       <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <ellipse cx="12" cy="5" rx="9" ry="3" />
-        <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3" />
-        <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5" />
+        <path d="m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z" />
+        <path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65" />
+        <path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65" />
       </svg>
     ),
   },
   {
-    title: "Secure Collaboration",
-    body: "Enabling cross-organisation collaboration through governed access models, secure environments, and trust boundaries.",
+    title: "HL7 / FHIR Standards",
+    body: "Enabling healthcare data interoperability",
     icon: (
       <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-        <circle cx="9" cy="7" r="4" />
-        <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
-        <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+        <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
       </svg>
     ),
   },
   {
-    title: "Interoperability & Data Exchange",
-    body: "Implementing standards-led architectures so data can be securely shared, understood, and reused across ecosystems.",
+    title: "European Data Ecosystems",
+    body: "GAIA-X, EOSC, European Health Data Space",
     icon: (
       <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <polyline points="16 3 21 3 21 8" />
-        <line x1="4" y1="20" x2="21" y2="3" />
-        <polyline points="21 16 21 21 16 21" />
-        <line x1="15" y1="15" x2="21" y2="21" />
+        <circle cx="12" cy="12" r="10" />
+        <path d="M2 12h20" />
+        <path d="M12 2a14.8 14.8 0 0 1 0 20 14.8 14.8 0 0 1 0-20" />
       </svg>
     ),
   },
 ];
 
-const total = SERVICES_ITEMS.length;
+const total = STANDARDS_ITEMS.length;
 
 function ServiceCard({
   item,
@@ -58,7 +54,7 @@ function ServiceCard({
   scrollYProgress,
   isMobile,
 }: {
-  item: typeof SERVICES_ITEMS[0];
+  item: (typeof STANDARDS_ITEMS)[0];
   index: number;
   scrollYProgress: ReturnType<typeof useScroll>["scrollYProgress"];
   isMobile: boolean;
@@ -67,11 +63,12 @@ function ServiceCard({
   const revealEnd = revealStart + 0.5 / total;
 
   const opacity = useTransform(scrollYProgress, [revealStart, revealEnd], [0, 1]);
-  const y = useTransform(scrollYProgress, [revealStart, revealEnd], [60, 0]);
+  /* Reveal from right → left (was bottom → top via translateY) */
+  const x = useTransform(scrollYProgress, [revealStart, revealEnd], [72, 0]);
 
   return (
     <motion.div
-      style={isMobile ? {} : { opacity, y }}
+      style={isMobile ? {} : { opacity, x }}
       className="group flex flex-col items-center md:flex-row md:items-center gap-4 md:gap-12 rounded-lg md:rounded-2xl border border-[#677f06] p-6 md:p-0"
     >
       <div className="flex-shrink-0 flex h-14 w-14 md:h-38 md:w-40 items-center justify-center rounded-xl md:rounded-l-2xl md:rounded-r-none bg-[#c5f018] text-black">
@@ -134,16 +131,24 @@ export function ServicesSection() {
                   className="h-2 w-2 rounded-full bg-[#c5f018]"
                   style={{ animation: "dotPulse 1s ease-in-out infinite" }}
                 />
-                <span className="md:text-lg text-sm">Lorem ipsum</span>
+                <span className="text-sm md:text-lg">Standards</span>
               </div>
               <h2 className="text-2xl font-semibold leading-tight text-[#c5f018] md:text-5xl">
-                Discover <span className="text-white font-light">the range of</span>
+                Standards,{" "}
+                <span className="font-light text-white">
+                  Frameworks &amp; Ecosystems
+                </span>
               </h2>
-              <div className="mt-12 h-64 sm:h-80 lg:h-[420px] w-full rounded-2xl bg-[url('https://images.pexels.com/photos/1181567/pexels-photo-1181567.jpeg?auto=compress&cs=tinysrgb&w=1200')] bg-cover bg-center" />
+              <p className="mt-4 max-w-xl text-sm leading-relaxed text-zinc-300 md:text-base">
+                Trusted digital infrastructure depends on shared frameworks that
+                ensure interoperability, compliance, and responsible data
+                governance.
+              </p>
+              <div className="mt-8 h-64 w-full rounded-2xl bg-[url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&auto=format&fit=crop&q=80')] bg-cover bg-center sm:h-80 lg:mt-10 lg:h-[420px]" />
             </div>
 
             <div className="w-full lg:w-1/2 space-y-4">
-              {SERVICES_ITEMS.map((item, index) => (
+              {STANDARDS_ITEMS.map((item, index) => (
                 <ServiceCard
                   key={item.title}
                   item={item}
