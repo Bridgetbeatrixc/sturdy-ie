@@ -51,7 +51,7 @@ export function Header() {
         <Link href="/" className="flex items-center gap-2">
         
           <span className="text-2xl font-medium tracking-wide text-zinc-300">
-            Jason<span className="font-semibold text-white">Sturdy</span>
+            <span className="font-semibold text-white">Sturdy.ie</span>
           </span>
         </Link>
 

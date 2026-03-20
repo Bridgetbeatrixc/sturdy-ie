@@ -46,18 +46,78 @@ export function HeroSection() {
               <p>Designing Trusted Digital Infrastructure</p>
             </motion.div>
 
+            {/* Supporting line */}
+            <motion.p
+              initial={{ opacity: 0, y: 10 }}
+              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
+              transition={{ duration: 0.8, ease: "easeOut", delay: 0.22 }}
+              className="text-base sm:text-lg text-zinc-300"
+            >
+              Data Governance • Security Architecture • Regulatory Systems • Digital Infrastructure
+            </motion.p>
+
+            {/* Micro line */}
+            <motion.p
+              initial={{ opacity: 0, y: 10 }}
+              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
+              transition={{ duration: 0.8, ease: "easeOut", delay: 0.28 }}
+              className="text-sm text-zinc-500"
+            >
+              Working across healthcare, financial systems, research infrastructure, and the public sector.
+            </motion.p>
+
+            {/* Hero paragraphs
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
+              transition={{ duration: 0.8, ease: "easeOut", delay: 0.35 }}
+              className="max-w-2xl space-y-4 text-base leading-relaxed text-zinc-300 sm:text-lg"
+            >
+              <p>
+                I design digital platforms and infrastructure that transform fragmented data into trusted intelligence.
+              </p>
+              <p>
+                My work focuses on systems that allow organisations to securely govern, integrate, and collaborate around complex datasets across regulated environments.
+              </p>
+            </motion.div> */}
+
+            {/* Divider line and star */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={isInView ? { opacity: 1 } : { opacity: 0 }}
+              transition={{ duration: 0.8, ease: "easeOut", delay: 0.45 }}
+              className="relative mt-6 flex items-center lg:w-3xl w-xs lg:w-2xl"
+            >
+              <div
+                className="h-[1px] flex-1 origin-left bg-zinc-400"
+                style={{ animation: isInView ? "grow 1s ease-out forwards" : "none" }}
+              />
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={isInView ? { opacity: 1 } : { opacity: 0 }}
+                transition={{ duration: 0.5, ease: "easeOut", delay: 0.75 }}
+                className="flex h-12 w-12 items-center justify-center"
+              >
+                <div className="relative flex h-8 w-8 items-center justify-center">
+                  <span className="absolute h-[3px] w-full bg-[#c5f018]" />
+                  <span className="absolute h-[3px] w-full rotate-60 bg-[#c5f018]" />
+                  <span className="absolute h-[3px] w-full -rotate-60 bg-[#c5f018]" />
+                </div>
+              </motion.div>
+            </motion.div>
+
             {/* Buttons */}
-            <div className="flex flex-col sm:flex-row flex-wrap gap-4 pt-4">
+            <div className="flex flex-col flex-wrap gap-4 pt-2 sm:flex-row">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-                transition={{ duration: 0.8, ease: "easeOut", delay: 0.3 }}
+                transition={{ duration: 0.8, ease: "easeOut", delay: 0.5 }}
               >
                 <Link
                   href="/case-studies"
-                  className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#c5f018] px-6 py-5 text-lg font-semibold transition duration-500 text-black hover:-translate-y-[1px] hover:bg-black hover:text-[#CCFF00] hover:border-1 hover:border-zinc-300"
+                  className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#c5f018] px-6 py-5 text-lg font-semibold text-black transition duration-500 hover:-translate-y-[1px] hover:border-1 hover:border-zinc-300 hover:bg-black hover:text-[#CCFF00]"
                 >
-                  Explore Case Studies
+                  View Case Studies
                   <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M3 13L13 3M13 3H5M13 3V11" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
@@ -67,75 +127,42 @@ export function HeroSection() {
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-                transition={{ duration: 0.8, ease: "easeOut", delay: 0.45 }}
+                transition={{ duration: 0.8, ease: "easeOut", delay: 0.58 }}
               >
                 <Link
-                  href="/ventures"
+                  href="/myinsights"
                   className="inline-flex items-center justify-center gap-2 rounded-lg border border-lime-400/70 bg-transparent px-6 py-5 text-lg font-semibold text-lime-300 transition duration-500 hover:-translate-y-[1px] hover:bg-[#CCFF00] hover:text-black"
                 >
-                  View Ventures
+                  Explore Insights
                   <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M3 13L13 3M13 3H5M13 3V11" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                 </Link>
               </motion.div>
             </div>
-
-            {/* Divider line and star */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={isInView ? { opacity: 1 } : { opacity: 0 }}
-              transition={{ duration: 0.8, ease: "easeOut", delay: 0.6 }}
-              className="relative mt-10 flex items-center lg:w-3xl w-xs lg:w-2xl"
-            >
-              <div
-                className="h-[1px] flex-1 bg-zinc-400 origin-left"
-                style={{ animation: isInView ? 'grow 1s ease-out forwards' : 'none' }}
-              />
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={isInView ? { opacity: 1 } : { opacity: 0 }}
-                transition={{ duration: 0.5, ease: "easeOut", delay: 0.9 }}
-                className="flex h-12 w-12 items-center justify-center"
-              >
-                <div className="relative w-8 h-8 flex items-center justify-center">
-                  <span className="absolute w-full h-[3px] bg-[#c5f018]" />
-                  <span className="absolute w-full h-[3px] bg-[#c5f018] rotate-60" />
-                  <span className="absolute w-full h-[3px] bg-[#c5f018] -rotate-60" />
-                </div>
-              </motion.div>
-            </motion.div>
-
-            {/* Tags */}
-            <motion.p
-              initial={{ opacity: 0, y: 10 }}
-              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
-              transition={{ duration: 0.8, ease: "easeOut", delay: 1 }}
-              className="text-zinc-300 text-sm"
-            >
-              Data Governance • Security Architecture • Regulatory Systems • Digital Infrastructure
-            </motion.p>
           </div>
 
-          {/* Right image */}
-          <div className="relative mx-auto mt-10 flex items-center justify-center lg:mt-0 md:mr-20 lg:-ml-34 lg:flex-1">
+          {/* Right image + floating quote card */}
+          <div className="relative mx-auto mt-10 flex w-full max-w-md flex-col items-center justify-center lg:mt-0 md:mr-20 lg:-ml-34 lg:max-w-none lg:flex-1">
             <div className="pointer-events-none absolute inset-0 blur-3xl" />
             <div className="relative h-[280px] w-[220px] min-[400px]:h-[360px] min-[400px]:w-[270px] sm:h-[460px] sm:w-[320px] md:h-[550px] md:w-[400px] lg:h-[430px] lg:w-[280px]">
               <motion.div
                 initial={{ opacity: 0, y: 60 }}
                 animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 60 }}
                 transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.4 }}
-                className="relative object-contain scale-[2] h-full w-full overflow-hidden bg-transparent"
+                className="relative h-full w-full scale-[2] overflow-hidden bg-transparent object-contain"
               >
                 <Image
                   src={jasonPortrait}
                   alt="Portrait of Jason Sturdy"
                   fill
-                  className="object-contain"
+                  className="object-contain -scale-x-100"
                   priority
                 />
               </motion.div>
             </div>
+
+           
           </div>
 
         </div>
