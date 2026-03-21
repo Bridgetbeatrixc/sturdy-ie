@@ -1,23 +1,22 @@
 import type { CollectionConfig } from 'payload'
 
-export const Media = {
+export const Media: CollectionConfig = {
   slug: 'media',
   access: {
-        read: () => true,
-    },
+    read: () => true,
+    create: () => true,
+    update: () => true,
+    delete: () => true,
+  },
   upload: {
-    staticURL: '/media',
-    staticDir: 'media',
-    imageSizes: [
-      {
-        name: 'thumbnail',
-        width: 400,
-        height: 300,
-        crop: 'center',
-      },
-    ],
-    adminThumbnail: 'thumbnail', 
+    disableLocalStorage: true,
     mimeTypes: ['image/*'],
   },
-  fields: [],
+  fields: [
+    {
+      name: 'alt',
+      type: 'text',
+      required: false,
+    },
+  ],
 }

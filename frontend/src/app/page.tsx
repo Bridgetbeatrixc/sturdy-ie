@@ -16,19 +16,21 @@ import { TestimonialsSection } from "@/components/TestimonialsSection";
 import { ProfileSection } from "@/components/ProfileSection";
 import { ContactUsCtaSection } from "@/components/ContactUsCtaSection";
 import { BlogSection } from "@/components/BlogSection";
+import { getHeroData } from "../lib/hero";
 
 export default async function Home() {
-  const [caseStudies, ventures, myInsights, challengeData] = await Promise.all([
+  const [caseStudies, ventures, myInsights, challengeData, heroData] = await Promise.all([
     getCaseStudiesIndex(),
     getVenturesIndex(),
     getMyInsightsIndex(),
     getChallengeData(),
+    getHeroData()
   ]);
 
   return (
     <main className="relative min-w-0 w-full max-w-full overflow-visible text-sm text-zinc-200">
       <Header />
-      <HeroSection />
+      <HeroSection data={heroData} />
       <CapabilitiesSection />
       {challengeData && <ExpertiseSection data={challengeData} />}
       <ServicesSection />

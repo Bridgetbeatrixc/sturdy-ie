@@ -15,7 +15,6 @@ import {
 import path from 'path'
 import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
-import sharp from 'sharp'
 import { s3Storage } from '@payloadcms/storage-s3'
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
@@ -23,6 +22,7 @@ import { Challenge } from './collections/Challenge'
 import { Ventures } from './collections/Ventures'
 import { MyInsight } from './collections/MyInsight'
 import { CaseStudies } from './collections/CaseStudies'
+import { Hero } from './collections/Hero'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -35,7 +35,7 @@ export default buildConfig({
     },
     livePreview: {
       url: process.env.NEXT_PUBLIC_SITE_URL,
-      collections: ['my-insight', 'case-studies', 'ventures', 'challenge'],
+      collections: ['my-insight', 'case-studies', 'ventures', 'challenge', 'hero'],
     },
   },
   cors: [
@@ -52,7 +52,7 @@ export default buildConfig({
     'https://sturdy-ie-66rb.vercel.app',
   process.env.NEXT_PUBLIC_SITE_URL ?? '',
   ],
-  collections: [Users, Media, Ventures, MyInsight, CaseStudies, Challenge],
+  collections: [Users, Media, Ventures, MyInsight, CaseStudies, Challenge, Hero],
   editor: lexicalEditor({
     features: ({ defaultFeatures }) => [
       ...defaultFeatures,
@@ -68,7 +68,6 @@ export default buildConfig({
       connectionString: process.env.DATABASE_URL || '',
     },
   }),
-  sharp,
   plugins: [
     s3Storage({
       collections: { media: true },

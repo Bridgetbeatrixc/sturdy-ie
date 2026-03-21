@@ -222,6 +222,12 @@
           "primaryKey": true,
           "notNull": true
         },
+        "alt": {
+          "name": "alt",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
         "updated_at": {
           "name": "updated_at",
           "type": "timestamp(3) with time zone",
@@ -289,42 +295,6 @@
           "type": "numeric",
           "primaryKey": false,
           "notNull": false
-        },
-        "sizes_thumbnail_url": {
-          "name": "sizes_thumbnail_url",
-          "type": "varchar",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "sizes_thumbnail_width": {
-          "name": "sizes_thumbnail_width",
-          "type": "numeric",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "sizes_thumbnail_height": {
-          "name": "sizes_thumbnail_height",
-          "type": "numeric",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "sizes_thumbnail_mime_type": {
-          "name": "sizes_thumbnail_mime_type",
-          "type": "varchar",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "sizes_thumbnail_filesize": {
-          "name": "sizes_thumbnail_filesize",
-          "type": "numeric",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "sizes_thumbnail_filename": {
-          "name": "sizes_thumbnail_filename",
-          "type": "varchar",
-          "primaryKey": false,
-          "notNull": false
         }
       },
       "indexes": {
@@ -369,21 +339,6 @@
             }
           ],
           "isUnique": true,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        },
-        "media_sizes_thumbnail_sizes_thumbnail_filename_idx": {
-          "name": "media_sizes_thumbnail_sizes_thumbnail_filename_idx",
-          "columns": [
-            {
-              "expression": "sizes_thumbnail_filename",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": false,
           "concurrently": false,
           "method": "btree",
           "with": {}
@@ -1126,6 +1081,442 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
+    "public.challenge_expertise_items": {
+      "name": "challenge_expertise_items",
+      "schema": "",
+      "columns": {
+        "_order": {
+          "name": "_order",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "_parent_id": {
+          "name": "_parent_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "id": {
+          "name": "id",
+          "type": "varchar",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "title": {
+          "name": "title",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "body": {
+          "name": "body",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "icon": {
+          "name": "icon",
+          "type": "enum_challenge_expertise_items_icon",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {
+        "challenge_expertise_items_order_idx": {
+          "name": "challenge_expertise_items_order_idx",
+          "columns": [
+            {
+              "expression": "_order",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "challenge_expertise_items_parent_id_idx": {
+          "name": "challenge_expertise_items_parent_id_idx",
+          "columns": [
+            {
+              "expression": "_parent_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "challenge_expertise_items_parent_id_fk": {
+          "name": "challenge_expertise_items_parent_id_fk",
+          "tableFrom": "challenge_expertise_items",
+          "tableTo": "challenge",
+          "columnsFrom": [
+            "_parent_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.challenge": {
+      "name": "challenge",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "badge": {
+          "name": "badge",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'Challenge'"
+        },
+        "heading": {
+          "name": "heading",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'Governance-led transformation in regulated ecosystems'"
+        },
+        "heading_highlight": {
+          "name": "heading_highlight",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Governance-led'"
+        },
+        "intro": {
+          "name": "intro",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'Across regulated environments, the challenge is not technology.\nIt is aligning governance, systems, and operations so data can be used in practice.'"
+        },
+        "image_id": {
+          "name": "image_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "image_caption": {
+          "name": "image_caption",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Executive delivery across public sector, financial services, and health systems'"
+        },
+        "cta_label": {
+          "name": "cta_label",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Explore My Work'"
+        },
+        "cta_href": {
+          "name": "cta_href",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'/case-studies'"
+        },
+        "seo_title": {
+          "name": "seo_title",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "seo_description": {
+          "name": "seo_description",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "challenge_image_idx": {
+          "name": "challenge_image_idx",
+          "columns": [
+            {
+              "expression": "image_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "challenge_updated_at_idx": {
+          "name": "challenge_updated_at_idx",
+          "columns": [
+            {
+              "expression": "updated_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "challenge_created_at_idx": {
+          "name": "challenge_created_at_idx",
+          "columns": [
+            {
+              "expression": "created_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "challenge_image_id_media_id_fk": {
+          "name": "challenge_image_id_media_id_fk",
+          "tableFrom": "challenge",
+          "tableTo": "media",
+          "columnsFrom": [
+            "image_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.hero": {
+      "name": "hero",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "heading": {
+          "name": "heading",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'Jason Sturdy'"
+        },
+        "heading_highlight": {
+          "name": "heading_highlight",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Sturdy'"
+        },
+        "subheading": {
+          "name": "subheading",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'Building Trusted Systems from Policy to Practice'"
+        },
+        "tagline": {
+          "name": "tagline",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Data Governance • Security Architecture • Operating Models • Digital Infrastructure'"
+        },
+        "description": {
+          "name": "description",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'I design systems and operating models that enable organisations to use data in practice, translating policy, regulation, and governance into infrastructure that is secure, usable, and trusted.'"
+        },
+        "primary_cta_label": {
+          "name": "primary_cta_label",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'View Case Studies'"
+        },
+        "primary_cta_href": {
+          "name": "primary_cta_href",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'/case-studies'"
+        },
+        "secondary_cta_label": {
+          "name": "secondary_cta_label",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Explore Insights'"
+        },
+        "secondary_cta_href": {
+          "name": "secondary_cta_href",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'/myinsights'"
+        },
+        "portrait_id": {
+          "name": "portrait_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "portrait_alt": {
+          "name": "portrait_alt",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Portrait of Jason Sturdy'"
+        },
+        "seo_title": {
+          "name": "seo_title",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "seo_description": {
+          "name": "seo_description",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "hero_portrait_idx": {
+          "name": "hero_portrait_idx",
+          "columns": [
+            {
+              "expression": "portrait_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "hero_updated_at_idx": {
+          "name": "hero_updated_at_idx",
+          "columns": [
+            {
+              "expression": "updated_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "hero_created_at_idx": {
+          "name": "hero_created_at_idx",
+          "columns": [
+            {
+              "expression": "created_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "hero_portrait_id_media_id_fk": {
+          "name": "hero_portrait_id_media_id_fk",
+          "tableFrom": "hero",
+          "tableTo": "media",
+          "columnsFrom": [
+            "portrait_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
     "public.payload_kv": {
       "name": "payload_kv",
       "schema": "",
@@ -1315,6 +1706,18 @@
           "type": "integer",
           "primaryKey": false,
           "notNull": false
+        },
+        "challenge_id": {
+          "name": "challenge_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "hero_id": {
+          "name": "hero_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
         }
       },
       "indexes": {
@@ -1437,6 +1840,36 @@
           "concurrently": false,
           "method": "btree",
           "with": {}
+        },
+        "payload_locked_documents_rels_challenge_id_idx": {
+          "name": "payload_locked_documents_rels_challenge_id_idx",
+          "columns": [
+            {
+              "expression": "challenge_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "payload_locked_documents_rels_hero_id_idx": {
+          "name": "payload_locked_documents_rels_hero_id_idx",
+          "columns": [
+            {
+              "expression": "hero_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
         }
       },
       "foreignKeys": {
@@ -1511,6 +1944,32 @@
           "tableTo": "case_studies",
           "columnsFrom": [
             "case_studies_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "payload_locked_documents_rels_challenge_fk": {
+          "name": "payload_locked_documents_rels_challenge_fk",
+          "tableFrom": "payload_locked_documents_rels",
+          "tableTo": "challenge",
+          "columnsFrom": [
+            "challenge_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "payload_locked_documents_rels_hero_fk": {
+          "name": "payload_locked_documents_rels_hero_fk",
+          "tableFrom": "payload_locked_documents_rels",
+          "tableTo": "hero",
+          "columnsFrom": [
+            "hero_id"
           ],
           "columnsTo": [
             "id"
@@ -1853,6 +2312,16 @@
         "Preventive Health Innovation",
         "AI & Regulated Data"
       ]
+    },
+    "public.enum_challenge_expertise_items_icon": {
+      "name": "enum_challenge_expertise_items_icon",
+      "schema": "public",
+      "values": [
+        "governance",
+        "infrastructure",
+        "collaboration",
+        "interoperability"
+      ]
     }
   },
   "schemas": {},
@@ -1865,6 +2334,6 @@
     "tables": {},
     "columns": {}
   },
-  "id": "4bdffd01-2a1f-494f-8c47-dd72eaaa8206",
+  "id": "39a18435-fd1f-4981-826d-bb42861f3f10",
   "prevId": "00000000-0000-0000-0000-000000000000"
 }

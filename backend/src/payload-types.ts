@@ -73,6 +73,7 @@ export interface Config {
     myinsights: Myinsight;
     'case-studies': CaseStudy;
     challenge: Challenge;
+    hero: Hero;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -86,6 +87,7 @@ export interface Config {
     myinsights: MyinsightsSelect<false> | MyinsightsSelect<true>;
     'case-studies': CaseStudiesSelect<false> | CaseStudiesSelect<true>;
     challenge: ChallengeSelect<false> | ChallengeSelect<true>;
+    hero: HeroSelect<false> | HeroSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -156,6 +158,7 @@ export interface User {
  */
 export interface Media {
   id: number;
+  alt?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -167,16 +170,6 @@ export interface Media {
   height?: number | null;
   focalX?: number | null;
   focalY?: number | null;
-  sizes?: {
-    thumbnail?: {
-      url?: string | null;
-      width?: number | null;
-      height?: number | null;
-      mimeType?: string | null;
-      filesize?: number | null;
-      filename?: string | null;
-    };
-  };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -590,6 +583,52 @@ export interface Challenge {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "hero".
+ */
+export interface Hero {
+  id: number;
+  /**
+   * Main hero heading. The highlighted portion is set separately.
+   */
+  heading: string;
+  /**
+   * Portion of the heading rendered in lime (#c5f018). Must match a substring of Heading.
+   */
+  headingHighlight?: string | null;
+  /**
+   * Large line shown beneath the main heading.
+   */
+  subheading: string;
+  /**
+   * Dot-separated disciplines line beneath the subheading.
+   */
+  tagline?: string | null;
+  /**
+   * Short paragraph beneath the tagline.
+   */
+  description?: string | null;
+  /**
+   * Text on the primary (lime) button.
+   */
+  primaryCtaLabel?: string | null;
+  primaryCtaHref?: string | null;
+  /**
+   * Text on the secondary (outline) button.
+   */
+  secondaryCtaLabel?: string | null;
+  secondaryCtaHref?: string | null;
+  /**
+   * Portrait shown on the right. Leave blank to use the default local image.
+   */
+  portrait?: (number | null) | Media;
+  portraitAlt?: string | null;
+  seoTitle?: string | null;
+  seoDescription?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -635,6 +674,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'challenge';
         value: number | Challenge;
+      } | null)
+    | ({
+        relationTo: 'hero';
+        value: number | Hero;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -705,6 +748,7 @@ export interface UsersSelect<T extends boolean = true> {
  * via the `definition` "media_select".
  */
 export interface MediaSelect<T extends boolean = true> {
+  alt?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
@@ -716,20 +760,6 @@ export interface MediaSelect<T extends boolean = true> {
   height?: T;
   focalX?: T;
   focalY?: T;
-  sizes?:
-    | T
-    | {
-        thumbnail?:
-          | T
-          | {
-              url?: T;
-              width?: T;
-              height?: T;
-              mimeType?: T;
-              filesize?: T;
-              filename?: T;
-            };
-      };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -822,6 +852,27 @@ export interface ChallengeSelect<T extends boolean = true> {
   imageCaption?: T;
   ctaLabel?: T;
   ctaHref?: T;
+  seoTitle?: T;
+  seoDescription?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "hero_select".
+ */
+export interface HeroSelect<T extends boolean = true> {
+  heading?: T;
+  headingHighlight?: T;
+  subheading?: T;
+  tagline?: T;
+  description?: T;
+  primaryCtaLabel?: T;
+  primaryCtaHref?: T;
+  secondaryCtaLabel?: T;
+  secondaryCtaHref?: T;
+  portrait?: T;
+  portraitAlt?: T;
   seoTitle?: T;
   seoDescription?: T;
   updatedAt?: T;
