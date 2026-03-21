@@ -19,6 +19,7 @@ import sharp from 'sharp'
 import { s3Storage } from '@payloadcms/storage-s3'
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
+import { Challenge } from './collections/Challenge'
 import { Ventures } from './collections/Ventures'
 import { MyInsight } from './collections/MyInsight'
 import { CaseStudies } from './collections/CaseStudies'
@@ -34,7 +35,7 @@ export default buildConfig({
     },
     livePreview: {
       url: process.env.NEXT_PUBLIC_SITE_URL,
-      collections: ['my-insight', 'case-studies', 'ventures'],
+      collections: ['my-insight', 'case-studies', 'ventures', 'challenge'],
     },
   },
   cors: [
@@ -51,7 +52,7 @@ export default buildConfig({
     'https://sturdy-ie-66rb.vercel.app',
   process.env.NEXT_PUBLIC_SITE_URL ?? '',
   ],
-  collections: [Users, Media, Ventures, MyInsight, CaseStudies],
+  collections: [Users, Media, Ventures, MyInsight, CaseStudies, Challenge],
   editor: lexicalEditor({
     features: ({ defaultFeatures }) => [
       ...defaultFeatures,

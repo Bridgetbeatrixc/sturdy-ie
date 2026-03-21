@@ -72,6 +72,7 @@ export interface Config {
     ventures: Venture;
     myinsights: Myinsight;
     'case-studies': CaseStudy;
+    challenge: Challenge;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -84,6 +85,7 @@ export interface Config {
     ventures: VenturesSelect<false> | VenturesSelect<true>;
     myinsights: MyinsightsSelect<false> | MyinsightsSelect<true>;
     'case-studies': CaseStudiesSelect<false> | CaseStudiesSelect<true>;
+    challenge: ChallengeSelect<false> | ChallengeSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -508,6 +510,86 @@ export interface CaseStudy {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "challenge".
+ */
+export interface Challenge {
+  id: number;
+  /**
+   * Small label shown next to the green dot (e.g. "Challenge").
+   */
+  badge: string;
+  /**
+   * Main section heading. The highlighted (lime) portion is set separately.
+   */
+  heading: string;
+  /**
+   * The portion of the heading rendered in lime (#c5f018). Must match a substring of Heading.
+   */
+  headingHighlight?: string | null;
+  /**
+   * Short paragraph below the heading (left column).
+   */
+  intro: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  /**
+   * The 2×2 grid of expertise cards. Supports up to 4 items.
+   */
+  expertiseItems?:
+    | {
+        title: string;
+        /**
+         * Short supporting sentence shown beneath the title.
+         */
+        body: string;
+        /**
+         * Choose the icon to display on this card.
+         */
+        icon: 'governance' | 'infrastructure' | 'collaboration' | 'interoperability';
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Large image shown in the right column.
+   */
+  image: number | Media;
+  /**
+   * Small caption rendered below the image.
+   */
+  imageCaption?: string | null;
+  /**
+   * Text on the call-to-action button.
+   */
+  ctaLabel?: string | null;
+  /**
+   * Where the CTA button links to.
+   */
+  ctaHref?: string | null;
+  /**
+   * Overrides the page <title>. Leave blank to use Heading.
+   */
+  seoTitle?: string | null;
+  /**
+   * Short description for search engine results.
+   */
+  seoDescription?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -549,6 +631,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'case-studies';
         value: number | CaseStudy;
+      } | null)
+    | ({
+        relationTo: 'challenge';
+        value: number | Challenge;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -710,6 +796,32 @@ export interface CaseStudiesSelect<T extends boolean = true> {
   outcomesImpact?: T;
   partnershipRelevance?: T;
   featured?: T;
+  seoTitle?: T;
+  seoDescription?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "challenge_select".
+ */
+export interface ChallengeSelect<T extends boolean = true> {
+  badge?: T;
+  heading?: T;
+  headingHighlight?: T;
+  intro?: T;
+  expertiseItems?:
+    | T
+    | {
+        title?: T;
+        body?: T;
+        icon?: T;
+        id?: T;
+      };
+  image?: T;
+  imageCaption?: T;
+  ctaLabel?: T;
+  ctaHref?: T;
   seoTitle?: T;
   seoDescription?: T;
   updatedAt?: T;

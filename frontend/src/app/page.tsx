@@ -9,6 +9,7 @@ import { FooterSection } from "../components/FooterSection";
 import { getCaseStudiesIndex } from "../lib/caseStudies";
 import { getVenturesIndex } from "../lib/ventures";
 import { getMyInsightsIndex } from "../lib/myInsight";
+import { getChallengeData } from "../lib/challenge";
 import { ServicesSection } from "@/components/Services";
 import { CaseStudiesTitleSection } from "@/components/CaseStudiesTitleSection";
 import { TestimonialsSection } from "@/components/TestimonialsSection";
@@ -17,10 +18,11 @@ import { ContactUsCtaSection } from "@/components/ContactUsCtaSection";
 import { BlogSection } from "@/components/BlogSection";
 
 export default async function Home() {
-  const [caseStudies, ventures, myInsights] = await Promise.all([
+  const [caseStudies, ventures, myInsights, challengeData] = await Promise.all([
     getCaseStudiesIndex(),
     getVenturesIndex(),
     getMyInsightsIndex(),
+    getChallengeData(),
   ]);
 
   return (
@@ -28,7 +30,7 @@ export default async function Home() {
       <Header />
       <HeroSection />
       <CapabilitiesSection />
-      <ExpertiseSection />
+      {challengeData && <ExpertiseSection data={challengeData} />}
       <ServicesSection />
       <InsightsPreviewSection myInsights={myInsights} />
       <VenturesSection />
