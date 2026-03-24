@@ -1,4 +1,6 @@
-const VENTURES = [
+import { getResponseCardData, type ResponseCardData } from "@/lib/ResponseCard";
+
+const FALLBACK_CARDS: ResponseCardData[] = [
   {
     indexLabel: "01",
     title: "Governance by Design",
@@ -19,11 +21,13 @@ const VENTURES = [
   },
 ];
 
-export function VenturesSection() {
+export async function VenturesSection() {
+  const cards = (await getResponseCardData()) ?? FALLBACK_CARDS;
+
   return (
     <section className="mx-auto max-w-8xl bg-black px-4 py-8 md:px-4 lg:px-4">
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {VENTURES.map((v) => (
+        {cards.map((v) => (
           <article
             key={v.title}
             className="group flex flex-col justify-between rounded-xl border border-transparent bg-zinc-800/80 p-8 transition-all duration-1000 hover:border-[#c5f018] hover:shadow-sm hover:shadow-white"

@@ -6,9 +6,8 @@ import { InsightsPreviewSection } from "../components/InsightsPreviewSection";
 import { VenturesSection } from "../components/VenturesSection";
 import { CaseStudiesSection } from "../components/CaseStudiesSection";
 import { FooterSection } from "../components/FooterSection";
+import { getInfrastructureData } from "@/lib/infrastructure";
 import { getCaseStudiesIndex } from "../lib/caseStudies";
-import { getVenturesIndex } from "../lib/ventures";
-import { getMyInsightsIndex } from "../lib/myInsight";
 import { getChallengeData } from "../lib/challenge";
 import { ServicesSection } from "@/components/Services";
 import { CaseStudiesTitleSection } from "@/components/CaseStudiesTitleSection";
@@ -17,14 +16,15 @@ import { ProfileSection } from "@/components/ProfileSection";
 import { ContactUsCtaSection } from "@/components/ContactUsCtaSection";
 import { BlogSection } from "@/components/BlogSection";
 import { getHeroData } from "../lib/hero";
+import { getResponseData } from "../lib/response"; // ← add this
 
 export default async function Home() {
-  const [caseStudies, ventures, myInsights, challengeData, heroData] = await Promise.all([
+  const [caseStudies, challengeData, heroData, infrastructureData, responseData] = await Promise.all([
     getCaseStudiesIndex(),
-    getVenturesIndex(),
-    getMyInsightsIndex(),
     getChallengeData(),
-    getHeroData()
+    getHeroData(),
+    getInfrastructureData(),
+    getResponseData(),
   ]);
 
   return (
@@ -33,8 +33,8 @@ export default async function Home() {
       <HeroSection data={heroData} />
       <CapabilitiesSection />
       {challengeData && <ExpertiseSection data={challengeData} />}
-      <ServicesSection />
-      <InsightsPreviewSection myInsights={myInsights} />
+      <ServicesSection data={infrastructureData} />
+      <InsightsPreviewSection data={responseData} />
       <VenturesSection />
       <CaseStudiesTitleSection />
       <CaseStudiesSection caseStudies={caseStudies} />

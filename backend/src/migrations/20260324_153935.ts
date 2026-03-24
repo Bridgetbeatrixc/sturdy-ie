@@ -8,6 +8,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE TYPE "public"."enum_challenge_expertise_items_icon" AS ENUM('governance', 'infrastructure', 'collaboration', 'interoperability');
   CREATE TYPE "public"."enum_hero_blocks_rich_text_section_position" AS ENUM('above-heading', 'below-heading', 'below-subheading', 'below-tagline', 'above-cta', 'below-cta');
   CREATE TYPE "public"."enum_hero_blocks_bullet_list_position" AS ENUM('above-heading', 'below-heading', 'below-subheading', 'below-tagline', 'above-cta', 'below-cta');
+  CREATE TYPE "public"."enum_infrastructure_cards_icon" AS ENUM('shield', 'layers', 'activity', 'globe');
   CREATE TABLE "users_sessions" (
   	"_order" integer NOT NULL,
   	"_parent_id" integer NOT NULL,
@@ -186,6 +187,27 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"created_at" timestamp(3) with time zone DEFAULT now() NOT NULL
   );
   
+  CREATE TABLE "infrastructure_cards" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" integer NOT NULL,
+  	"id" varchar PRIMARY KEY NOT NULL,
+  	"title" varchar NOT NULL,
+  	"body" varchar NOT NULL,
+  	"icon" "enum_infrastructure_cards_icon" DEFAULT 'shield'
+  );
+  
+  CREATE TABLE "infrastructure" (
+  	"id" serial PRIMARY KEY NOT NULL,
+  	"badge" varchar DEFAULT 'Infrastructure',
+  	"heading" varchar DEFAULT 'Building Infrastructure' NOT NULL,
+  	"heading_light" varchar DEFAULT 'That Operates at Scale',
+  	"body" jsonb DEFAULT '{"root":{"type":"root","children":[{"type":"paragraph","version":1,"children":[{"type":"text","text":"The systems required in regulated environments go beyond individual tools or platforms.","version":1}]},{"type":"paragraph","version":1,"children":[{"type":"text","text":"They are infrastructure-level environments that integrate governance, security, and data exchange across organisations.","version":1}]}],"direction":"ltr","format":"","indent":0,"version":1}}'::jsonb,
+  	"image_id" integer NOT NULL,
+  	"image_caption" varchar DEFAULT 'Infrastructure designed to operate across public sector, financial systems, and health environments',
+  	"updated_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
+  	"created_at" timestamp(3) with time zone DEFAULT now() NOT NULL
+  );
+  
   CREATE TABLE "payload_kv" (
   	"id" serial PRIMARY KEY NOT NULL,
   	"key" varchar NOT NULL,
@@ -210,7 +232,8 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"myinsights_id" integer,
   	"case_studies_id" integer,
   	"challenge_id" integer,
-  	"hero_id" integer
+  	"hero_id" integer,
+  	"infrastructure_id" integer
   );
   
   CREATE TABLE "payload_preferences" (
@@ -249,6 +272,8 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   ALTER TABLE "hero_blocks_bullet_list_items" ADD CONSTRAINT "hero_blocks_bullet_list_items_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."hero_blocks_bullet_list"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "hero_blocks_bullet_list" ADD CONSTRAINT "hero_blocks_bullet_list_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."hero"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "hero" ADD CONSTRAINT "hero_portrait_id_media_id_fk" FOREIGN KEY ("portrait_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
+  ALTER TABLE "infrastructure_cards" ADD CONSTRAINT "infrastructure_cards_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."infrastructure"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "infrastructure" ADD CONSTRAINT "infrastructure_image_id_media_id_fk" FOREIGN KEY ("image_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
   ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_parent_fk" FOREIGN KEY ("parent_id") REFERENCES "public"."payload_locked_documents"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_users_fk" FOREIGN KEY ("users_id") REFERENCES "public"."users"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_media_fk" FOREIGN KEY ("media_id") REFERENCES "public"."media"("id") ON DELETE cascade ON UPDATE no action;
@@ -257,6 +282,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_case_studies_fk" FOREIGN KEY ("case_studies_id") REFERENCES "public"."case_studies"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_challenge_fk" FOREIGN KEY ("challenge_id") REFERENCES "public"."challenge"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_hero_fk" FOREIGN KEY ("hero_id") REFERENCES "public"."hero"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_infrastructure_fk" FOREIGN KEY ("infrastructure_id") REFERENCES "public"."infrastructure"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "payload_preferences_rels" ADD CONSTRAINT "payload_preferences_rels_parent_fk" FOREIGN KEY ("parent_id") REFERENCES "public"."payload_preferences"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "payload_preferences_rels" ADD CONSTRAINT "payload_preferences_rels_users_fk" FOREIGN KEY ("users_id") REFERENCES "public"."users"("id") ON DELETE cascade ON UPDATE no action;
   CREATE INDEX "users_sessions_order_idx" ON "users_sessions" USING btree ("_order");
@@ -299,6 +325,11 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE INDEX "hero_portrait_idx" ON "hero" USING btree ("portrait_id");
   CREATE INDEX "hero_updated_at_idx" ON "hero" USING btree ("updated_at");
   CREATE INDEX "hero_created_at_idx" ON "hero" USING btree ("created_at");
+  CREATE INDEX "infrastructure_cards_order_idx" ON "infrastructure_cards" USING btree ("_order");
+  CREATE INDEX "infrastructure_cards_parent_id_idx" ON "infrastructure_cards" USING btree ("_parent_id");
+  CREATE INDEX "infrastructure_image_idx" ON "infrastructure" USING btree ("image_id");
+  CREATE INDEX "infrastructure_updated_at_idx" ON "infrastructure" USING btree ("updated_at");
+  CREATE INDEX "infrastructure_created_at_idx" ON "infrastructure" USING btree ("created_at");
   CREATE UNIQUE INDEX "payload_kv_key_idx" ON "payload_kv" USING btree ("key");
   CREATE INDEX "payload_locked_documents_global_slug_idx" ON "payload_locked_documents" USING btree ("global_slug");
   CREATE INDEX "payload_locked_documents_updated_at_idx" ON "payload_locked_documents" USING btree ("updated_at");
@@ -313,6 +344,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE INDEX "payload_locked_documents_rels_case_studies_id_idx" ON "payload_locked_documents_rels" USING btree ("case_studies_id");
   CREATE INDEX "payload_locked_documents_rels_challenge_id_idx" ON "payload_locked_documents_rels" USING btree ("challenge_id");
   CREATE INDEX "payload_locked_documents_rels_hero_id_idx" ON "payload_locked_documents_rels" USING btree ("hero_id");
+  CREATE INDEX "payload_locked_documents_rels_infrastructure_id_idx" ON "payload_locked_documents_rels" USING btree ("infrastructure_id");
   CREATE INDEX "payload_preferences_key_idx" ON "payload_preferences" USING btree ("key");
   CREATE INDEX "payload_preferences_updated_at_idx" ON "payload_preferences" USING btree ("updated_at");
   CREATE INDEX "payload_preferences_created_at_idx" ON "payload_preferences" USING btree ("created_at");
@@ -340,6 +372,8 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
   DROP TABLE "hero_blocks_bullet_list_items" CASCADE;
   DROP TABLE "hero_blocks_bullet_list" CASCADE;
   DROP TABLE "hero" CASCADE;
+  DROP TABLE "infrastructure_cards" CASCADE;
+  DROP TABLE "infrastructure" CASCADE;
   DROP TABLE "payload_kv" CASCADE;
   DROP TABLE "payload_locked_documents" CASCADE;
   DROP TABLE "payload_locked_documents_rels" CASCADE;
@@ -351,5 +385,6 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
   DROP TYPE "public"."enum_myinsights_category";
   DROP TYPE "public"."enum_challenge_expertise_items_icon";
   DROP TYPE "public"."enum_hero_blocks_rich_text_section_position";
-  DROP TYPE "public"."enum_hero_blocks_bullet_list_position";`)
+  DROP TYPE "public"."enum_hero_blocks_bullet_list_position";
+  DROP TYPE "public"."enum_infrastructure_cards_icon";`)
 }

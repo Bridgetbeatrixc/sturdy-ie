@@ -5,10 +5,16 @@ export const Hero: CollectionConfig = {
   admin: {
     useAsTitle: 'heading',
     defaultColumns: ['heading', 'subheading', 'updatedAt'],
-    livePreview: {
-      url: () => `${process.env.NEXT_PUBLIC_SITE_URL}/`,
+      livePreview: {
+      url: ({ data }) => {
+        const base = process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000'
+        return `${base.replace(/\/$/, '')}/?preview=true&id=${data?.id ?? ''}`
+      },
     },
-    preview: () => `${process.env.NEXT_PUBLIC_SITE_URL}/`,
+    preview: (doc) => {
+      const base = process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000'
+      return `${base.replace(/\/$/, '')}/?preview=true&id=${doc?.id ?? ''}`
+    },
   },
   access: {
     read: () => true,

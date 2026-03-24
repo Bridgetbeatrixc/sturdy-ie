@@ -6,9 +6,15 @@ export const Challenge: CollectionConfig = {
     useAsTitle: 'heading',
     defaultColumns: ['heading', 'badge', 'updatedAt'],
     livePreview: {
-      url: () => `${process.env.NEXT_PUBLIC_SITE_URL}/#challenge`,
+      url: ({ data }) => {
+        const base = process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000'
+        return `${base.replace(/\/$/, '')}/?preview=true&id=${data?.id ?? ''}`
+      },
     },
-    preview: () => `${process.env.NEXT_PUBLIC_SITE_URL}/#challenge`,
+    preview: (doc) => {
+      const base = process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000'
+      return `${base.replace(/\/$/, '')}/?preview=true&id=${doc?.id ?? ''}`
+    },
   },
   access: {
     read: () => true,
@@ -45,8 +51,6 @@ export const Challenge: CollectionConfig = {
       defaultValue: 'Across regulated environments, the challenge is not technology.\nIt is aligning governance, systems, and operations so data can be used in practice.',
       admin: { description: 'Short paragraph below the heading (left column).' },
     },
-
-    // expertise
     {
       name: 'expertiseItems',
       label: 'Expertise Cards',
@@ -80,8 +84,6 @@ export const Challenge: CollectionConfig = {
         },
       ],
     },
-
-    // right column
     {
       name: 'image',
       type: 'upload',
@@ -109,8 +111,6 @@ export const Challenge: CollectionConfig = {
       defaultValue: '/case-studies',
       admin: { description: 'Where the CTA button links to.' },
     },
-
-    // SEO
     {
       name: 'seoTitle',
       label: 'SEO Title',

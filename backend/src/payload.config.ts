@@ -24,6 +24,9 @@ import { Ventures } from './collections/Ventures'
 import { MyInsight } from './collections/MyInsight'
 import { CaseStudies } from './collections/CaseStudies'
 import { Hero } from './collections/Hero'
+import { Infrastructure } from './collections/Infrastructure'
+import { Response } from './collections/Response'
+import { ResponseCard } from './collections/ResponseCard'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -36,7 +39,7 @@ export default buildConfig({
     },
     livePreview: {
       url: process.env.NEXT_PUBLIC_SITE_URL,
-      collections: ['my-insight', 'case-studies', 'ventures', 'challenge', 'hero'],
+      collections: ['my-insight', 'case-studies', 'ventures', 'challenge', 'hero', 'infrastructure', 'response', 'response-card'],
     },
   },
   cors: [
@@ -53,7 +56,7 @@ export default buildConfig({
     'https://sturdy-ie-66rb.vercel.app',
     process.env.NEXT_PUBLIC_SITE_URL ?? '',
   ],
-  collections: [Users, Media, Ventures, MyInsight, CaseStudies, Challenge, Hero],
+  collections: [Users, Media, Ventures, MyInsight, CaseStudies, Challenge, Hero, Infrastructure, Response, ResponseCard],
   editor: lexicalEditor({
     features: ({ defaultFeatures }) => [
       ...defaultFeatures,

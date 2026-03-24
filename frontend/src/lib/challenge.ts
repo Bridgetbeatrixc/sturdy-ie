@@ -48,13 +48,14 @@ export async function getChallengeData(): Promise<ChallengeData | null> {
       badge: c.badge ?? "",
       heading: c.heading ?? "",
       headingHighlight: c.headingHighlight ?? "",
-      intro: lexicalToText(c.intro),
+      // ✅ Fix: intro is a plain text field, not Lexical rich text
+      intro: typeof c.intro === "string" ? c.intro : lexicalToText(c.intro),
       expertiseItems: Array.isArray(c.expertiseItems)
         ? c.expertiseItems.map((item: any): ExpertiseItem => ({
-          title: item.title ?? "",
-          body: item.body ?? "",
-          icon: item.icon ?? "governance",
-        }))
+            title: item.title ?? "",
+            body: item.body ?? "",
+            icon: item.icon ?? "governance",
+          }))
         : [],
       image: {
         url: c.image?.url

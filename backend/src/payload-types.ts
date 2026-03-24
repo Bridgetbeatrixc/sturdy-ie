@@ -74,6 +74,9 @@ export interface Config {
     'case-studies': CaseStudy;
     challenge: Challenge;
     hero: Hero;
+    infrastructure: Infrastructure;
+    response: Response;
+    response_card: ResponseCard;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -88,6 +91,9 @@ export interface Config {
     'case-studies': CaseStudiesSelect<false> | CaseStudiesSelect<true>;
     challenge: ChallengeSelect<false> | ChallengeSelect<true>;
     hero: HeroSelect<false> | HeroSelect<true>;
+    infrastructure: InfrastructureSelect<false> | InfrastructureSelect<true>;
+    response: ResponseSelect<false> | ResponseSelect<true>;
+    response_card: ResponseCardSelect<false> | ResponseCardSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -690,6 +696,152 @@ export interface Hero {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "infrastructure".
+ */
+export interface Infrastructure {
+  id: number;
+  /**
+   * Small badge label above the heading (e.g. "Infrastructure").
+   */
+  badge?: string | null;
+  /**
+   * First line of the heading (rendered in lime).
+   */
+  heading: string;
+  /**
+   * Second line of the heading (rendered in white, lighter weight).
+   */
+  headingLight?: string | null;
+  /**
+   * Paragraph text beneath the heading.
+   */
+  body?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  /**
+   * Image shown below the body text.
+   */
+  image: number | Media;
+  imageCaption?: string | null;
+  /**
+   * The four (or more) cards shown on the right column.
+   */
+  cards?:
+    | {
+        title: string;
+        /**
+         * Short descriptor line shown beneath the title.
+         */
+        body: string;
+        /**
+         * Pick the icon that best represents this card.
+         */
+        icon?: ('shield' | 'layers' | 'activity' | 'globe') | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "response".
+ */
+export interface Response {
+  id: number;
+  /**
+   * Small badge label above the heading.
+   */
+  badge?: string | null;
+  /**
+   * First line of the heading (rendered in lime).
+   */
+  heading: string;
+  /**
+   * Second line of the heading (rendered in white, lighter weight).
+   */
+  headingLight?: string | null;
+  /**
+   * Paragraph text beneath the heading.
+   */
+  body?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  /**
+   * Text on the call-to-action button.
+   */
+  ctaLabel?: string | null;
+  /**
+   * URL the CTA button links to.
+   */
+  ctaHref?: string | null;
+  /**
+   * Up to 3 images shown in the stacked animation on the right.
+   */
+  images?:
+    | {
+        image: number | Media;
+        /**
+         * Alt text for accessibility.
+         */
+        alt?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "response_card".
+ */
+export interface ResponseCard {
+  id: number;
+  /**
+   * Display number shown top-left of the card (e.g. "01", "02").
+   */
+  indexLabel: string;
+  /**
+   * Card title text.
+   */
+  title: string;
+  /**
+   * Short description shown beneath the title.
+   */
+  body?: string | null;
+  /**
+   * Number of lime bars shown top-right of the card (1–3).
+   */
+  bars: '1' | '2' | '3';
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -739,6 +891,18 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'hero';
         value: number | Hero;
+      } | null)
+    | ({
+        relationTo: 'infrastructure';
+        value: number | Infrastructure;
+      } | null)
+    | ({
+        relationTo: 'response';
+        value: number | Response;
+      } | null)
+    | ({
+        relationTo: 'response_card';
+        value: number | ResponseCard;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -960,6 +1124,61 @@ export interface HeroSelect<T extends boolean = true> {
   portraitAlt?: T;
   seoTitle?: T;
   seoDescription?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "infrastructure_select".
+ */
+export interface InfrastructureSelect<T extends boolean = true> {
+  badge?: T;
+  heading?: T;
+  headingLight?: T;
+  body?: T;
+  image?: T;
+  imageCaption?: T;
+  cards?:
+    | T
+    | {
+        title?: T;
+        body?: T;
+        icon?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "response_select".
+ */
+export interface ResponseSelect<T extends boolean = true> {
+  badge?: T;
+  heading?: T;
+  headingLight?: T;
+  body?: T;
+  ctaLabel?: T;
+  ctaHref?: T;
+  images?:
+    | T
+    | {
+        image?: T;
+        alt?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "response_card_select".
+ */
+export interface ResponseCardSelect<T extends boolean = true> {
+  indexLabel?: T;
+  title?: T;
+  body?: T;
+  bars?: T;
   updatedAt?: T;
   createdAt?: T;
 }

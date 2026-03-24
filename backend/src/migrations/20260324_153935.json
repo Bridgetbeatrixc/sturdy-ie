@@ -1820,6 +1820,236 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
+    "public.infrastructure_cards": {
+      "name": "infrastructure_cards",
+      "schema": "",
+      "columns": {
+        "_order": {
+          "name": "_order",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "_parent_id": {
+          "name": "_parent_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "id": {
+          "name": "id",
+          "type": "varchar",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "title": {
+          "name": "title",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "body": {
+          "name": "body",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "icon": {
+          "name": "icon",
+          "type": "enum_infrastructure_cards_icon",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'shield'"
+        }
+      },
+      "indexes": {
+        "infrastructure_cards_order_idx": {
+          "name": "infrastructure_cards_order_idx",
+          "columns": [
+            {
+              "expression": "_order",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "infrastructure_cards_parent_id_idx": {
+          "name": "infrastructure_cards_parent_id_idx",
+          "columns": [
+            {
+              "expression": "_parent_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "infrastructure_cards_parent_id_fk": {
+          "name": "infrastructure_cards_parent_id_fk",
+          "tableFrom": "infrastructure_cards",
+          "tableTo": "infrastructure",
+          "columnsFrom": [
+            "_parent_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.infrastructure": {
+      "name": "infrastructure",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "badge": {
+          "name": "badge",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Infrastructure'"
+        },
+        "heading": {
+          "name": "heading",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'Building Infrastructure'"
+        },
+        "heading_light": {
+          "name": "heading_light",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'That Operates at Scale'"
+        },
+        "body": {
+          "name": "body",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'{\"root\":{\"type\":\"root\",\"children\":[{\"type\":\"paragraph\",\"version\":1,\"children\":[{\"type\":\"text\",\"text\":\"The systems required in regulated environments go beyond individual tools or platforms.\",\"version\":1}]},{\"type\":\"paragraph\",\"version\":1,\"children\":[{\"type\":\"text\",\"text\":\"They are infrastructure-level environments that integrate governance, security, and data exchange across organisations.\",\"version\":1}]}],\"direction\":\"ltr\",\"format\":\"\",\"indent\":0,\"version\":1}}'::jsonb"
+        },
+        "image_id": {
+          "name": "image_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "image_caption": {
+          "name": "image_caption",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Infrastructure designed to operate across public sector, financial systems, and health environments'"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "infrastructure_image_idx": {
+          "name": "infrastructure_image_idx",
+          "columns": [
+            {
+              "expression": "image_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "infrastructure_updated_at_idx": {
+          "name": "infrastructure_updated_at_idx",
+          "columns": [
+            {
+              "expression": "updated_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "infrastructure_created_at_idx": {
+          "name": "infrastructure_created_at_idx",
+          "columns": [
+            {
+              "expression": "created_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "infrastructure_image_id_media_id_fk": {
+          "name": "infrastructure_image_id_media_id_fk",
+          "tableFrom": "infrastructure",
+          "tableTo": "media",
+          "columnsFrom": [
+            "image_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
     "public.payload_kv": {
       "name": "payload_kv",
       "schema": "",
@@ -2021,6 +2251,12 @@
           "type": "integer",
           "primaryKey": false,
           "notNull": false
+        },
+        "infrastructure_id": {
+          "name": "infrastructure_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
         }
       },
       "indexes": {
@@ -2173,6 +2409,21 @@
           "concurrently": false,
           "method": "btree",
           "with": {}
+        },
+        "payload_locked_documents_rels_infrastructure_id_idx": {
+          "name": "payload_locked_documents_rels_infrastructure_id_idx",
+          "columns": [
+            {
+              "expression": "infrastructure_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
         }
       },
       "foreignKeys": {
@@ -2273,6 +2524,19 @@
           "tableTo": "hero",
           "columnsFrom": [
             "hero_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "payload_locked_documents_rels_infrastructure_fk": {
+          "name": "payload_locked_documents_rels_infrastructure_fk",
+          "tableFrom": "payload_locked_documents_rels",
+          "tableTo": "infrastructure",
+          "columnsFrom": [
+            "infrastructure_id"
           ],
           "columnsTo": [
             "id"
@@ -2649,6 +2913,16 @@
         "above-cta",
         "below-cta"
       ]
+    },
+    "public.enum_infrastructure_cards_icon": {
+      "name": "enum_infrastructure_cards_icon",
+      "schema": "public",
+      "values": [
+        "shield",
+        "layers",
+        "activity",
+        "globe"
+      ]
     }
   },
   "schemas": {},
@@ -2661,6 +2935,6 @@
     "tables": {},
     "columns": {}
   },
-  "id": "02f7e888-4ab4-4b68-9b09-1ba93dcf2954",
+  "id": "65cb9487-ca2a-441c-a1d7-f8048ac89cb2",
   "prevId": "00000000-0000-0000-0000-000000000000"
 }

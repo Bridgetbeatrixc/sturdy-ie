@@ -2,9 +2,74 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { MyInsightIndex } from "../lib/myInsight";
+import { LexicalRenderer } from "@/components/LexicalRenderer";
+import type { ResponseData, ResponseImage } from "@/lib/response";
 
-function StackedImages() {
+const FALLBACK_IMAGES: ResponseImage[] = [
+  {
+    url: "https://images.pexels.com/photos/3184418/pexels-photo-3184418.jpeg?auto=compress&cs=tinysrgb&w=800",
+    alt: "Team collaboration",
+  },
+  {
+    url: "https://images.pexels.com/photos/1181675/pexels-photo-1181675.jpeg?auto=compress&cs=tinysrgb&w=800",
+    alt: "Systems design",
+  },
+  {
+    url: "https://images.pexels.com/photos/323780/pexels-photo-323780.jpeg?auto=compress&cs=tinysrgb&w=800",
+    alt: "Infrastructure",
+  },
+];
+
+const FALLBACK: ResponseData = {
+  badge: "Response",
+  heading: "Designing Systems",
+  headingLight: "That Work in Practice",
+  body: {
+    root: {
+      type: "root",
+      children: [
+        {
+          type: "paragraph",
+          version: 1,
+          children: [
+            {
+              type: "text",
+              text: "Addressing the gap between policy, systems, and real-world use requires more than technology.",
+              version: 1,
+            },
+          ],
+        },
+        {
+          type: "paragraph",
+          version: 1,
+          children: [
+            {
+              type: "text",
+              text: "It requires approaches that embed governance, standards, and collaboration into how systems are designed and operated.",
+              version: 1,
+            },
+          ],
+        },
+      ],
+      direction: "ltr",
+      format: "",
+      indent: 0,
+      version: 1,
+    },
+  },
+  ctaLabel: "Explore Insights",
+  ctaHref: "/myinsights",
+  images: FALLBACK_IMAGES,
+};
+
+// Stacked positions for up to 3 images [top-left, middle, bottom-right]
+const STACK_POSITIONS = [
+  { startLeft: 30, endLeft: 0,  startTop: 30, endTop: 0  },
+  { startLeft: 33, endLeft: 15, startTop: 33, endTop: 22 },
+  { startLeft: 36, endLeft: 38, startTop: 36, endTop: 45 },
+];
+
+function StackedImages({ images }: { images: ResponseImage[] }) {
   const ref = useRef<HTMLDivElement>(null);
   const [progress, setProgress] = useState(0);
 
@@ -26,40 +91,42 @@ function StackedImages() {
 
   const lerp = (a: number, b: number) => a + (b - a) * progress;
 
+  const displayImages = images.length ? images.slice(0, 3) : FALLBACK_IMAGES;
+
   return (
     <div ref={ref} className="relative w-full h-[400px] lg:h-[450px]">
-      <div
-        className="absolute bg-cover bg-center"
-        style={{
-          backgroundImage: "url('https://images.pexels.com/photos/3184418/pexels-photo-3184418.jpeg?auto=compress&cs=tinysrgb&w=800')",
-          width: '50%', height: '45%',
-          left: `${lerp(30, 0)}%`, top: `${lerp(30, 0)}%`,
-          zIndex: 5, borderRadius: '10px',
-        }}
-      />
-      <div
-        className="absolute bg-cover bg-center"
-        style={{
-          backgroundImage: "url('https://images.pexels.com/photos/1181675/pexels-photo-1181675.jpeg?auto=compress&cs=tinysrgb&w=800')",
-          width: '50%', height: '45%',
-          left: `${lerp(33, 15)}%`, top: `${lerp(33, 22)}%`,
-          zIndex: 10, borderRadius: '10px',
-        }}
-      />
-      <div
-        className="absolute bg-cover bg-center"
-        style={{
-          backgroundImage: "url('https://images.pexels.com/photos/323780/pexels-photo-323780.jpeg?auto=compress&cs=tinysrgb&w=800')",
-          width: '50%', height: '45%',
-          left: `${lerp(36, 38)}%`, top: `${lerp(36, 45)}%`,
-          zIndex: 15, borderRadius: '10px',
-        }}
-      />
+      {displayImages.map((img, i) => {
+        const pos = STACK_POSITIONS[i];
+        return (
+          <div
+            key={i}
+            className="absolute bg-cover bg-center"
+            style={{
+              backgroundImage: `url('${img.url}')`,
+              width: "50%",
+              height: "45%",
+              left: `${lerp(pos.startLeft, pos.endLeft)}%`,
+              top: `${lerp(pos.startTop, pos.endTop)}%`,
+              zIndex: (i + 1) * 5,
+              borderRadius: "10px",
+            }}
+            aria-label={img.alt}
+          />
+        );
+      })}
     </div>
   );
 }
 
-export function InsightsPreviewSection({ myInsights }: { myInsights: MyInsightIndex[] }) {
+const ArrowIcon = () => (
+  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M3 13L13 3M13 3H5M13 3V11" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+  </svg>
+);
+
+export function InsightsPreviewSection({ data }: { data?: ResponseData | null }) {
+  const d = data ?? FALLBACK;
+
   const ref = useRef<HTMLElement>(null);
   const [visible, setVisible] = useState(false);
 
@@ -77,66 +144,57 @@ export function InsightsPreviewSection({ myInsights }: { myInsights: MyInsightIn
     return () => observer.disconnect();
   }, []);
 
-  const featured = myInsights.slice(0, 3);
-
   return (
     <section ref={ref} className="mx-auto max-w-8xl justify-center px-4 py-8 md:px-4 lg:px-4 bg-black">
       <div className="flex flex-col lg:flex-row gap-10 lg:gap-20">
         <div className="mb-10 lg:w-1/2">
-          {/* Label — animated */}
+
+          {/* Badge */}
           <div
             className="mb-4 flex items-center gap-2 text-xs font-medium text-zinc-300"
             style={{
               opacity: 0,
-              animation: visible ? 'fadeUp 2s forwards' : 'none',
+              animation: visible ? "fadeUp 2s forwards" : "none",
             }}
           >
             <span
               className="h-2 w-2 rounded-full bg-[#c5f018]"
-              style={{ animation: 'dotPulse 1s ease-in-out infinite' }}
+              style={{ animation: "dotPulse 1s ease-in-out infinite" }}
             />
-            <span className="text-sm md:text-lg">Response</span>
+            <span className="text-sm md:text-lg">{d.badge}</span>
           </div>
 
-          {/* Heading — no animation */}
+          {/* Heading */}
           <h2 className="text-2xl font-semibold leading-tight text-[#c5f018] md:text-5xl">
-            Designing Systems{" "}
-            <span className="font-light text-white">
-              That Work in Practice
-            </span>
+            {d.heading}{" "}
+            <span className="font-light text-white">{d.headingLight}</span>
           </h2>
 
-          {/* Description — no animation */}
-          <p className="mt-4 max-w-2xl text-sm leading-relaxed text-zinc-300 md:text-base">
-            Addressing the gap between policy, systems, and real-world use requires more than technology.
-            <br />
-            <br />
-            It requires approaches that embed governance, standards, and collaboration into how systems are designed and operated.
+          {/* Body */}
+          <div className="mt-4 max-w-2xl text-sm leading-relaxed text-zinc-300 md:text-base [&_p]:mb-4 [&_p:last-child]:mb-0">
+            <LexicalRenderer data={d.body} />
+          </div>
 
-          </p>
-
-          {/* Button — animated */}
+          {/* CTA Button */}
           <div
             className="mt-10"
             style={{
               opacity: 0,
-              animation: visible ? 'fadeUp 2s forwards' : 'none',
+              animation: visible ? "fadeUp 2s forwards" : "none",
             }}
           >
             <Link
-              href="/myinsights"
+              href={d.ctaHref}
               className="inline-flex items-center justify-center gap-2 text-lg md:text-xl rounded-lg border border-[#c5f018] bg-transparent px-6 py-5 text-sm font-semibold text-[#c5f018] transition duration-500 hover:bg-[#c5f018] hover:text-black"
             >
-              Explore Insights
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M3 13L13 3M13 3H5M13 3V11" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
+              {d.ctaLabel}
+              <ArrowIcon />
             </Link>
           </div>
         </div>
 
         <div className="lg:w-1/2">
-          <StackedImages />
+          <StackedImages images={d.images} />
         </div>
       </div>
     </section>
