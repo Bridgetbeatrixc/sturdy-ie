@@ -6,6 +6,8 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE TYPE "public"."enum_ventures_status" AS ENUM('Exploring', 'Active', 'Relaunching');
   CREATE TYPE "public"."enum_myinsights_category" AS ENUM('Governance & Compliance', 'Research Collaboration', 'Interoperability & Standards', 'Preventive Health Innovation', 'AI & Regulated Data');
   CREATE TYPE "public"."enum_challenge_expertise_items_icon" AS ENUM('governance', 'infrastructure', 'collaboration', 'interoperability');
+  CREATE TYPE "public"."enum_hero_blocks_rich_text_section_position" AS ENUM('above-heading', 'below-heading', 'below-subheading', 'below-tagline', 'above-cta', 'below-cta');
+  CREATE TYPE "public"."enum_hero_blocks_bullet_list_position" AS ENUM('above-heading', 'below-heading', 'below-subheading', 'below-tagline', 'above-cta', 'below-cta');
   CREATE TABLE "users_sessions" (
   	"_order" integer NOT NULL,
   	"_parent_id" integer NOT NULL,
@@ -128,7 +130,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"badge" varchar DEFAULT 'Challenge' NOT NULL,
   	"heading" varchar DEFAULT 'Governance-led transformation in regulated ecosystems' NOT NULL,
   	"heading_highlight" varchar DEFAULT 'Governance-led',
-  	"intro" jsonb DEFAULT 'Across regulated environments, the challenge is not technology.
+  	"intro" varchar DEFAULT 'Across regulated environments, the challenge is not technology.
   It is aligning governance, systems, and operations so data can be used in practice.' NOT NULL,
   	"image_id" integer NOT NULL,
   	"image_caption" varchar DEFAULT 'Executive delivery across public sector, financial services, and health systems',
@@ -140,13 +142,38 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"created_at" timestamp(3) with time zone DEFAULT now() NOT NULL
   );
   
+  CREATE TABLE "hero_blocks_rich_text_section" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" integer NOT NULL,
+  	"_path" text NOT NULL,
+  	"id" varchar PRIMARY KEY NOT NULL,
+  	"position" "enum_hero_blocks_rich_text_section_position" DEFAULT 'below-tagline' NOT NULL,
+  	"content" jsonb NOT NULL,
+  	"block_name" varchar
+  );
+  
+  CREATE TABLE "hero_blocks_bullet_list_items" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" varchar NOT NULL,
+  	"id" varchar PRIMARY KEY NOT NULL,
+  	"text" jsonb NOT NULL
+  );
+  
+  CREATE TABLE "hero_blocks_bullet_list" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" integer NOT NULL,
+  	"_path" text NOT NULL,
+  	"id" varchar PRIMARY KEY NOT NULL,
+  	"position" "enum_hero_blocks_bullet_list_position" DEFAULT 'below-tagline' NOT NULL,
+  	"block_name" varchar
+  );
+  
   CREATE TABLE "hero" (
   	"id" serial PRIMARY KEY NOT NULL,
   	"heading" varchar DEFAULT 'Jason Sturdy' NOT NULL,
   	"heading_highlight" varchar DEFAULT 'Sturdy',
   	"subheading" varchar DEFAULT 'Building Trusted Systems from Policy to Practice' NOT NULL,
   	"tagline" varchar DEFAULT 'Data Governance • Security Architecture • Operating Models • Digital Infrastructure',
-  	"description" varchar DEFAULT 'I design systems and operating models that enable organisations to use data in practice, translating policy, regulation, and governance into infrastructure that is secure, usable, and trusted.',
   	"primary_cta_label" varchar DEFAULT 'View Case Studies',
   	"primary_cta_href" varchar DEFAULT '/case-studies',
   	"secondary_cta_label" varchar DEFAULT 'Explore Insights',
@@ -218,6 +245,9 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   ALTER TABLE "case_studies" ADD CONSTRAINT "case_studies_img_id_media_id_fk" FOREIGN KEY ("img_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
   ALTER TABLE "challenge_expertise_items" ADD CONSTRAINT "challenge_expertise_items_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."challenge"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "challenge" ADD CONSTRAINT "challenge_image_id_media_id_fk" FOREIGN KEY ("image_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
+  ALTER TABLE "hero_blocks_rich_text_section" ADD CONSTRAINT "hero_blocks_rich_text_section_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."hero"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "hero_blocks_bullet_list_items" ADD CONSTRAINT "hero_blocks_bullet_list_items_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."hero_blocks_bullet_list"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "hero_blocks_bullet_list" ADD CONSTRAINT "hero_blocks_bullet_list_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."hero"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "hero" ADD CONSTRAINT "hero_portrait_id_media_id_fk" FOREIGN KEY ("portrait_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
   ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_parent_fk" FOREIGN KEY ("parent_id") REFERENCES "public"."payload_locked_documents"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_users_fk" FOREIGN KEY ("users_id") REFERENCES "public"."users"("id") ON DELETE cascade ON UPDATE no action;
@@ -258,6 +288,14 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE INDEX "challenge_image_idx" ON "challenge" USING btree ("image_id");
   CREATE INDEX "challenge_updated_at_idx" ON "challenge" USING btree ("updated_at");
   CREATE INDEX "challenge_created_at_idx" ON "challenge" USING btree ("created_at");
+  CREATE INDEX "hero_blocks_rich_text_section_order_idx" ON "hero_blocks_rich_text_section" USING btree ("_order");
+  CREATE INDEX "hero_blocks_rich_text_section_parent_id_idx" ON "hero_blocks_rich_text_section" USING btree ("_parent_id");
+  CREATE INDEX "hero_blocks_rich_text_section_path_idx" ON "hero_blocks_rich_text_section" USING btree ("_path");
+  CREATE INDEX "hero_blocks_bullet_list_items_order_idx" ON "hero_blocks_bullet_list_items" USING btree ("_order");
+  CREATE INDEX "hero_blocks_bullet_list_items_parent_id_idx" ON "hero_blocks_bullet_list_items" USING btree ("_parent_id");
+  CREATE INDEX "hero_blocks_bullet_list_order_idx" ON "hero_blocks_bullet_list" USING btree ("_order");
+  CREATE INDEX "hero_blocks_bullet_list_parent_id_idx" ON "hero_blocks_bullet_list" USING btree ("_parent_id");
+  CREATE INDEX "hero_blocks_bullet_list_path_idx" ON "hero_blocks_bullet_list" USING btree ("_path");
   CREATE INDEX "hero_portrait_idx" ON "hero" USING btree ("portrait_id");
   CREATE INDEX "hero_updated_at_idx" ON "hero" USING btree ("updated_at");
   CREATE INDEX "hero_created_at_idx" ON "hero" USING btree ("created_at");
@@ -298,6 +336,9 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
   DROP TABLE "case_studies" CASCADE;
   DROP TABLE "challenge_expertise_items" CASCADE;
   DROP TABLE "challenge" CASCADE;
+  DROP TABLE "hero_blocks_rich_text_section" CASCADE;
+  DROP TABLE "hero_blocks_bullet_list_items" CASCADE;
+  DROP TABLE "hero_blocks_bullet_list" CASCADE;
   DROP TABLE "hero" CASCADE;
   DROP TABLE "payload_kv" CASCADE;
   DROP TABLE "payload_locked_documents" CASCADE;
@@ -308,5 +349,7 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
   DROP TYPE "public"."enum_ventures_collaboration_sought";
   DROP TYPE "public"."enum_ventures_status";
   DROP TYPE "public"."enum_myinsights_category";
-  DROP TYPE "public"."enum_challenge_expertise_items_icon";`)
+  DROP TYPE "public"."enum_challenge_expertise_items_icon";
+  DROP TYPE "public"."enum_hero_blocks_rich_text_section_position";
+  DROP TYPE "public"."enum_hero_blocks_bullet_list_position";`)
 }

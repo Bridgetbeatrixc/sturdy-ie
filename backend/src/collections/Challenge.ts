@@ -40,7 +40,7 @@ export const Challenge: CollectionConfig = {
     },
     {
       name: 'intro',
-      type: 'richText',
+      type: 'text',
       required: true,
       defaultValue: 'Across regulated environments, the challenge is not technology.\nIt is aligning governance, systems, and operations so data can be used in practice.',
       admin: { description: 'Short paragraph below the heading (left column).' },

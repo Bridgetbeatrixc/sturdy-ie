@@ -309,7 +309,7 @@ export function ProfileSection() {
         transition={{ duration: 1.2, ease: "easeOut", delay: 0.15 }}
         className="text-center text-2xl font-light leading-tight text-white md:text-6xl"
       >
-        <h1>Standards, Frameworks & Ecosystems</h1>
+        Standards, Frameworks & Ecosystems
       </motion.h2>
 
       <motion.div

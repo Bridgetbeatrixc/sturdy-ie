@@ -45,11 +45,83 @@ export const Hero: CollectionConfig = {
       defaultValue: 'Data Governance • Security Architecture • Operating Models • Digital Infrastructure',
       admin: { description: 'Dot-separated disciplines line beneath the subheading.' },
     },
+
     {
-      name: 'description',
-      type: 'textarea',
-      defaultValue: 'I design systems and operating models that enable organisations to use data in practice, translating policy, regulation, and governance into infrastructure that is secure, usable, and trusted.',
-      admin: { description: 'Short paragraph beneath the tagline.' },
+      name: 'sections',
+      label: 'Content Sections',
+      type: 'blocks',
+      admin: {
+        description: 'Add content sections to the hero. Each section has its own type and position slot.',
+      },
+      blocks: [
+
+        {
+          slug: 'richTextSection',
+          labels: { singular: 'Rich Text', plural: 'Rich Text Sections' },
+          fields: [
+            {
+              name: 'position',
+              type: 'select',
+              required: true,
+              defaultValue: 'below-tagline',
+              options: [
+                { label: 'Above Heading',    value: 'above-heading' },
+                { label: 'Below Heading',    value: 'below-heading' },
+                { label: 'Below Subheading', value: 'below-subheading' },
+                { label: 'Below Tagline',    value: 'below-tagline' },
+                { label: 'Above CTA',        value: 'above-cta' },
+                { label: 'Below CTA',        value: 'below-cta' },
+              ],
+              admin: { description: 'Where this section renders in the hero layout.' },
+            },
+            {
+              name: 'content',
+              type: 'richText',
+              required: true,
+              admin: { description: 'Supports bold, italic, and inline links.' },
+            },
+          ],
+        },
+
+        // Block 2 — Bullet List
+        {
+          slug: 'bulletList',
+          labels: { singular: 'Bullet List', plural: 'Bullet Lists' },
+          fields: [
+            {
+              name: 'position',
+              type: 'select',
+              required: true,
+              defaultValue: 'below-tagline',
+              options: [
+                { label: 'Above Heading',    value: 'above-heading' },
+                { label: 'Below Heading',    value: 'below-heading' },
+                { label: 'Below Subheading', value: 'below-subheading' },
+                { label: 'Below Tagline',    value: 'below-tagline' },
+                { label: 'Above CTA',        value: 'above-cta' },
+                { label: 'Below CTA',        value: 'below-cta' },
+              ],
+              admin: { description: 'Where this section renders in the hero layout.' },
+            },
+            {
+              name: 'items',
+              type: 'array',
+              required: true,
+              minRows: 1,
+              admin: { description: 'Add and reorder bullet items.' },
+              fields: [
+                {
+                  name: 'text',
+                  type: 'richText',
+                  required: true,
+                  admin: { description: 'Supports bold, italic, and inline links per item.' },
+                },
+              ],
+            },
+          ],
+        },
+
+      ],
     },
 
     {

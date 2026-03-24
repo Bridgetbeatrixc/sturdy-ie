@@ -1209,7 +1209,7 @@
         },
         "intro": {
           "name": "intro",
-          "type": "jsonb",
+          "type": "varchar",
           "primaryKey": false,
           "notNull": true,
           "default": "'Across regulated environments, the challenge is not technology.\nIt is aligning governance, systems, and operations so data can be used in practice.'"
@@ -1336,6 +1336,316 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
+    "public.hero_blocks_rich_text_section": {
+      "name": "hero_blocks_rich_text_section",
+      "schema": "",
+      "columns": {
+        "_order": {
+          "name": "_order",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "_parent_id": {
+          "name": "_parent_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "_path": {
+          "name": "_path",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "id": {
+          "name": "id",
+          "type": "varchar",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "position": {
+          "name": "position",
+          "type": "enum_hero_blocks_rich_text_section_position",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'below-tagline'"
+        },
+        "content": {
+          "name": "content",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "block_name": {
+          "name": "block_name",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {
+        "hero_blocks_rich_text_section_order_idx": {
+          "name": "hero_blocks_rich_text_section_order_idx",
+          "columns": [
+            {
+              "expression": "_order",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "hero_blocks_rich_text_section_parent_id_idx": {
+          "name": "hero_blocks_rich_text_section_parent_id_idx",
+          "columns": [
+            {
+              "expression": "_parent_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "hero_blocks_rich_text_section_path_idx": {
+          "name": "hero_blocks_rich_text_section_path_idx",
+          "columns": [
+            {
+              "expression": "_path",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "hero_blocks_rich_text_section_parent_id_fk": {
+          "name": "hero_blocks_rich_text_section_parent_id_fk",
+          "tableFrom": "hero_blocks_rich_text_section",
+          "tableTo": "hero",
+          "columnsFrom": [
+            "_parent_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.hero_blocks_bullet_list_items": {
+      "name": "hero_blocks_bullet_list_items",
+      "schema": "",
+      "columns": {
+        "_order": {
+          "name": "_order",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "_parent_id": {
+          "name": "_parent_id",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "id": {
+          "name": "id",
+          "type": "varchar",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "text": {
+          "name": "text",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {
+        "hero_blocks_bullet_list_items_order_idx": {
+          "name": "hero_blocks_bullet_list_items_order_idx",
+          "columns": [
+            {
+              "expression": "_order",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "hero_blocks_bullet_list_items_parent_id_idx": {
+          "name": "hero_blocks_bullet_list_items_parent_id_idx",
+          "columns": [
+            {
+              "expression": "_parent_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "hero_blocks_bullet_list_items_parent_id_fk": {
+          "name": "hero_blocks_bullet_list_items_parent_id_fk",
+          "tableFrom": "hero_blocks_bullet_list_items",
+          "tableTo": "hero_blocks_bullet_list",
+          "columnsFrom": [
+            "_parent_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.hero_blocks_bullet_list": {
+      "name": "hero_blocks_bullet_list",
+      "schema": "",
+      "columns": {
+        "_order": {
+          "name": "_order",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "_parent_id": {
+          "name": "_parent_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "_path": {
+          "name": "_path",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "id": {
+          "name": "id",
+          "type": "varchar",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "position": {
+          "name": "position",
+          "type": "enum_hero_blocks_bullet_list_position",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'below-tagline'"
+        },
+        "block_name": {
+          "name": "block_name",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {
+        "hero_blocks_bullet_list_order_idx": {
+          "name": "hero_blocks_bullet_list_order_idx",
+          "columns": [
+            {
+              "expression": "_order",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "hero_blocks_bullet_list_parent_id_idx": {
+          "name": "hero_blocks_bullet_list_parent_id_idx",
+          "columns": [
+            {
+              "expression": "_parent_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "hero_blocks_bullet_list_path_idx": {
+          "name": "hero_blocks_bullet_list_path_idx",
+          "columns": [
+            {
+              "expression": "_path",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "hero_blocks_bullet_list_parent_id_fk": {
+          "name": "hero_blocks_bullet_list_parent_id_fk",
+          "tableFrom": "hero_blocks_bullet_list",
+          "tableTo": "hero",
+          "columnsFrom": [
+            "_parent_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
     "public.hero": {
       "name": "hero",
       "schema": "",
@@ -1373,13 +1683,6 @@
           "primaryKey": false,
           "notNull": false,
           "default": "'Data Governance • Security Architecture • Operating Models • Digital Infrastructure'"
-        },
-        "description": {
-          "name": "description",
-          "type": "varchar",
-          "primaryKey": false,
-          "notNull": false,
-          "default": "'I design systems and operating models that enable organisations to use data in practice, translating policy, regulation, and governance into infrastructure that is secure, usable, and trusted.'"
         },
         "primary_cta_label": {
           "name": "primary_cta_label",
@@ -2322,6 +2625,30 @@
         "collaboration",
         "interoperability"
       ]
+    },
+    "public.enum_hero_blocks_rich_text_section_position": {
+      "name": "enum_hero_blocks_rich_text_section_position",
+      "schema": "public",
+      "values": [
+        "above-heading",
+        "below-heading",
+        "below-subheading",
+        "below-tagline",
+        "above-cta",
+        "below-cta"
+      ]
+    },
+    "public.enum_hero_blocks_bullet_list_position": {
+      "name": "enum_hero_blocks_bullet_list_position",
+      "schema": "public",
+      "values": [
+        "above-heading",
+        "below-heading",
+        "below-subheading",
+        "below-tagline",
+        "above-cta",
+        "below-cta"
+      ]
     }
   },
   "schemas": {},
@@ -2334,6 +2661,6 @@
     "tables": {},
     "columns": {}
   },
-  "id": "39a18435-fd1f-4981-826d-bb42861f3f10",
+  "id": "02f7e888-4ab4-4b68-9b09-1ba93dcf2954",
   "prevId": "00000000-0000-0000-0000-000000000000"
 }

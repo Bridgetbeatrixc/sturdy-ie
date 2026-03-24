@@ -15,6 +15,7 @@ import {
 import path from 'path'
 import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
+import sharp from 'sharp'
 import { s3Storage } from '@payloadcms/storage-s3'
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
@@ -43,14 +44,14 @@ export default buildConfig({
     'http://localhost:3001',
     'https://unnecessary-dahlia-beatrixbbc-c1438312.koyeb.app',
     'https://sturdy-ie-66rb.vercel.app',
-  process.env.NEXT_PUBLIC_SITE_URL ?? '',
+    process.env.NEXT_PUBLIC_SITE_URL ?? '',
   ],
   csrf: [
     'http://localhost:3000',
     'http://localhost:3001',
     'https://unnecessary-dahlia-beatrixbbc-c1438312.koyeb.app',
     'https://sturdy-ie-66rb.vercel.app',
-  process.env.NEXT_PUBLIC_SITE_URL ?? '',
+    process.env.NEXT_PUBLIC_SITE_URL ?? '',
   ],
   collections: [Users, Media, Ventures, MyInsight, CaseStudies, Challenge, Hero],
   editor: lexicalEditor({
@@ -60,6 +61,7 @@ export default buildConfig({
     ],
   }),
   secret: process.env.PAYLOAD_SECRET || '',
+  sharp,
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },
@@ -69,18 +71,24 @@ export default buildConfig({
     },
   }),
   plugins: [
-    s3Storage({
-      collections: { media: true },
-      bucket: process.env.S3_BUCKET!,
-      config: {
-        region: 'auto',
-        endpoint: process.env.S3_ENDPOINT,
-        forcePathStyle: true,
-        credentials: {
-          accessKeyId: process.env.S3_ACCESS_KEY!,
-          secretAccessKey: process.env.S3_SECRET_KEY!,
-        },
-      },
-    }),
-  ],
+ s3Storage({
+  collections: {
+    media: {
+      disableLocalStorage: true,
+      generateFileURL: (args) =>
+        `${process.env.PAYLOAD_API_URL}/api/media/file/${args.filename}`,
+    },
+  },
+  bucket: process.env.S3_BUCKET!,
+  config: {
+    region: 'auto',
+    endpoint: process.env.S3_ENDPOINT,
+    forcePathStyle: true,
+    credentials: {
+      accessKeyId: process.env.S3_ACCESS_KEY!,
+      secretAccessKey: process.env.S3_SECRET_KEY!,
+    },
+  },
+}),
+],
 })

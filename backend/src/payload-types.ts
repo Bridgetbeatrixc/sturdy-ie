@@ -522,21 +522,7 @@ export interface Challenge {
   /**
    * Short paragraph below the heading (left column).
    */
-  intro: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  };
+  intro: string;
   /**
    * The 2×2 grid of expertise cards. Supports up to 4 items.
    */
@@ -604,9 +590,84 @@ export interface Hero {
    */
   tagline?: string | null;
   /**
-   * Short paragraph beneath the tagline.
+   * Add content sections to the hero. Each section has its own type and position slot.
    */
-  description?: string | null;
+  sections?:
+    | (
+        | {
+            /**
+             * Where this section renders in the hero layout.
+             */
+            position:
+              | 'above-heading'
+              | 'below-heading'
+              | 'below-subheading'
+              | 'below-tagline'
+              | 'above-cta'
+              | 'below-cta';
+            /**
+             * Supports bold, italic, and inline links.
+             */
+            content: {
+              root: {
+                type: string;
+                children: {
+                  type: any;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            };
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'richTextSection';
+          }
+        | {
+            /**
+             * Where this section renders in the hero layout.
+             */
+            position:
+              | 'above-heading'
+              | 'below-heading'
+              | 'below-subheading'
+              | 'below-tagline'
+              | 'above-cta'
+              | 'below-cta';
+            /**
+             * Add and reorder bullet items.
+             */
+            items: {
+              /**
+               * Supports bold, italic, and inline links per item.
+               */
+              text: {
+                root: {
+                  type: string;
+                  children: {
+                    type: any;
+                    version: number;
+                    [k: string]: unknown;
+                  }[];
+                  direction: ('ltr' | 'rtl') | null;
+                  format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                  indent: number;
+                  version: number;
+                };
+                [k: string]: unknown;
+              };
+              id?: string | null;
+            }[];
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'bulletList';
+          }
+      )[]
+    | null;
   /**
    * Text on the primary (lime) button.
    */
@@ -866,7 +927,31 @@ export interface HeroSelect<T extends boolean = true> {
   headingHighlight?: T;
   subheading?: T;
   tagline?: T;
-  description?: T;
+  sections?:
+    | T
+    | {
+        richTextSection?:
+          | T
+          | {
+              position?: T;
+              content?: T;
+              id?: T;
+              blockName?: T;
+            };
+        bulletList?:
+          | T
+          | {
+              position?: T;
+              items?:
+                | T
+                | {
+                    text?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+      };
   primaryCtaLabel?: T;
   primaryCtaHref?: T;
   secondaryCtaLabel?: T;

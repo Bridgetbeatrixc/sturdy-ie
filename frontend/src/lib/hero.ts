@@ -1,11 +1,40 @@
 const API_URL = (process.env.PAYLOAD_API_URL ?? "http://localhost:3001").replace(/\/$/, "");
 
+export type SectionPosition =
+  | "above-heading"
+  | "below-heading"
+  | "below-subheading"
+  | "below-tagline"
+  | "above-cta"
+  | "below-cta";
+
+export type RichTextNode = {
+  root: {
+    children: unknown[];
+    [key: string]: unknown;
+  };
+};
+
+export type RichTextSection = {
+  blockType: "richTextSection";
+  position: SectionPosition;
+  content: RichTextNode;
+};
+
+export type BulletListSection = {
+  blockType: "bulletList";
+  position: SectionPosition;
+  items: { text: RichTextNode }[];
+};
+
+export type HeroSection = RichTextSection | BulletListSection;
+
 export type HeroData = {
   heading: string;
   headingHighlight: string;
   subheading: string;
   tagline: string;
-  description: string;
+  sections: HeroSection[];
   primaryCtaLabel: string;
   primaryCtaHref: string;
   secondaryCtaLabel: string;
@@ -29,16 +58,28 @@ export async function getHeroData(): Promise<HeroData | null> {
       headingHighlight:   h.headingHighlight ?? "",
       subheading:         h.subheading ?? "",
       tagline:            h.tagline ?? "",
-      description:        h.description ?? "",
+      sections:           Array.isArray(h.sections) ? h.sections : [],
       primaryCtaLabel:    h.primaryCtaLabel ?? "",
       primaryCtaHref:     h.primaryCtaHref ?? "/",
       secondaryCtaLabel:  h.secondaryCtaLabel ?? "",
       secondaryCtaHref:   h.secondaryCtaHref ?? "/",
       portrait: h.portrait?.url
-        ? { url: `${API_URL}${h.portrait.url}`, alt: h.portrait.alt ?? "" }
+        ? {
+            url: h.portrait.url.startsWith("http")
+              ? h.portrait.url
+              : `${API_URL}${h.portrait.url}`,
+            alt: h.portrait.alt ?? "",
+          }
         : null,
     };
   } catch {
     return null;
   }
+}
+
+export function getSectionsForPosition(
+  sections: HeroSection[],
+  position: SectionPosition
+): HeroSection[] {
+  return sections.filter((s) => s.position === position);
 }

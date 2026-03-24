@@ -18,6 +18,21 @@ export type ChallengeData = {
   ctaHref: string;
 };
 
+function lexicalToText(content: any): string {
+  if (!content?.root?.children) return "";
+
+  function extractText(node: any): string {
+    if (node.type === "text") return node.text ?? "";
+    if (node.children) return node.children.map(extractText).join("");
+    return "";
+  }
+
+  return content.root.children
+    .map((block: any) => extractText(block).trim())
+    .filter(Boolean)
+    .join("\n\n");
+}
+
 export async function getChallengeData(): Promise<ChallengeData | null> {
   try {
     const url = `${API_URL}/api/challenge?limit=1&depth=1`;
@@ -30,24 +45,28 @@ export async function getChallengeData(): Promise<ChallengeData | null> {
     const c = docs[0];
 
     return {
-      badge:            c.badge ?? "",
-      heading:          c.heading ?? "",
+      badge: c.badge ?? "",
+      heading: c.heading ?? "",
       headingHighlight: c.headingHighlight ?? "",
-      intro:            c.intro ?? "",
-      expertiseItems:   Array.isArray(c.expertiseItems)
+      intro: lexicalToText(c.intro),
+      expertiseItems: Array.isArray(c.expertiseItems)
         ? c.expertiseItems.map((item: any): ExpertiseItem => ({
-            title: item.title ?? "",
-            body:  item.body ?? "",
-            icon:  item.icon ?? "governance",
-          }))
+          title: item.title ?? "",
+          body: item.body ?? "",
+          icon: item.icon ?? "governance",
+        }))
         : [],
       image: {
-        url: c.image?.url ? `${API_URL}${c.image.url}` : "",
+        url: c.image?.url
+          ? c.image.url.startsWith("http")
+            ? c.image.url
+            : `${API_URL}${c.image.url}`
+          : "",
         alt: c.image?.alt ?? "",
       },
       imageCaption: c.imageCaption ?? "",
-      ctaLabel:     c.ctaLabel ?? "",
-      ctaHref:      c.ctaHref ?? "",
+      ctaLabel: c.ctaLabel ?? "",
+      ctaHref: c.ctaHref ?? "",
     };
   } catch {
     return null;
