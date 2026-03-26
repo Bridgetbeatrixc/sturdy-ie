@@ -1,5 +1,3 @@
-import Link from "next/link";
-
 export function AboutSection() {
   return (
     <section className="relative z-10 bg-black overflow-hidden">
@@ -26,8 +24,7 @@ export function AboutSection() {
           {/* Right - Subtitle */}
           <div className="flex items-center justify-end">
             <p className="max-w-xl text-center text-lg leading-relaxed text-white md:text-xl">
-              Executive leadership across sovereign data, governance, and
-              regulated transformation.
+              Building trusted systems from policy to practice.
             </p>
           </div>
         </div>

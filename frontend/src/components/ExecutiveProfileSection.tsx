@@ -1,124 +1,110 @@
 "use client";
 
-import { useState } from "react";
-
-const PROFILES = [
-  {
-    title: "Data Governance & Infrastructure",
-    description:
-      "I operate at the intersection of data governance, regulatory compliance, and secure infrastructure design, focusing on enabling trusted collaboration across highly regulated environments.",
-    img: "https://images.pexels.com/photos/3183150/pexels-photo-3183150.jpeg?auto=compress&cs=tinysrgb&w=1200",
-  },
-  {
-    title: "Privacy-First Collaboration",
-    description:
-      "With over two decades of experience delivering enterprise data and digital transformation initiatives, my work centres on enabling privacy-first collaboration across institutional ecosystems.",
-    img: "https://images.pexels.com/photos/3182812/pexels-photo-3182812.jpeg?auto=compress&cs=tinysrgb&w=1200",
-  },
-  {
-    title: "Regulated Innovation",
-    description:
-      "Supporting innovation without compromising regulatory obligations or public trust. I design secure data collaboration environments for highly regulated industries.",
-    img: "https://images.pexels.com/photos/3182812/pexels-photo-3182812.jpeg?auto=compress&cs=tinysrgb&w=1200",
-  },
-];
-
 export function ExecutiveProfileSection() {
-  const [currentIndex, setCurrentIndex] = useState(0);
-
-  const handleNext = () => {
-    setCurrentIndex((prev) => (prev + 1) % PROFILES.length);
-  };
-
-  const handlePrev = () => {
-    setCurrentIndex((prev) =>
-      prev === 0 ? PROFILES.length - 1 : prev - 1
-    );
-  };
-
-  const current = PROFILES[currentIndex];
+  const sections = [
+    {
+      title: "Background",
+      content: [
+        "I’ve spent over 20 years working across public sector, financial services, and health systems, starting in technical roles and moving into leading larger programmes and platform delivery across multiple organisations and countries.",
+        "Early in my career, the work was focused on security, recovery, and core systems where reliability and control were critical. That experience shaped how I think about systems today. Systems need to work under real conditions, not just in design.",
+        "As my work evolved, I moved into more complex environments where technology is only one part of the problem. These included national platforms, regulated data systems, and multi-organisation programmes shaped as much by policy and governance as by engineering.",
+        "Across these environments, a consistent pattern emerged: data exists and regulation exists, but the systems connecting them often do not work in a way that organisations can rely on.",
+        "Alongside platform delivery, I’ve designed operating models that enable organisations to use data more effectively in practice. This has involved aligning technology, data, governance, and delivery functions so that systems are not only implemented, but actively used, sustained, and trusted within regulated environments.",
+      ],
+    },
+    {
+      title: "Perspective",
+      content: [
+        "I don’t see this as a purely technical problem. In most of the environments I’ve worked in, the challenge sits between policy, systems, and how organisations actually operate.",
+        "Regulation defines what should happen. Technology defines what could happen. The difficulty is making those two things align in practice.",
+        "A lot of my work sits in that space, translating governance, policy, and regulatory intent into infrastructure that works under real conditions.",
+      ],
+      bullets: [
+        "Systems that technically exist but don’t support how organisations need to work",
+        "Data that requires significant effort to prepare before it can be used",
+        "Regulatory requirements that are understood but difficult to implement consistently",
+      ],
+    },
+    {
+      title: "Working Across Environments",
+      content: [
+        "Over the course of my work, I’ve been involved in a range of environments facing similar challenges from different perspectives. This includes academic and research settings, public health and government systems, and clinical environments where data supports care and operational decision-making.",
+        "I’ve also worked in financial and regulated industries, where data underpins risk, compliance, and reporting across complex regulatory frameworks. In parallel, I’ve been involved in collaborative data environments, innovation programmes, and global contexts where systems need to function under real-world constraints.",
+        "While each environment has its own context, the underlying challenge is often consistent: designing systems that allow data, policy, and operations to work together in a way that is usable, trusted, and sustainable.",
+      ],
+    },
+    {
+      title: "Why It Matters",
+      content: [
+        "Across the environments I’ve worked in, whether in public sector, financial services, or health systems, the challenge is rarely a lack of data or regulation. Both already exist in abundance.",
+        "The issue is that data often cannot be used in a meaningful way, and policy and regulatory intent are difficult to translate into systems that work in practice.",
+        "In public sector and government, this affects how decisions are made and how services are delivered. In financial systems, it impacts risk, compliance, and trust. In healthcare and research, it slows progress, limits collaboration, and reduces the impact data should be delivering.",
+        "I’ve seen how much effort is spent working around systems rather than benefiting from them, and how much potential remains locked in data that is never fully used.",
+        "For me, the work is about addressing that directly. It’s about making sure that data, policy, and systems are aligned in a way that allows organisations to operate with clarity, confidence, and control.",
+        "Because when that works properly, it enables better decisions, stronger oversight, faster research, and in some cases, outcomes that directly affect people’s lives.",
+      ],
+    },
+  ];
 
   return (
-    <div className="mt-24 space-y-12 px-4 md:px-6 lg:px-30 overflow-hidden bg-black">
-{/* Section Header */}
-<div>
-  <h2 className="px-6 text-3xl font-bold text-[#c5f018] md:text-4xl">
-    Executive
-    <span className="text-white"> Profile</span>
-  </h2>
-</div>
-
-{/* Two Column Layout - Text Center, Image Right */}
-<div className="relative">
-  <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center min-h-96">
-    {/* Center Column - Text Content */}
-    <div className="flex flex-col items-center justify-center space-y-8 z-10 px-6">
-      {/* Dark text box */}
-      <div className="relative w-full max-w-xl bg-[#222222] p-20 overflow-hidden">
-        <div
-          key={currentIndex}
-          className="animate-in fade-in slide-in-from-left-full duration-500 space-y-6 text-sm leading-relaxed text-zinc-300 md:text-base"
-        >
-          <p>
-            I am a technology, data, and governance transformation
-            executive leading large-scale digital, platform, and AI
-            modernisation initiatives across public sector, financial
-            services, and health ecosystems. My work focuses on delivering
-            sovereign data infrastructures and secure collaboration
-            environments within highly regulated contexts where
-            resilience, compliance, and operational integrity are
-            non-negotiable.
+    <section className="mt-24 overflow-hidden bg-black px-6 md:px-10 lg:px-0">
+      <div className="mx-auto max-w-6xl space-y-20">
+        <div className="relative overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-950/70 p-8 md:p-12">
+          <div className="pointer-events-none absolute -right-20 -top-20 h-48 w-48 rounded-full bg-[#c5f018]/10 blur-3xl" />
+          <h2 className="text-3xl font-bold text-[#c5f018] md:text-5xl">
+            Building Trusted Systems
+            <span className="text-white"> from Policy to Practice</span>
+          </h2>
+          <p className="mt-6 max-w-4xl text-base leading-relaxed text-zinc-300 md:text-lg">
+            I work in data, infrastructure, and regulated systems. Over time,
+            I&apos;ve seen how difficult it is for organisations to use the data
+            they already have, particularly in environments shaped by policy,
+            regulation, and operational complexity.
           </p>
-          <p>
-            Operating at board and executive level, I advise on digital
-            sovereignty, governance strategy, and regulator-aligned
-            transformation—bridging innovation ambition with structured
-            execution. I have led complex programmes, modernised
-            enterprise operating models, and embedded governance and
-            security into mission-critical platforms that support
-            long-term trust and performance.
+          <p className="mt-4 max-w-4xl text-base leading-relaxed text-zinc-300 md:text-lg">
+            My focus is on building systems that make that possible in practice,
+            translating policy, governance, and regulatory requirements into
+            infrastructure that organisations can actually use and trust.
           </p>
         </div>
-        {/* Navigation Controls */}
-      <div className="flex items-center justify-center py-6 gap-6">
-        <button
-          onClick={handlePrev}
-          className="flex h-18 w-18 items-center justify-center rounded-full border-3 border-white bg-transparent text-white transition hover:border-zinc-400 hover:bg-zinc-800/50"
-          aria-label="Previous profile"
-        >
-          ←
-        </button>
-        <div className="h-12 w-12 rounded-full bg-[#c5f018]" />
-        <button
-          onClick={handleNext}
-          className="flex h-18 w-18 items-center justify-center rounded-full bg-[#c5f018] text-black transition hover:bg-lime-300"
-          aria-label="Next profile"
-        >
-          →
-        </button>
-      </div>
-      </div>
-    </div>
 
-    {/* Right Column - Image */}
-    <div className="relative h-80 lg:h-120 overflow-hidden -ml-20 lg:-ml-40">
-      <div
-        key={currentIndex}
-        className="absolute inset-0 animate-in fade-in slide-in-from-right-full duration-500"
-      >
-        <img
-          src={current.img}
-          alt="Executive Profile"
-          className="h-full w-full object-cover"
-        />
+        {sections.map((section, index) => (
+          <article
+            key={section.title}
+            className="grid gap-6 border-t border-zinc-800 pt-10 md:grid-cols-[220px_1fr] md:gap-10"
+          >
+            <div className="md:sticky md:top-20 md:self-start">
+              <p className="mb-2 text-xs font-semibold uppercase tracking-[0.2em] text-zinc-500">
+                Section {index + 1}
+              </p>
+              <h3 className="text-2xl font-bold text-white md:text-3xl">
+                {section.title}
+              </h3>
+            </div>
+
+            <div className="space-y-4 rounded-2xl border border-zinc-800 bg-zinc-950/60 p-6 md:p-8">
+              {section.content.map((paragraph) => (
+                <p
+                  key={paragraph}
+                  className="text-base leading-relaxed text-zinc-300 md:text-lg"
+                >
+                  {paragraph}
+                </p>
+              ))}
+
+              {section.bullets && (
+                <ul className="space-y-3 border-l-2 border-[#c5f018]/40 pl-5 text-base leading-relaxed text-zinc-300 md:text-lg">
+                  {section.bullets.map((bullet) => (
+                    <li key={bullet} className="list-disc">
+                      {bullet}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          </article>
+        ))}
       </div>
-    </div>
-  </div>
-  </div>
-</div>
+    </section>
   );
 }
-
-
-
-  
