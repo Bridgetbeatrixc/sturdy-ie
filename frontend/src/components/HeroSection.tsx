@@ -12,7 +12,7 @@ import { LexicalRenderer } from "@/components/LexicalRenderer";
 function SectionBlock({ block }: { block: HeroSection }) {
   if (block.blockType === "richTextSection") {
     return (
-      <div className="text-sm text-zinc-400 max-w-4xl">
+      <div className="text-sm text-white font-semibold max-w-4xl">
         <LexicalRenderer data={block.content} />
       </div>
     );
@@ -54,14 +54,14 @@ function HeroSlot({
 function SplitHeading({ heading, highlight }: { heading: string; highlight: string }) {
   if (!highlight || !heading.includes(highlight)) {
     return (
-      <h1 className="text-5xl font-medium leading-tight tracking-tight text-white sm:text-6xl md:text-9xl md:leading-[1.05]">
+      <h1 className="text-5xl sm:text-6xl md:text-[120px] lg:text-[150px] xl:text-[160px] font-light leading-tight tracking-tight text-white md:leading-[1.05] text-center sm:text-left">
         {heading}
       </h1>
     );
   }
   const [before, after] = heading.split(highlight);
   return (
-    <h1 className="text-5xl font-medium leading-tight tracking-tight text-white sm:text-6xl md:text-9xl md:leading-[1.05]">
+    <h1 className="text-5xl sm:text-6xl md:text-[120px] lg:text-[150px] xl:text-[160px] font-light leading-tight tracking-tight text-white md:leading-[1.05] text-center sm:text-left">
       {before}
       <span className="text-[#c5f018]">{highlight}</span>
       {after}
@@ -124,13 +124,13 @@ export function HeroSection({ data }: Props) {
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_60%_at_50%_90%,rgba(197,240,24,0.55)_0%,rgba(160,210,0,0.55)_20%,transparent_65%)]" />
       </div>
 
-      <div className="relative mx-auto max-w-8xl px-4 py-30">
+      <div className="relative mx-auto max-w-8xl px-4 py-24">
         <div className="pointer-events-none absolute -left-50 bottom-100 hidden h-90 w-90 rounded-full mr-[50px] border-[50px] border-zinc-700/60 md:block" />
         <div className="pointer-events-none absolute -right-50 top-100 hidden h-90 w-90 rounded-full border-[50px] border-zinc-700/60 md:block" />
 
-        <div className="relative flex flex-col items-start gap-12 lg:flex-row lg:items-center lg:justify-between">
+        <div className="relative flex flex-col items-start gap-12 xl:flex-row xl:items-center xl:justify-between">
 
-          <div className="w-full space-y-8">
+          <div className="w-full space-y-8 text-center sm:text-left">
 
             <HeroSlot sections={sections} position="above-heading" />
 
@@ -148,7 +148,7 @@ export function HeroSection({ data }: Props) {
               initial={{ opacity: 0, y: 40 }}
               animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
               transition={{ duration: 1, ease: "easeOut", delay: 0.15 }}
-              className="space-y-3 text-2xl sm:text-3xl md:text-6xl lg:text-3xl leading-relaxed text-zinc-200"
+              className="space-y-3 text-2xl sm:text-3xl md:text-4xl lg:text-4xl leading-relaxed text-zinc-200"
             >
               <p>{subheading}</p>
             </motion.div>
@@ -159,7 +159,7 @@ export function HeroSection({ data }: Props) {
               initial={{ opacity: 0, y: 10 }}
               animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
               transition={{ duration: 0.8, ease: "easeOut", delay: 0.22 }}
-              className="text-base sm:text-lg text-zinc-300"
+              className="text-base sm:text-xl lg:text-xl font-semibold bg-gradient-to-b from-[#cdf52f] to-[#9db821] bg-clip-text text-transparent"
             >
               {tagline}
             </motion.p>
@@ -177,7 +177,7 @@ export function HeroSection({ data }: Props) {
               initial={{ opacity: 0 }}
               animate={isInView ? { opacity: 1 } : { opacity: 0 }}
               transition={{ duration: 0.8, ease: "easeOut", delay: 0.45 }}
-              className="relative mt-6 flex items-center lg:w-3xl w-xs lg:w-2xl"
+              className="relative mt-6 flex items-center lg:w-3xl w-xs lg:w-2xl mx-auto sm:mx-0"
             >
               <div className="h-[1px] flex-1 origin-left bg-zinc-400"
                 style={{ animation: isInView ? "grow 1s ease-out forwards" : "none" }}
@@ -198,16 +198,16 @@ export function HeroSection({ data }: Props) {
 
             <HeroSlot sections={sections} position="above-cta" />
 
-            {/* Buttons */}
-            <div className="flex flex-col flex-wrap gap-4 pt-2 sm:flex-row">
+            <div className="flex flex-row justify-center gap-3 pt-2 sm:justify-start sm:gap-4">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                 transition={{ duration: 0.8, ease: "easeOut", delay: 0.5 }}
+                className="flex-1 sm:flex-none"
               >
                 <Link
                   href={primaryCtaHref}
-                  className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#c5f018] px-6 py-5 text-lg font-semibold text-black transition duration-500 hover:-translate-y-[1px] hover:border-1 hover:border-zinc-300 hover:bg-black hover:text-[#CCFF00]"
+                  className="inline-flex w-full items-center justify-center gap-1.5 rounded-lg bg-[#c5f018] px-3 py-3 text-sm font-semibold text-black transition duration-500 hover:-translate-y-[1px] sm:w-auto sm:gap-2 sm:px-6 sm:py-5 sm:text-lg hover:border-1 hover:border-zinc-300 hover:bg-black hover:text-[#CCFF00]"
                 >
                   {primaryCtaLabel}
                   <ArrowIcon />
@@ -218,10 +218,11 @@ export function HeroSection({ data }: Props) {
                 initial={{ opacity: 0, y: 20 }}
                 animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                 transition={{ duration: 0.8, ease: "easeOut", delay: 0.58 }}
+                className="flex-1 sm:flex-none"
               >
                 <Link
                   href={secondaryCtaHref}
-                  className="inline-flex items-center justify-center gap-2 rounded-lg border border-lime-400/70 bg-transparent px-6 py-5 text-lg font-semibold text-lime-300 transition duration-500 hover:-translate-y-[1px] hover:bg-[#CCFF00] hover:text-black"
+                  className="inline-flex w-full items-center justify-center gap-1.5 rounded-lg border border-lime-400/70 bg-transparent px-3 py-3 text-sm font-semibold text-lime-300 transition duration-500 hover:-translate-y-[1px] sm:w-auto sm:gap-2 sm:px-6 sm:py-5 sm:text-lg hover:bg-[#CCFF00] hover:text-black"
                 >
                   {secondaryCtaLabel}
                   <ArrowIcon />
@@ -233,7 +234,7 @@ export function HeroSection({ data }: Props) {
 
           </div>
 
-          <div className="relative mx-auto mt-10 flex w-full max-w-md flex-col items-center justify-center lg:mt-0 md:mr-20 lg:-ml-34 lg:max-w-none lg:flex-1">
+          <div className="relative mx-auto mt-10 flex w-full max-w-md flex-col items-center justify-center xl:mt-0 xl:mr-20 xl:-ml-34 xl:max-w-none xl:flex-1">
             <div className="pointer-events-none absolute inset-0 blur-3xl" />
             <div className="relative h-[280px] w-[220px] min-[400px]:h-[360px] min-[400px]:w-[270px] sm:h-[460px] sm:w-[320px] md:h-[550px] md:w-[400px] lg:h-[430px] lg:w-[280px]">
               <motion.div

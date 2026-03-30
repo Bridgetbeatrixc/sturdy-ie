@@ -1,6 +1,8 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
+import logo from "@/img/logo.png";
 import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 
@@ -46,12 +48,19 @@ export function Header() {
 
   return (
     <header className="absolute top-0 left-0 w-full z-50 bg-transparent">
-      <div className="mx-auto flex max-w-8xl items-center justify-between md:px-16 px-8 py-6">
+      <div className="mx-auto flex max-w-8xl items-center justify-between md:px-8 lg:px-8 px-4 py-6">
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2">
-        
-          <span className="text-2xl font-medium tracking-wide text-zinc-300">
-            <span className="font-semibold text-white">Sturdy.ie</span>
+        <Link href="/" className="flex items-center gap-3">
+          <Image
+            src={logo}
+            alt="Sturdy.ie logo"
+            width={40}
+            height={40}
+            className="object-contain"
+          />
+
+          <span className="text-2xl font-medium tracking-wide">
+            <span className="font-light text-white">Sturdy.ie</span>
           </span>
         </Link>
 
@@ -70,8 +79,8 @@ export function Header() {
             <span className="flex flex-col items-center justify-center gap-[5px]">
               <span
                 className={`block h-[2px] w-5 transition-all duration-300 ${menuOpen
-                    ? "translate-y-[7px] rotate-45 bg-black"
-                    : "bg-black"
+                  ? "translate-y-[7px] rotate-45 bg-black"
+                  : "bg-black"
                   }`}
               />
               <span
@@ -80,8 +89,8 @@ export function Header() {
               />
               <span
                 className={`block h-[2px] w-5 transition-all duration-300 ${menuOpen
-                    ? "-translate-y-[7px] -rotate-45 bg-black"
-                    : "bg-black"
+                  ? "-translate-y-[7px] -rotate-45 bg-black"
+                  : "bg-black"
                   }`}
               />
             </span>
@@ -91,8 +100,8 @@ export function Header() {
           <div
             ref={menuRef}
             className={`absolute right-0 top-full mt-2 w-68 origin-top-right rounded-2xl bg-[#c5f018] shadow-2xl transition-all duration-300 ease-out ${menuOpen
-                ? "scale-y-100 opacity-100"
-                : "pointer-events-none scale-y-0 opacity-0"
+              ? "scale-y-100 opacity-100"
+              : "pointer-events-none scale-y-0 opacity-0"
               }`}
           >
             <nav className="flex flex-col px-6 py-6">
