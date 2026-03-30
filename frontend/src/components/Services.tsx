@@ -3,7 +3,7 @@
 import { useRef, useState, useEffect } from "react";
 import { motion, useScroll, useTransform } from "motion/react";
 import { LexicalRenderer } from "@/components/LexicalRenderer";
-import type { InfrastructureData } from "@/lib/infrastructure";
+import type { ChallengeData } from "@/lib/challenge";
 
 const ICONS: Record<string, React.ReactNode> = {
   shield: (
@@ -36,7 +36,7 @@ const ICONS: Record<string, React.ReactNode> = {
   ),
 };
 
-const FALLBACK: InfrastructureData = {
+const FALLBACK: ChallengeData = {
   badge: "Infrastructure",
   heading: "Building Infrastructure",
   headingLight: "That Operates at Scale",
@@ -125,7 +125,7 @@ function ServiceCard({
   );
 }
 
-export function ServicesSection({ data }: { data?: InfrastructureData | null }) {
+export function ServicesSection({ data }: { data?: ChallengeData | null }) {
   const d = data ?? FALLBACK;
   const total = d.cards.length;
 
@@ -158,7 +158,7 @@ export function ServicesSection({ data }: { data?: InfrastructureData | null }) 
             style={{
               opacity: gradientOpacity,
               background:
-                "radial-gradient(ellipse at 50% 90%, rgba(103, 147, 20, 0.55) 30%, rgba(45,68,5,0.35) 50%, transparent 70%)",
+                "radial-gradient(ellipse at 50% 90%, rgba(152, 209, 47, 0.65) 30%, rgba(99, 135, 35, 0.35) 50%, transparent 70%)",
             }}
           />
         )}
@@ -176,7 +176,7 @@ export function ServicesSection({ data }: { data?: InfrastructureData | null }) 
                 <span className="text-sm md:text-lg">{d.badge}</span>
               </div>
 
-              <h2 className="text-2xl font-semibold leading-tight text-[#c5f018] md:text-5xl">
+              <h2 className="text-2xl font-light leading-tight text-[#c5f018] md:text-5xl">
                 {d.heading}{" "}
                 <span className="font-light text-white">{d.headingLight}</span>
               </h2>
@@ -195,7 +195,6 @@ export function ServicesSection({ data }: { data?: InfrastructureData | null }) 
               </p>
             </div>
 
-            {/* Right column — cards */}
             <div className="w-full lg:w-1/2 space-y-4">
               {d.cards.map((item, index) => (
                 <ServiceCard

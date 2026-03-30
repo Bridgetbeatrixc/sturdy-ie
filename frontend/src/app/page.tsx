@@ -1,14 +1,14 @@
 import { Header } from "../components/Header";
 import { HeroSection } from "../components/HeroSection";
 import { CapabilitiesSection } from "../components/CapabilitiesSection";
-import { ExpertiseSection } from "../components/ExpertiseSection";
+// import { ExpertiseSection } from "../components/ExpertiseSection";
 import { InsightsPreviewSection } from "../components/InsightsPreviewSection";
 import { VenturesSection } from "../components/VenturesSection";
 import { CaseStudiesSection } from "../components/CaseStudiesSection";
 import { FooterSection } from "../components/FooterSection";
-import { getInfrastructureData } from "@/lib/infrastructure";
+import { getChallengeData } from "@/lib/challenge";
 import { getCaseStudiesIndex } from "../lib/caseStudies";
-import { getChallengeData } from "../lib/challenge";
+// import { getChallengeData } from "../lib/challengedel";
 import { ServicesSection } from "@/components/Services";
 import { CaseStudiesTitleSection } from "@/components/CaseStudiesTitleSection";
 import { TestimonialsSection } from "@/components/TestimonialsSection";
@@ -21,13 +21,15 @@ import { getPrinciplesData } from "../lib/principles";
 import { getCtaData } from "@/lib/cta";
 import { getStandardsData } from "@/lib/standards";
 import { getFooterData } from "@/lib/footer";
+import { getIndustriesData } from "@/lib/industries"; 
 
 export default async function Home() {
   const [
     caseStudies,
     challengeData,
     heroData,
-    infrastructureData,
+    industriesData,
+    // infrastructureData,
     responseData,
     principlesData,
     standardsData,
@@ -37,7 +39,8 @@ export default async function Home() {
     getCaseStudiesIndex(),
     getChallengeData(),
     getHeroData(),
-    getInfrastructureData(),
+    getIndustriesData(),
+    // getInfrastructureData(),
     getResponseData(),
     getPrinciplesData(),
     getStandardsData(),
@@ -49,9 +52,8 @@ export default async function Home() {
     <main className="relative min-w-0 w-full max-w-full overflow-visible text-sm text-zinc-200">
       <Header />
       <HeroSection data={heroData} />
-      <CapabilitiesSection />
-      {challengeData && <ExpertiseSection data={challengeData} />}
-      <ServicesSection data={infrastructureData} />
+      <CapabilitiesSection data={industriesData}/>
+      <ServicesSection data={challengeData} />
       <InsightsPreviewSection data={responseData} />
       <VenturesSection />
       <CaseStudiesTitleSection />

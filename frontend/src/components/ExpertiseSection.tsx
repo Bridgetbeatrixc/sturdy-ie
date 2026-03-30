@@ -3,7 +3,7 @@
 import type { ReactNode } from "react";
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import type { ChallengeData, ExpertiseItem } from "../lib/challenge";
+import type { ChallengeData, ExpertiseItem } from "../lib/challengedel";
 
 const iconProps = {
   width: "100%",
@@ -65,13 +65,13 @@ const ICON_MAP: Record<ExpertiseItem["icon"], ReactNode> = {
 
 function SplitHeading({ heading, highlight }: { heading: string; highlight: string }) {
   if (!highlight || !heading.includes(highlight)) {
-    return <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-semibold leading-tight text-white">{heading}</h2>;
+    return <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-light leading-tight text-white">{heading}</h2>;
   }
 
   const [before, after] = heading.split(highlight);
 
   return (
-    <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-semibold leading-tight text-white">
+    <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-light leading-tight text-white">
       {before}
       <span className="text-[#c5f018]">{highlight}</span>
       <span className="font-light">{after}</span>
@@ -204,7 +204,7 @@ export function ExpertiseSection({ data }: Props) {
 
             <Link
               href={data.ctaHref}
-              className="inline-flex items-center justify-center gap-2 rounded-lg border border-[#c5f018] bg-transparent px-6 py-4 text-sm md:text-base font-semibold text-[#c5f018] transition duration-500 hover:bg-[#c5f018] hover:text-black"
+              className="inline-flex items-center justify-center gap-2 rounded-lg border border-[#c5f018] bg-transparent px-6 py-4 text-sm md:text-base font-light text-[#c5f018] transition duration-500 hover:bg-[#c5f018] hover:text-black"
               style={{
                 opacity: 0,
                 animation: visible ? "fadeUp 1.5s ease-out 0.6s forwards" : "none",

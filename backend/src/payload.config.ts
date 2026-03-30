@@ -19,18 +19,18 @@ import sharp from 'sharp'
 import { s3Storage } from '@payloadcms/storage-s3'
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
-import { Challenge } from './collections/Challenge'
 import { Ventures } from './collections/Ventures'
 import { MyInsight } from './collections/MyInsight'
 import { CaseStudies } from './collections/CaseStudies'
 import { Hero } from './collections/Hero'
-import { Infrastructure } from './collections/Infrastructure'
+import { Challenge } from './collections/Challenge'
 import { Response } from './collections/Response'
 import { ResponseCard } from './collections/ResponseCard'
 import { Principles } from './collections/Principles'
 import { Standards } from './collections/Standards'
 import { Cta } from './collections/Cta'
 import { Footer } from './collections/Footer'
+import { Industries } from './collections/Industries'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -43,7 +43,7 @@ export default buildConfig({
     },
     livePreview: {
       url: process.env.NEXT_PUBLIC_SITE_URL,
-      collections: ['my-insight', 'case-studies', 'ventures', 'challenge', 'hero', 'infrastructure', 'response', 'response-card', 'principles', 'standards', 'cta', 'footer'],
+      collections: ['my-insight', 'case-studies', 'ventures', 'challenge', 'hero', 'industries', 'response', 'response-card', 'principles', 'standards', 'cta', 'footer'],
     },
   },
   cors: [
@@ -60,7 +60,7 @@ export default buildConfig({
     'https://sturdy-ie-66rb.vercel.app',
     process.env.NEXT_PUBLIC_SITE_URL ?? '',
   ],
-  collections: [Users, Media, Ventures, MyInsight, CaseStudies, Challenge, Hero, Infrastructure, Response, ResponseCard, Principles, Standards, Cta],
+  collections: [Users, Media, Ventures, MyInsight, CaseStudies, Challenge, Hero, Industries, Response, ResponseCard, Principles, Standards, Cta],
   globals: [Footer],
   editor: lexicalEditor({
     features: ({ defaultFeatures }) => [

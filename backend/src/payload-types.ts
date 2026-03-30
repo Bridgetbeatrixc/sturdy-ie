@@ -74,7 +74,7 @@ export interface Config {
     'case-studies': CaseStudy;
     challenge: Challenge;
     hero: Hero;
-    infrastructure: Infrastructure;
+    industries: Industry;
     response: Response;
     response_card: ResponseCard;
     principles: Principle;
@@ -94,7 +94,7 @@ export interface Config {
     'case-studies': CaseStudiesSelect<false> | CaseStudiesSelect<true>;
     challenge: ChallengeSelect<false> | ChallengeSelect<true>;
     hero: HeroSelect<false> | HeroSelect<true>;
-    infrastructure: InfrastructureSelect<false> | InfrastructureSelect<true>;
+    industries: IndustriesSelect<false> | IndustriesSelect<true>;
     response: ResponseSelect<false> | ResponseSelect<true>;
     response_card: ResponseCardSelect<false> | ResponseCardSelect<true>;
     principles: PrinciplesSelect<false> | PrinciplesSelect<true>;
@@ -524,62 +524,57 @@ export interface CaseStudy {
 export interface Challenge {
   id: number;
   /**
-   * Small label shown next to the green dot (e.g. "Challenge").
+   * Small badge label above the heading (e.g. "Challenge").
    */
-  badge: string;
+  badge?: string | null;
   /**
-   * Main section heading. The highlighted (lime) portion is set separately.
+   * First line of the heading (rendered in lime).
    */
   heading: string;
   /**
-   * The portion of the heading rendered in lime (#c5f018). Must match a substring of Heading.
+   * Second line of the heading (rendered in white, lighter weight).
    */
-  headingHighlight?: string | null;
+  headingLight?: string | null;
   /**
-   * Short paragraph below the heading (left column).
+   * Paragraph text beneath the heading.
    */
-  intro: string;
+  body?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
   /**
-   * The 2×2 grid of expertise cards. Supports up to 4 items.
+   * Image shown below the body text.
    */
-  expertiseItems?:
+  image: number | Media;
+  imageCaption?: string | null;
+  /**
+   * The four (or more) cards shown on the right column.
+   */
+  cards?:
     | {
         title: string;
         /**
-         * Short supporting sentence shown beneath the title.
+         * Short descriptor line shown beneath the title.
          */
         body: string;
         /**
-         * Choose the icon to display on this card.
+         * Pick the icon that best represents this card.
          */
-        icon: 'governance' | 'infrastructure' | 'collaboration' | 'interoperability';
+        icon?: ('shield' | 'layers' | 'activity' | 'globe') | null;
         id?: string | null;
       }[]
     | null;
-  /**
-   * Large image shown in the right column.
-   */
-  image: number | Media;
-  /**
-   * Small caption rendered below the image.
-   */
-  imageCaption?: string | null;
-  /**
-   * Text on the call-to-action button.
-   */
-  ctaLabel?: string | null;
-  /**
-   * Where the CTA button links to.
-   */
-  ctaHref?: string | null;
-  /**
-   * Overrides the page <title>. Leave blank to use Heading.
-   */
-  seoTitle?: string | null;
-  /**
-   * Short description for search engine results.
-   */
-  seoDescription?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -706,24 +701,28 @@ export interface Hero {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "infrastructure".
+ * via the `definition` "industries".
  */
-export interface Infrastructure {
+export interface Industry {
   id: number;
   /**
-   * Small badge label above the heading (e.g. "Infrastructure").
+   * Small badge label shown above the heading (e.g. "Industries").
    */
-  badge?: string | null;
+  sectionLabel?: string | null;
   /**
-   * First line of the heading (rendered in lime).
+   * First part of the heading rendered in normal white text.
    */
-  heading: string;
+  headingRegular: string;
   /**
-   * Second line of the heading (rendered in white, lighter weight).
+   * Second part of the heading rendered in lime (#c5f018).
+   */
+  headingAccent: string;
+  /**
+   * Third / trailing part of the heading rendered in light white text.
    */
   headingLight?: string | null;
   /**
-   * Paragraph text beneath the heading.
+   * Descriptive paragraphs shown beside the heading.
    */
   body?: {
     root: {
@@ -741,24 +740,22 @@ export interface Infrastructure {
     [k: string]: unknown;
   } | null;
   /**
-   * Image shown below the body text.
-   */
-  image: number | Media;
-  imageCaption?: string | null;
-  /**
-   * The four (or more) cards shown on the right column.
+   * The grid cards shown in the capabilities section (typically 4).
    */
   cards?:
     | {
+        /**
+         * Card heading (e.g. "Data Governance & Compliance").
+         */
         title: string;
         /**
          * Short descriptor line shown beneath the title.
          */
-        body: string;
+        description: string;
         /**
-         * Pick the icon that best represents this card.
+         * Background image for this card.
          */
-        icon?: ('shield' | 'layers' | 'activity' | 'globe') | null;
+        image: number | Media;
         id?: string | null;
       }[]
     | null;
@@ -1084,8 +1081,8 @@ export interface PayloadLockedDocument {
         value: number | Hero;
       } | null)
     | ({
-        relationTo: 'infrastructure';
-        value: number | Infrastructure;
+        relationTo: 'industries';
+        value: number | Industry;
       } | null)
     | ({
         relationTo: 'response';
@@ -1266,9 +1263,11 @@ export interface CaseStudiesSelect<T extends boolean = true> {
 export interface ChallengeSelect<T extends boolean = true> {
   badge?: T;
   heading?: T;
-  headingHighlight?: T;
-  intro?: T;
-  expertiseItems?:
+  headingLight?: T;
+  body?: T;
+  image?: T;
+  imageCaption?: T;
+  cards?:
     | T
     | {
         title?: T;
@@ -1276,12 +1275,6 @@ export interface ChallengeSelect<T extends boolean = true> {
         icon?: T;
         id?: T;
       };
-  image?: T;
-  imageCaption?: T;
-  ctaLabel?: T;
-  ctaHref?: T;
-  seoTitle?: T;
-  seoDescription?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -1332,21 +1325,20 @@ export interface HeroSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "infrastructure_select".
+ * via the `definition` "industries_select".
  */
-export interface InfrastructureSelect<T extends boolean = true> {
-  badge?: T;
-  heading?: T;
+export interface IndustriesSelect<T extends boolean = true> {
+  sectionLabel?: T;
+  headingRegular?: T;
+  headingAccent?: T;
   headingLight?: T;
   body?: T;
-  image?: T;
-  imageCaption?: T;
   cards?:
     | T
     | {
         title?: T;
-        body?: T;
-        icon?: T;
+        description?: T;
+        image?: T;
         id?: T;
       };
   updatedAt?: T;
