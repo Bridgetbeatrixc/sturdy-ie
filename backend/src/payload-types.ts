@@ -80,6 +80,7 @@ export interface Config {
     principles: Principle;
     standards: Standard;
     application: Application;
+    about: About;
     cta: Cta;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
@@ -101,6 +102,7 @@ export interface Config {
     principles: PrinciplesSelect<false> | PrinciplesSelect<true>;
     standards: StandardsSelect<false> | StandardsSelect<true>;
     application: ApplicationSelect<false> | ApplicationSelect<true>;
+    about: AboutSelect<false> | AboutSelect<true>;
     cta: CtaSelect<false> | CtaSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
@@ -990,6 +992,23 @@ export interface Application {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "about".
+ */
+export interface About {
+  id: number;
+  /**
+   * Main heading text (e.g. "About").
+   */
+  heading: string;
+  /**
+   * Subtitle paragraph shown on the right side.
+   */
+  subtitle: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "cta".
  */
 export interface Cta {
@@ -1109,6 +1128,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'application';
         value: number | Application;
+      } | null)
+    | ({
+        relationTo: 'about';
+        value: number | About;
       } | null)
     | ({
         relationTo: 'cta';
@@ -1457,6 +1480,16 @@ export interface ApplicationSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "about_select".
+ */
+export interface AboutSelect<T extends boolean = true> {
+  heading?: T;
+  subtitle?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "cta_select".
  */
 export interface CtaSelect<T extends boolean = true> {
@@ -1524,6 +1557,14 @@ export interface Footer {
   id: number;
   tagline: string;
   copyright: string;
+  /**
+   * e.g. "Let's Connect". Leave blank to hide the button.
+   */
+  ctaLabel?: string | null;
+  /**
+   * e.g. "/contact" or "https://calendly.com/..."
+   */
+  ctaHref?: string | null;
   navItems?:
     | {
         label: string;
@@ -1548,6 +1589,8 @@ export interface Footer {
 export interface FooterSelect<T extends boolean = true> {
   tagline?: T;
   copyright?: T;
+  ctaLabel?: T;
+  ctaHref?: T;
   navItems?:
     | T
     | {

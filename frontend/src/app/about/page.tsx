@@ -4,8 +4,16 @@ import { ExecutiveProfileSection } from "../../components/ExecutiveProfileSectio
 import { CardAboutSection } from "../../components/CardAboutSection";
 import { ExploreWorkSection } from "../../components/ExploreWorkSection";
 import { FooterSection } from "../../components/FooterSection";
+import { getFooterData } from "@/lib/footer";
 
-export default function AboutPage() {
+export default async function AboutPage() {
+
+  const [
+    footerData,
+  ] = await Promise.all([
+    getFooterData(),
+  ]);
+
   return (
     <main className="relative w-full overflow-x-hidden text-sm text-zinc-200">
       <Header />
@@ -13,7 +21,7 @@ export default function AboutPage() {
       <ExecutiveProfileSection />
       <CardAboutSection />
       <ExploreWorkSection />
-      <FooterSection />
+      <FooterSection data={footerData} />
     </main>
   );
 }

@@ -32,6 +32,7 @@ import { Cta } from './collections/Cta'
 import { Footer } from './collections/Footer'
 import { Industries } from './collections/Industries'
 import { Application } from './collections/Application'
+import { About } from './collections/About'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -44,7 +45,7 @@ export default buildConfig({
     },
     livePreview: {
       url: process.env.NEXT_PUBLIC_SITE_URL,
-      collections: ['my-insight', 'case-studies', 'ventures', 'challenge', 'hero', 'industries', 'response', 'response-card', 'principles', 'standards', 'cta', 'application', 'footer'],
+      collections: ['my-insight', 'case-studies', 'ventures', 'challenge', 'hero', 'industries', 'response', 'response-card', 'principles', 'standards', 'cta', 'application', 'about'],
     },
   },
   cors: [
@@ -61,7 +62,7 @@ export default buildConfig({
     'https://sturdy-ie-66rb.vercel.app',
     process.env.NEXT_PUBLIC_SITE_URL ?? '',
   ],
-  collections: [Users, Media, Ventures, MyInsight, CaseStudies, Challenge, Hero, Industries, Response, ResponseCard, Principles, Standards, Application, Cta],
+  collections: [Users, Media, Ventures, MyInsight, CaseStudies, Challenge, Hero, Industries, Response, ResponseCard, Principles, Standards, Application, About, Cta],
   globals: [Footer],
   editor: lexicalEditor({
     features: ({ defaultFeatures }) => [

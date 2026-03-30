@@ -2,8 +2,16 @@ import { Header } from "../../components/Header";
 import { CaseStudyBlogSection } from "../../components/CaseStudyBlogSection";
 import { FooterSection } from "../../components/FooterSection";
 import { getCaseStudiesIndex } from "../../lib/caseStudies";
+import { getFooterData } from "@/lib/footer";
 
 export default async function CaseStudiesPage() {
+
+  const [
+    footerData,
+  ] = await Promise.all([
+    getFooterData(),
+  ]);
+
   const caseStudies = await getCaseStudiesIndex();
 
   return (
@@ -29,7 +37,7 @@ export default async function CaseStudiesPage() {
       </section>
 
       <CaseStudyBlogSection caseStudies={caseStudies} />
-      <FooterSection />
+      <FooterSection data={footerData} />
     </main>
   );
 }

@@ -6,6 +6,8 @@ export type FooterSocial  = { label: string; href: string };
 export type FooterData = {
   tagline:   string;
   copyright: string;
+  ctaLabel?: string;
+  ctaHref?:  string;
   navItems:  FooterNavItem[];
   socials:   FooterSocial[];
 };
@@ -20,6 +22,8 @@ export async function getFooterData(): Promise<FooterData | null> {
     return {
       tagline:   d.tagline   ?? "",
       copyright: d.copyright ?? "",
+      ctaLabel:  d.ctaLabel  ?? "",
+      ctaHref:   d.ctaHref   ?? "",
       navItems: Array.isArray(d.navItems)
         ? d.navItems.map((item: any) => ({
             label: item.label ?? "",

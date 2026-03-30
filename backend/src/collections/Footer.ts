@@ -17,6 +17,18 @@ export const Footer: GlobalConfig = {
             defaultValue: 'Copyright © All Rights Reserved Jason Sturdy',
         },
         {
+            name: 'ctaLabel',
+            label: 'CTA Button Label',
+            type: 'text',
+            admin: { description: "e.g. \"Let's Connect\". Leave blank to hide the button." },
+        },
+        {
+            name: 'ctaHref',
+            label: 'CTA Button URL',
+            type: 'text',
+            admin: { description: 'e.g. "/contact" or "https://calendly.com/..."' },
+        },
+        {
             name: 'navItems',
             type: 'array',
             label: 'Nav Links',

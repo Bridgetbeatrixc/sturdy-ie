@@ -1,5 +1,7 @@
 "use client";
 import Link from "next/link";
+import Image from "next/image";
+import logo2 from "@/img/logo-2.png";
 import { useRef } from "react";
 import { motion, useInView } from "motion/react";
 import type { FooterData } from "@/lib/footer";
@@ -27,30 +29,11 @@ const SOCIAL_ICONS: Record<string, React.ReactNode> = {
   ),
 };
 
-const FALLBACK: FooterData = {
-  tagline:
-    "Designing sovereign data infrastructures and secure collaboration environments for regulated ecosystems.",
-  copyright: "Copyright © All Rights Reserved Jason Sturdy",
-  navItems: [
-    { label: "Home", href: "/" },
-    { label: "About", href: "/about" },
-    // { label: "Ventures", href: "/ventures" },
-    { label: "Case Studies", href: "/case-studies" },
-    { label: "My Insights", href: "/myinsights" },
-    { label: "Contact", href: "/contact" },
-  ],
-  socials: [
-    { label: "Instagram", href: "https://instagram.com" },
-    { label: "LinkedIn", href: "https://linkedin.com" },
-    { label: "Twitter", href: "https://x.com" },
-    { label: "Facebook", href: "https://facebook.com" },
-  ],
-};
-
 export function FooterSection({ data }: { data?: FooterData | null }) {
-  const d = data ?? FALLBACK;
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "0px 0px -60px 0px" });
+
+  if (!data) return null;
 
   return (
     <footer
@@ -61,15 +44,8 @@ export function FooterSection({ data }: { data?: FooterData | null }) {
           "radial-gradient(ellipse at 50% 20%, rgba(74, 110, 8, 0.95) 0%, rgba(45, 68, 5, 0.85) 40%, rgba(20, 30, 3, 0.9) 60%, #0a0a0a 100%)",
       }}
     >
-      {/* Decorative gradient arcs — left */}
       <div className="hidden md:block pointer-events-none absolute -left-20 bottom-80 top-1/6 -translate-y-1/2">
-        <svg
-          width="300"
-          height="330"
-          viewBox="0 0 260 320"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
+        <svg width="300" height="330" viewBox="0 0 260 320" fill="none" xmlns="http://www.w3.org/2000/svg">
           <defs>
             <linearGradient id="arcGradL1" x1="0" y1="0" x2="1" y2="1">
               <stop offset="0%" stopColor="#D0F347" stopOpacity="0.6" />
@@ -81,15 +57,8 @@ export function FooterSection({ data }: { data?: FooterData | null }) {
         </svg>
       </div>
 
-      {/* Decorative gradient arcs — right */}
       <div className="hidden md:block pointer-events-none absolute -right-28 top-1/2 -translate-y-1/2">
-        <svg
-          width="340"
-          height="400"
-          viewBox="0 0 300 320"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
+        <svg width="340" height="400" viewBox="0 0 300 320" fill="none" xmlns="http://www.w3.org/2000/svg">
           <defs>
             <linearGradient id="arcGradR1" x1="1" y1="0" x2="0" y2="1">
               <stop offset="0%" stopColor="#c5f018" stopOpacity="0.6" />
@@ -102,7 +71,6 @@ export function FooterSection({ data }: { data?: FooterData | null }) {
       </div>
 
       <div className="py-8 md:py-16">
-        {/* Logo */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
@@ -116,65 +84,84 @@ export function FooterSection({ data }: { data?: FooterData | null }) {
           </Link>
         </motion.div>
 
-        {/* Tagline */}
         <motion.p
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
           transition={{ duration: 1, ease: "easeOut", delay: 0.15 }}
           className="mx-auto max-w-xs md:max-w-2xl text-center text-sm leading-relaxed text-white md:text-base"
         >
-          {d.tagline}
+          {data.tagline}
         </motion.p>
 
-        {/* Social icons */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
           transition={{ duration: 1, ease: "easeOut", delay: 0.3 }}
-          className="mt-10 md:mt-20 flex items-center justify-center gap-6 md:gap-10"
+          className="mt-10 md:mt-20 flex flex-wrap items-center justify-center gap-4 md:gap-6"
         >
-          {d.socials.map((social) => (
+          {data.socials.map((social) => (
             <a
               key={social.label}
               href={social.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex h-12 w-12 items-center justify-center rounded-sm border border-zinc-400 text-zinc-300 transition-all duration-600 ease-in-out hover:bg-black hover:scale-120"
+              className="flex h-12 w-12 items-center justify-center rounded-sm border border-zinc-400 text-zinc-300 transition-all duration-300 hover:bg-black hover:scale-110"
               aria-label={social.label}
             >
               {SOCIAL_ICONS[social.label] ?? null}
             </a>
           ))}
+
+          {data.ctaLabel && data.ctaHref && (
+            <Link
+              href={data.ctaHref}
+              className="inline-flex items-center gap-2 rounded-sm border border-[#c5f018] bg-[#c5f018] px-6 py-3 text-sm font-semibold text-black transition-all duration-300 hover:bg-black hover:text-[#c5f018] hover:scale-110"
+            >
+              {data.ctaLabel}
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden>
+                <path d="M3 13L13 3M13 3H5M13 3V11" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </Link>
+          )}
         </motion.div>
 
-        {/* Nav links */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
           transition={{ duration: 1, ease: "easeOut", delay: 0.45 }}
           className="mt-10 md:mt-20 flex flex-wrap items-center justify-center gap-2 sm:gap-8"
         >
-          {d.navItems.map((item) => (
+          {data.navItems.map((item) => (
             <Link
               key={item.href}
               href={item.href}
-              className="rounded-lg bg-[#31332d] px-4 md:px-8 py-4 text-sm font-medium text-white transition-all duration-600 ease-in-out hover:scale-110"
+              className="rounded-lg bg-[#31332d] px-4 md:px-8 py-4 text-sm font-medium text-white transition-all duration-300 hover:scale-110"
             >
               {item.label}
             </Link>
           ))}
         </motion.div>
 
-        {/* Divider + copyright */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
           transition={{ duration: 1, ease: "easeOut", delay: 0.6 }}
           className="mt-10 md:mt-16 mx-auto max-w-xs md:max-w-6xl px-8 border-t border-[rgba(219,255,73,0.9)] pt-6 pb-8"
         >
-          <p className="text-center mt-6 md:mt-8 text-sm md:text-lg text-white">
-            {d.copyright}
-          </p>
+          <div className="flex items-center justify-between gap-4">
+            <p className="text-sm md:text-lg text-white">
+              {data.copyright}
+            </p>
+            <Link href="/" className="shrink-0 flex items-center gap-1.5">
+              <Image
+                src={logo2}
+                alt="logo"
+                width={40}
+                height={40}
+                className="object-contain"
+              />
+            </Link>
+          </div>
         </motion.div>
       </div>
     </footer>

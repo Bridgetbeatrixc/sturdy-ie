@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Header } from "../../../components/Header";
-import { FooterSection } from "../../../components/FooterSection";
+import { getFooterData } from "@/lib/footer";
+import { FooterSection } from "@/components/FooterSection";
 import { getCaseStudyBySlug, getCaseStudiesIndex } from "../../../lib/caseStudies";
 import { LexicalRenderer } from "../../../components/LexicalRenderer";
 import { CopyGuard } from "../../../components/CopyGuard";
@@ -17,6 +18,12 @@ export default async function CaseStudyDetailPage({
     getCaseStudiesIndex(),
   ]);
   if (!study) notFound();
+
+  const [
+    footerData,
+  ] = await Promise.all([
+    getFooterData(),
+  ]);
 
   const recentStudies = allStudies.filter((s) => s.slug !== slug).slice(0, 2);
 
@@ -151,7 +158,7 @@ export default async function CaseStudyDetailPage({
           </section>
         </div>
 
-        <FooterSection />
+        <FooterSection data={footerData} />
       </main>
     </CopyGuard>
   );

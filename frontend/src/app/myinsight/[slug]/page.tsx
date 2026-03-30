@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Header } from "../../../components/Header";
-import { FooterSection } from "../../../components/FooterSection";
+import { getFooterData } from "@/lib/footer";
+import { FooterSection } from "@/components/FooterSection";
 import { getMyInsightBySlug, getMyInsightsIndex } from "../../../lib/myInsight";
 import { LexicalRenderer } from "../../../components/LexicalRenderer";
 import { CopyGuard } from "../../../components/CopyGuard";
@@ -17,6 +18,12 @@ export default async function MyInsightDetailPage({
     getMyInsightsIndex(),
   ]);
   if (!myInsight) notFound();
+
+    const [
+    footerData,
+  ] = await Promise.all([
+    getFooterData(),
+  ]);
 
   const recentInsights = allInsights.filter((i) => i.slug !== slug).slice(0, 2);
 
@@ -194,7 +201,7 @@ export default async function MyInsightDetailPage({
           )}
         </div>
 
-        <FooterSection />
+        <FooterSection data={footerData} />
       </main>
     </CopyGuard>
   );

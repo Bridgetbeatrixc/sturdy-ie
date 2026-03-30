@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Header } from "../../components/Header";
 import { FooterSection } from "../../components/FooterSection";
 import { MyInsightIndex, CATEGORY_STYLES } from "../../lib/myInsight";
+import { getFooterData } from "@/lib/footer";
 
 const CATEGORIES = [
   "All",
@@ -14,6 +15,12 @@ const CATEGORIES = [
   "Preventive Health Innovation",
   "AI & Regulated Data",
 ];
+
+  const [
+    footerData,
+  ] = await Promise.all([
+    getFooterData(),
+  ]);
 
 const ITEMS_PER_PAGE = 6;
 
@@ -187,8 +194,7 @@ export function WritingClient({
           )}
         </div>
       </section>
-
-      <FooterSection />
+      <FooterSection data={footerData} />
     </main>
   );
 }
