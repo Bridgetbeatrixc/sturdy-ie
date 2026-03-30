@@ -1,14 +1,32 @@
 import { CollectionConfig } from 'payload';
+import {
+  BlocksFeature,
+  BoldFeature,
+  ChecklistFeature,
+  HeadingFeature,
+  HorizontalRuleFeature,
+  ItalicFeature,
+  LinkFeature,
+  OrderedListFeature,
+  RelationshipFeature,
+  StrikethroughFeature,
+  UnderlineFeature,
+  UnorderedListFeature,
+  UploadFeature,
+  lexicalEditor,
+} from '@payloadcms/richtext-lexical';
 
 export const CaseStudies: CollectionConfig = {
   slug: 'case-studies',
   admin: {
     useAsTitle: 'title',
-    defaultColumns: ['title', 'theme', 'context'],
+    defaultColumns: ['title', 'theme', 'updatedAt'],
     livePreview: {
-      url: ({ data }) => `${process.env.NEXT_PUBLIC_SITE_URL}/case-studies/${data.slug}`,
+      url: ({ data }) =>
+        `${process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000'}/case-studies/${data.slug}`,
     },
-    preview: (data) => `${process.env.NEXT_PUBLIC_SITE_URL}/case-studies/${data.slug}`,
+    preview: (data) =>
+      `${process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000'}/case-studies/${data.slug}`,
   },
   access: {
     read: () => true,
@@ -27,14 +45,9 @@ export const CaseStudies: CollectionConfig = {
       type: 'text',
       required: true,
       unique: true,
-      admin: {
-        description: 'Auto-filled from title. You can override it manually.',
-        condition: () => true,
-      },
       hooks: {
         beforeValidate: [
           ({ value, data }) => {
-            // Always regenerate from title if slug is empty
             if (!value && data?.title) {
               return data.title
                 .toLowerCase()
@@ -51,9 +64,23 @@ export const CaseStudies: CollectionConfig = {
     {
       name: 'summary',
       type: 'richText',
-      label: 'Summary Outcome',
       required: true,
-      admin: { description: 'Short description shown on listing cards.' },
+      editor: lexicalEditor({
+        features: [
+          BoldFeature(),
+          ItalicFeature(),
+          UnderlineFeature(),
+          StrikethroughFeature(),
+          HeadingFeature({ enabledHeadingSizes: ['h2', 'h3', 'h4'] }),
+          UnorderedListFeature(),
+          OrderedListFeature(),
+          ChecklistFeature(),
+          LinkFeature(),
+          HorizontalRuleFeature(),
+          UploadFeature(),
+          RelationshipFeature(),
+        ],
+      }),
     },
     {
       name: 'theme',
@@ -62,70 +89,71 @@ export const CaseStudies: CollectionConfig = {
       admin: { description: 'e.g. "Research Collaboration / TRE"' },
     },
     {
-      name: 'context',
-      type: 'richText',
-      required: true,
-      admin: { description: 'e.g. "Multi-institutional research consortium"' },
+      name: 'date',
+      type: 'text',
+      admin: { description: 'Display date e.g. "March 2024"' },
     },
     {
-      name: 'img',
+      name: 'period',
+      type: 'text',
+      admin: { description: 'Fallback period label if no date e.g. "Q1 2024"' },
+    },
+    {
+      name: 'image',
       type: 'upload',
       relationTo: 'media',
       required: true,
-      admin: { description: 'Upload or select image.' },
     },
     {
-      name: 'overviewContext',
-      label: 'Overview & Context',
-      type: 'richText',
-    },
-    {
-      name: 'environmentModel',
-      label: 'Environment Model',
-      type: 'richText',
-    },
-    {
-      name: 'governanceControls',
-      label: 'Governance & Controls',
-      type: 'richText',
-    },
-    {
-      name: 'standardsInteroperability',
-      label: 'Standards & Interoperability',
-      type: 'richText',
-    },
-    {
-      name: 'outcomesImpact',
-      label: 'Outcomes & Impact',
-      type: 'richText',
-    },
-    {
-      name: 'partnershipRelevance',
-      label: 'Partnership Relevance',
-      type: 'richText',
+      name: 'sections',
+      label: 'Body Sections',
+      type: 'array',
+      minRows: 0,
+      admin: { description: 'Add, reorder, or remove sections freely.' },
+      fields: [
+        {
+          name: 'heading',
+          type: 'text',
+          required: true,
+          admin: { description: 'Section heading shown on the page.' },
+        },
+        {
+          name: 'body',
+          type: 'richText',
+          required: true,
+          editor: lexicalEditor({
+            features: [
+              BoldFeature(),
+              ItalicFeature(),
+              UnderlineFeature(),
+              StrikethroughFeature(),
+              HeadingFeature({ enabledHeadingSizes: ['h2', 'h3', 'h4'] }),
+              UnorderedListFeature(),
+              OrderedListFeature(),
+              ChecklistFeature(),
+              LinkFeature(),
+              HorizontalRuleFeature(),
+              UploadFeature(),
+              RelationshipFeature(),
+            ],
+          }),
+        },
+      ],
     },
     {
       name: 'featured',
       type: 'checkbox',
       defaultValue: false,
-      admin: { description: 'Mark as a Featured Article.' },
     },
-    // SEO
     {
       name: 'seoTitle',
       label: 'SEO Title',
       type: 'text',
-      admin: {
-        description: 'Overrides the page title in search engine results. Leave blank to use the article title.',
-      },
     },
     {
       name: 'seoDescription',
       label: 'SEO Description',
       type: 'textarea',
-      admin: {
-        description: 'Short description for search engine results.',
-      },
     },
   ],
 };

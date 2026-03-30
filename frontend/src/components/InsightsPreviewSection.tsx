@@ -183,9 +183,9 @@ export function InsightsPreviewSection({
           </div>
 
           {/* Heading */}
-          <h2 className="text-2xl font-semibold leading-tight text-[#c5f018] md:text-5xl">
+          <h2 className="text-2xl font-light leading-tight text-white md:text-5xl">
             {d.heading}{" "}
-            <span className="font-light text-white">{d.headingLight}</span>
+            <span className="font-light text-[#c5f018]">{d.headingLight}</span>
           </h2>
 
           {/* Body */}

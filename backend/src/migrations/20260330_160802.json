@@ -882,6 +882,94 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
+    "public.case_studies_sections": {
+      "name": "case_studies_sections",
+      "schema": "",
+      "columns": {
+        "_order": {
+          "name": "_order",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "_parent_id": {
+          "name": "_parent_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "id": {
+          "name": "id",
+          "type": "varchar",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "heading": {
+          "name": "heading",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "body": {
+          "name": "body",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {
+        "case_studies_sections_order_idx": {
+          "name": "case_studies_sections_order_idx",
+          "columns": [
+            {
+              "expression": "_order",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "case_studies_sections_parent_id_idx": {
+          "name": "case_studies_sections_parent_id_idx",
+          "columns": [
+            {
+              "expression": "_parent_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "case_studies_sections_parent_id_fk": {
+          "name": "case_studies_sections_parent_id_fk",
+          "tableFrom": "case_studies_sections",
+          "tableTo": "case_studies",
+          "columnsFrom": [
+            "_parent_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
     "public.case_studies": {
       "name": "case_studies",
       "schema": "",
@@ -902,7 +990,7 @@
           "name": "slug",
           "type": "varchar",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
         },
         "summary": {
           "name": "summary",
@@ -916,53 +1004,23 @@
           "primaryKey": false,
           "notNull": true
         },
-        "context": {
-          "name": "context",
-          "type": "jsonb",
+        "date": {
+          "name": "date",
+          "type": "varchar",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         },
-        "img_id": {
-          "name": "img_id",
+        "period": {
+          "name": "period",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "image_id": {
+          "name": "image_id",
           "type": "integer",
           "primaryKey": false,
           "notNull": true
-        },
-        "overview_context": {
-          "name": "overview_context",
-          "type": "jsonb",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "environment_model": {
-          "name": "environment_model",
-          "type": "jsonb",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "governance_controls": {
-          "name": "governance_controls",
-          "type": "jsonb",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "standards_interoperability": {
-          "name": "standards_interoperability",
-          "type": "jsonb",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "outcomes_impact": {
-          "name": "outcomes_impact",
-          "type": "jsonb",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "partnership_relevance": {
-          "name": "partnership_relevance",
-          "type": "jsonb",
-          "primaryKey": false,
-          "notNull": false
         },
         "featured": {
           "name": "featured",
@@ -1014,11 +1072,11 @@
           "method": "btree",
           "with": {}
         },
-        "case_studies_img_idx": {
-          "name": "case_studies_img_idx",
+        "case_studies_image_idx": {
+          "name": "case_studies_image_idx",
           "columns": [
             {
-              "expression": "img_id",
+              "expression": "image_id",
               "isExpression": false,
               "asc": true,
               "nulls": "last"
@@ -1061,12 +1119,12 @@
         }
       },
       "foreignKeys": {
-        "case_studies_img_id_media_id_fk": {
-          "name": "case_studies_img_id_media_id_fk",
+        "case_studies_image_id_media_id_fk": {
+          "name": "case_studies_image_id_media_id_fk",
           "tableFrom": "case_studies",
           "tableTo": "media",
           "columnsFrom": [
-            "img_id"
+            "image_id"
           ],
           "columnsTo": [
             "id"
@@ -2727,7 +2785,14 @@
           "type": "varchar",
           "primaryKey": false,
           "notNull": true,
-          "default": "'Standards, Frameworks & Ecosystems'"
+          "default": "'Standards,'"
+        },
+        "heading_accent": {
+          "name": "heading_accent",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Frameworks & Ecosystems'"
         },
         "body": {
           "name": "body",
@@ -4310,6 +4375,6 @@
     "tables": {},
     "columns": {}
   },
-  "id": "5a31c401-bc70-4236-8529-63ed546f2b4b",
+  "id": "c7078b93-42fc-4b82-a986-ff9b8bcb5c04",
   "prevId": "00000000-0000-0000-0000-000000000000"
 }

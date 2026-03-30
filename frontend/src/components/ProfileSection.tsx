@@ -83,7 +83,8 @@ const ICONS: Record<StandardsCard["icon"], React.ReactNode> = {
 
 const FALLBACK: StandardsData = {
   badge: "Standards",
-  heading: "Standards, Frameworks & Ecosystems",
+  heading: "Standards,",
+  headingAccent: "Frameworks & Ecosystems",
   body: {
     root: {
       type: "root",
@@ -291,7 +292,7 @@ export function ProfileSection({ data }: { data?: StandardsData | null }) {
   };
 
   return (
-    <section id="profile" className="mx-auto max-w-8xl px-4 py-16 md:px-4 md:py-24 lg:px-4">
+    <section id="profile" className="mx-auto max-w-8xl px-4 py-16 md:px-4 md:py-24 lg:px-4 bg-[radial-gradient(ellipse_80%_80%_at_50%_60%,rgba(197,240,24,0.55)_0%,rgba(160,210,0,0.55)_20%,transparent_65%)]">
       <motion.div
         ref={ref}
         initial={{ opacity: 0, y: 30 }}
@@ -312,7 +313,8 @@ export function ProfileSection({ data }: { data?: StandardsData | null }) {
         transition={{ duration: 1.2, ease: "easeOut", delay: 0.15 }}
         className="text-center text-2xl font-light leading-tight text-white md:text-6xl"
       >
-        {d.heading}
+        <span className="text-[#c5f018]">{d.heading} </span>
+        <span className="text-white">{d.headingAccent}</span>
       </motion.h2>
 
       <motion.div

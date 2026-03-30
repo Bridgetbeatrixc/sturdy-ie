@@ -3,56 +3,7 @@ import { notFound } from "next/navigation";
 import { Header } from "../../../components/Header";
 import { FooterSection } from "../../../components/FooterSection";
 import { getCaseStudyBySlug, getCaseStudiesIndex } from "../../../lib/caseStudies";
-
-const SECTIONS = [
-  { key: "overviewContext", heading: "Overview & Context" },
-  { key: "environmentModel", heading: "Environment Model" },
-  { key: "governanceControls", heading: "Governance & Controls" },
-  { key: "standardsInteroperability", heading: "Standards & Interoperability" },
-  { key: "outcomesImpact", heading: "Outcomes & Impact" },
-  { key: "partnershipRelevance", heading: "Partnership Relevance" },
-] as const;
-
-function BodyContent({ text }: { text: string }) {
-  return (
-    <div className="space-y-4">
-      {text.split("\n\n").map((para: string, i: number) => {
-        const trimmed = para.trim();
-        if (!trimmed) return null;
-
-        // Detect inline bullet pattern: "Some intro: - item - item" or "- item - item"
-        const bulletSplit = trimmed.split(/\s*-\s+/);
-
-        if (bulletSplit.length > 1) {
-          const intro = bulletSplit[0].trim();
-          const items = bulletSplit.slice(1).filter(Boolean);
-
-          return (
-            <div key={i}>
-              {intro && (
-                <p className="text-[16px] text-white mb-2">{intro}</p>
-              )}
-              <ul className="space-y-2 pl-1">
-                {items.map((item, j) => (
-                  <li key={j} className="flex items-start gap-2 text-[16px] text-white">
-                    <span className="mt-[6px] h-1.5 w-1.5 shrink-0 rounded-sm bg-[#c5f018]" />
-                    {item.trim()}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          );
-        }
-
-        return (
-          <p key={i} className="text-[16px] text-white">
-            {trimmed}
-          </p>
-        );
-      })}
-    </div>
-  );
-}
+import { LexicalRenderer } from "../../../components/LexicalRenderer";
 
 export default async function CaseStudyDetailPage({
   params,
@@ -72,7 +23,6 @@ export default async function CaseStudyDetailPage({
     <main className="relative w-full overflow-x-hidden bg-black text-zinc-200">
       <Header />
 
-      {/* Hero (centered, like reference) */}
       <section className="relative bg-black">
         <div className="mx-auto max-w-8xl px-4 pt-16 sm:px-6 md:px-10 md:pt-20 lg:px-0">
           <Link
@@ -87,9 +37,10 @@ export default async function CaseStudyDetailPage({
               {study.title}
             </h1>
 
-            <p className="mx-auto mt-5 max-w-3xl text-sm leading-relaxed text-zinc-400 md:text-base">
-              {study.summary}
-            </p>
+            {/* ✅ was: {study.summary} which renders [object Object] */}
+            <div className="mx-auto mt-5 max-w-3xl text-sm leading-relaxed text-zinc-400 md:text-base [&_p]:text-zinc-400">
+              <LexicalRenderer data={study.summary} />
+            </div>
 
             <div className="mt-6 flex flex-wrap items-center justify-center gap-3 text-xs text-zinc-500">
               <span className="rounded-full border border-[#c5f018]/35 bg-[#c5f018]/10 px-3 py-1 font-semibold text-[#c5f018]">
@@ -104,7 +55,6 @@ export default async function CaseStudyDetailPage({
             </div>
           </div>
 
-          {/* Featured image (approx 1400x600 at max-w-8xl) */}
           <div className="mt-12 overflow-hidden rounded-2xl bg-zinc-900">
             <img
               src={study.img}
@@ -115,26 +65,22 @@ export default async function CaseStudyDetailPage({
         </div>
       </section>
 
-      {/* Body */}
       <div className="mx-auto max-w-8xl px-4 pt-14 sm:px-6 md:px-10 lg:px-0">
-        {/* Body sections */}
         <article className="space-y-14">
-          {SECTIONS.map(({ key, heading }) => {
-            const body = (study as unknown as Record<string, string>)[key];
-            if (!body?.trim()) return null;
+          {study.sections.map(({ heading, body }, index) => {
+            if (!body) return null;
             return (
-              <section key={key}>
+              <section key={index}>
                 <h2 className="text-[48px] font-light leading-[1.1] text-white">
                   {heading}
                 </h2>
-                <div className="mt-6">
-                  <BodyContent text={body} />
+                <div className="mt-6 space-y-4 text-[16px] leading-relaxed text-white [&_p]:text-white [&_li]:text-white">
+                  <LexicalRenderer data={body} />
                 </div>
               </section>
             );
           })}
 
-          {/* CTA */}
           <section className="pt-16">
             <div className="rounded-2xl border border-zinc-800 bg-gradient-to-b from-zinc-950 to-black px-6 py-14 text-center shadow-[0_30px_120px_rgba(0,0,0,0.75)] md:px-10">
               <h3 className="text-[48px] font-light leading-[1.1] text-white">
@@ -149,16 +95,7 @@ export default async function CaseStudyDetailPage({
                   className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#c5f018] px-10 py-4 text-sm font-semibold text-black transition hover:bg-[#d4ff2a]"
                 >
                   Discuss collaboration
-                  <svg
-                    viewBox="0 0 24 24"
-                    className="h-4 w-4"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    aria-hidden="true"
-                  >
+                  <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                     <line x1="7" y1="17" x2="17" y2="7" />
                     <polyline points="10 7 17 7 17 14" />
                   </svg>
@@ -168,7 +105,6 @@ export default async function CaseStudyDetailPage({
           </section>
         </article>
 
-        {/* Recent case studies */}
         <section className="pt-20 pb-24">
           <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-10">
             <div>

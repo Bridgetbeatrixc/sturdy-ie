@@ -27,6 +27,7 @@ export type StandardsCard = {
 export type StandardsData = {
   badge: string;
   heading: string;
+  headingAccent: string;
   body: RichTextNode;
   cards: StandardsCard[];
 };
@@ -46,6 +47,7 @@ export async function getStandardsData(): Promise<StandardsData | null> {
     return {
       badge:   d.badge   ?? "Standards",
       heading: d.heading ?? "",
+      headingAccent: d.headingAccent ?? "",
       body:         d.body         ?? { root: { children: [] } },
       cards: Array.isArray(d.cards)
         ? d.cards.map((c: any) => ({

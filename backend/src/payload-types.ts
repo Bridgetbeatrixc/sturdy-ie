@@ -364,13 +364,7 @@ export interface Myinsight {
 export interface CaseStudy {
   id: number;
   title: string;
-  /**
-   * Auto-filled from title. You can override it manually.
-   */
-  slug?: string | null;
-  /**
-   * Short description shown on listing cards.
-   */
+  slug: string;
   summary: {
     root: {
       type: string;
@@ -391,128 +385,43 @@ export interface CaseStudy {
    */
   theme: string;
   /**
-   * e.g. "Multi-institutional research consortium"
+   * Display date e.g. "March 2024"
    */
-  context: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  };
+  date?: string | null;
   /**
-   * Upload or select image.
+   * Fallback period label if no date e.g. "Q1 2024"
    */
-  img: number | Media;
-  overviewContext?: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  environmentModel?: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  governanceControls?: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  standardsInteroperability?: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  outcomesImpact?: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  partnershipRelevance?: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
+  period?: string | null;
+  image: number | Media;
   /**
-   * Mark as a Featured Article.
+   * Add, reorder, or remove sections freely.
    */
+  sections?:
+    | {
+        /**
+         * Section heading shown on the page.
+         */
+        heading: string;
+        body: {
+          root: {
+            type: string;
+            children: {
+              type: any;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        };
+        id?: string | null;
+      }[]
+    | null;
   featured?: boolean | null;
-  /**
-   * Overrides the page title in search engine results. Leave blank to use the article title.
-   */
   seoTitle?: string | null;
-  /**
-   * Short description for search engine results.
-   */
   seoDescription?: string | null;
   updatedAt: string;
   createdAt: string;
@@ -925,9 +834,13 @@ export interface Standard {
    */
   badge?: string | null;
   /**
-   * Main heading of the section.
+   * First part of heading (rendered in white).
    */
   heading: string;
+  /**
+   * Second part of heading (rendered in lime).
+   */
+  headingAccent?: string | null;
   /**
    * Paragraph text beneath the heading.
    */
@@ -1242,14 +1155,16 @@ export interface CaseStudiesSelect<T extends boolean = true> {
   slug?: T;
   summary?: T;
   theme?: T;
-  context?: T;
-  img?: T;
-  overviewContext?: T;
-  environmentModel?: T;
-  governanceControls?: T;
-  standardsInteroperability?: T;
-  outcomesImpact?: T;
-  partnershipRelevance?: T;
+  date?: T;
+  period?: T;
+  image?: T;
+  sections?:
+    | T
+    | {
+        heading?: T;
+        body?: T;
+        id?: T;
+      };
   featured?: T;
   seoTitle?: T;
   seoDescription?: T;
@@ -1407,6 +1322,7 @@ export interface PrinciplesSelect<T extends boolean = true> {
 export interface StandardsSelect<T extends boolean = true> {
   badge?: T;
   heading?: T;
+  headingAccent?: T;
   body?: T;
   cards?:
     | T

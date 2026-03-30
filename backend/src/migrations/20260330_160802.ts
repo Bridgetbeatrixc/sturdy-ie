@@ -98,20 +98,23 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"created_at" timestamp(3) with time zone DEFAULT now() NOT NULL
   );
   
+  CREATE TABLE "case_studies_sections" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" integer NOT NULL,
+  	"id" varchar PRIMARY KEY NOT NULL,
+  	"heading" varchar NOT NULL,
+  	"body" jsonb NOT NULL
+  );
+  
   CREATE TABLE "case_studies" (
   	"id" serial PRIMARY KEY NOT NULL,
   	"title" varchar NOT NULL,
-  	"slug" varchar,
+  	"slug" varchar NOT NULL,
   	"summary" jsonb NOT NULL,
   	"theme" varchar NOT NULL,
-  	"context" jsonb NOT NULL,
-  	"img_id" integer NOT NULL,
-  	"overview_context" jsonb,
-  	"environment_model" jsonb,
-  	"governance_controls" jsonb,
-  	"standards_interoperability" jsonb,
-  	"outcomes_impact" jsonb,
-  	"partnership_relevance" jsonb,
+  	"date" varchar,
+  	"period" varchar,
+  	"image_id" integer NOT NULL,
   	"featured" boolean DEFAULT false,
   	"seo_title" varchar,
   	"seo_description" varchar,
@@ -270,7 +273,8 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE TABLE "standards" (
   	"id" serial PRIMARY KEY NOT NULL,
   	"badge" varchar DEFAULT 'Standards',
-  	"heading" varchar DEFAULT 'Standards, Frameworks & Ecosystems' NOT NULL,
+  	"heading" varchar DEFAULT 'Standards,' NOT NULL,
+  	"heading_accent" varchar DEFAULT 'Frameworks & Ecosystems',
   	"body" jsonb DEFAULT '{"root":{"type":"root","children":[{"type":"paragraph","version":1,"children":[{"type":"text","text":"Operating within established standards and regulatory frameworks to ensure governance, interoperability, security, and trust across complex environments.","version":1}]},{"type":"paragraph","version":1,"children":[{"type":"text","text":"They are infrastructure-level environments that integrate governance, security, and data exchange across organisations.","version":1}]}],"direction":"ltr","format":"","indent":0,"version":1}}'::jsonb,
   	"updated_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
   	"created_at" timestamp(3) with time zone DEFAULT now() NOT NULL
@@ -382,7 +386,8 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   ALTER TABLE "ventures" ADD CONSTRAINT "ventures_img_id_media_id_fk" FOREIGN KEY ("img_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
   ALTER TABLE "myinsights_sections" ADD CONSTRAINT "myinsights_sections_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."myinsights"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "myinsights" ADD CONSTRAINT "myinsights_img_id_media_id_fk" FOREIGN KEY ("img_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
-  ALTER TABLE "case_studies" ADD CONSTRAINT "case_studies_img_id_media_id_fk" FOREIGN KEY ("img_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
+  ALTER TABLE "case_studies_sections" ADD CONSTRAINT "case_studies_sections_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."case_studies"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "case_studies" ADD CONSTRAINT "case_studies_image_id_media_id_fk" FOREIGN KEY ("image_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
   ALTER TABLE "challenge_cards" ADD CONSTRAINT "challenge_cards_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."challenge"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "challenge" ADD CONSTRAINT "challenge_image_id_media_id_fk" FOREIGN KEY ("image_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
   ALTER TABLE "hero_blocks_rich_text_section" ADD CONSTRAINT "hero_blocks_rich_text_section_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."hero"("id") ON DELETE cascade ON UPDATE no action;
@@ -437,8 +442,10 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE INDEX "myinsights_img_idx" ON "myinsights" USING btree ("img_id");
   CREATE INDEX "myinsights_updated_at_idx" ON "myinsights" USING btree ("updated_at");
   CREATE INDEX "myinsights_created_at_idx" ON "myinsights" USING btree ("created_at");
+  CREATE INDEX "case_studies_sections_order_idx" ON "case_studies_sections" USING btree ("_order");
+  CREATE INDEX "case_studies_sections_parent_id_idx" ON "case_studies_sections" USING btree ("_parent_id");
   CREATE UNIQUE INDEX "case_studies_slug_idx" ON "case_studies" USING btree ("slug");
-  CREATE INDEX "case_studies_img_idx" ON "case_studies" USING btree ("img_id");
+  CREATE INDEX "case_studies_image_idx" ON "case_studies" USING btree ("image_id");
   CREATE INDEX "case_studies_updated_at_idx" ON "case_studies" USING btree ("updated_at");
   CREATE INDEX "case_studies_created_at_idx" ON "case_studies" USING btree ("created_at");
   CREATE INDEX "challenge_cards_order_idx" ON "challenge_cards" USING btree ("_order");
@@ -528,6 +535,7 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
   DROP TABLE "ventures" CASCADE;
   DROP TABLE "myinsights_sections" CASCADE;
   DROP TABLE "myinsights" CASCADE;
+  DROP TABLE "case_studies_sections" CASCADE;
   DROP TABLE "case_studies" CASCADE;
   DROP TABLE "challenge_cards" CASCADE;
   DROP TABLE "challenge" CASCADE;

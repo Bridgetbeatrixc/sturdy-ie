@@ -1,128 +1,69 @@
-import { readFile } from "node:fs/promises";
-import path from "node:path";
-
 const API_URL = (process.env.PAYLOAD_API_URL ?? "http://localhost:3001").replace(/\/$/, "");
 
 export interface CaseStudyIndex {
   slug: string;
   title: string;
-  summary: string;
+  summary: any;
   theme: string;
-  context: string;
   period: string;
-  date?: string;
+  date: string;
   img: string;
 }
 
+export interface CaseStudySection {
+  heading: string;
+  body: any;
+}
+
 export interface CaseStudyDetail extends CaseStudyIndex {
-  overviewContext: string;
-  environmentModel: string;
-  governanceControls: string;
-  standardsInteroperability: string;
-  outcomesImpact: string;
-  partnershipRelevance: string;
+  sections: CaseStudySection[];
 }
 
-interface MockCaseStudy extends CaseStudyDetail {}
-
-function lexicalToText(content: any): string {
-  if (!content?.root?.children) return "";
-
-  function extractText(node: any): string {
-    if (node.type === "text") return node.text ?? "";
-    if (node.children) return node.children.map(extractText).join("");
-    return "";
-  }
-
-  return content.root.children
-    .map((block: any) => extractText(block).trim())
-    .filter(Boolean)
-    .join("\n\n");
-}
-
-async function getMockCaseStudies(): Promise<MockCaseStudy[]> {
-  try {
-    const filePath = path.join(process.cwd(), "src", "lib", "caseStudies.mock.json");
-    const raw = await readFile(filePath, "utf-8");
-    const parsed = JSON.parse(raw);
-    return Array.isArray(parsed) ? (parsed as MockCaseStudy[]) : [];
-  } catch {
-    return [];
-  }
+// ✅ shared helper — handles both absolute and relative URLs
+function resolveImageUrl(url?: string): string {
+  if (!url) return "";
+  return url.startsWith("http") ? url : `${API_URL}${url}`;
 }
 
 function mapBackendDocToIndex(c: any): CaseStudyIndex {
   return {
-    slug: c.slug,
-    title: c.title,
-    summary: lexicalToText(c.summary),
-    theme: c.theme,
-    context: lexicalToText(c.context),
-    period: c.period ?? "",
-    date: c.date ?? "",
-    img: c.img?.url ? `${API_URL}${c.img.url}` : "",
+    slug:    c.slug,
+    title:   c.title,
+    summary: c.summary ?? { root: { children: [] } },
+    theme:   c.theme,
+    period:  c.period ?? "",
+    date:    c.date   ?? "",
+    img:     resolveImageUrl(c.image?.url), 
   };
 }
 
 function mapBackendDocToDetail(c: any): CaseStudyDetail {
   return {
-    slug: c.slug,
-    title: c.title,
-    summary: lexicalToText(c.summary),
-    theme: c.theme,
-    context: lexicalToText(c.context),
-    period: c.period ?? "",
-    date: c.date ?? "",
-    img: c.img?.url ? `${API_URL}${c.img.url}` : "",
-    overviewContext: lexicalToText(c.overviewContext),
-    environmentModel: lexicalToText(c.environmentModel),
-    governanceControls: lexicalToText(c.governanceControls),
-    standardsInteroperability: lexicalToText(c.standardsInteroperability),
-    outcomesImpact: lexicalToText(c.outcomesImpact),
-    partnershipRelevance: lexicalToText(c.partnershipRelevance),
+    slug:     c.slug,
+    title:    c.title,
+    summary:  c.summary ?? { root: { children: [] } }, 
+    theme:    c.theme,
+    period:   c.period ?? "",
+    date:     c.date   ?? "",
+    img:      resolveImageUrl(c.image?.url), 
+    sections: Array.isArray(c.sections) ? c.sections : [],
   };
 }
 
 export async function getCaseStudiesIndex(): Promise<CaseStudyIndex[]> {
-  const mock = await getMockCaseStudies();
-  if (mock.length > 0) {
-    return mock.map(({ slug, title, summary, theme, context, period, date, img }) => ({
-      slug,
-      title,
-      summary,
-      theme,
-      context,
-      period,
-      date,
-      img,
-    }));
-  }
-
-  try {
-    const url = `${API_URL}/api/case-studies?limit=100&depth=1`;
-    const res = await fetch(url, { cache: "no-store" });
-    if (!res.ok) return [];
-
-    const { docs } = await res.json();
-    if (!Array.isArray(docs)) return [];
-
-    return docs.map(mapBackendDocToIndex);
-  } catch {
-    return [];
-  }
+  const url = `${API_URL}/api/case-studies?limit=100&depth=1`;
+  const res = await fetch(url, { cache: "no-store" });
+  if (!res.ok) return [];
+  const { docs } = await res.json();
+  if (!Array.isArray(docs)) return [];
+  return docs.map(mapBackendDocToIndex);
 }
 
 export async function getCaseStudyBySlug(slug: string): Promise<CaseStudyDetail | null> {
-  const mock = await getMockCaseStudies();
-  const mockMatch = mock.find((item) => item.slug === slug);
-  if (mockMatch) return mockMatch;
-
   const url = `${API_URL}/api/case-studies?where[slug][equals]=${slug}&depth=1&limit=1`;
   const res = await fetch(url, { cache: "no-store" });
   if (!res.ok) throw new Error(`Failed to fetch case study — ${res.status} ${res.statusText}`);
-
   const { docs } = await res.json();
   if (!docs.length) return null;
-
   return mapBackendDocToDetail(docs[0]);
 }
