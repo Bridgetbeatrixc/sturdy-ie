@@ -3,38 +3,7 @@
 import Link from "next/link";
 import { useRef, useState } from "react";
 import { motion, useInView } from "motion/react";
-
-/** One author avatar everywhere — same URL, same circular treatment */
-const AUTHOR = {
-  name: "Jason Sturdy",
-  avatar:
-    "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=120&h=120&auto=format&fit=crop&q=80",
-} as const;
-
-const authorAvatarClassName =
-  "h-9 w-9 shrink-0 rounded-full object-cover ring-2 ring-[#c5f018]/30 sm:h-10 sm:w-10";
-
-const FEATURED_POST = {
-  img: "https://images.unsplash.com/photo-1633265486064-086b219458ec?w=800&auto=format&fit=crop&q=80",
-  title: "Designing Trust Into Digital Infrastructure",
-  date: "Insights",
-  href: "/myinsight/designing-trust-into-digital-infrastructure",
-};
-
-const SMALL_POSTS = [
-  {
-    img: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&auto=format&fit=crop&q=80",
-    title: "Governance in Regulated Data Ecosystems",
-    date: "Insights",
-    href: "/myinsight/governance-in-regulated-data-ecosystems",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1639322537504-6427a16b0a28?w=400&auto=format&fit=crop&q=80",
-    title: "Standards and the Future of Data Exchange",
-    date: "Insights",
-    href: "/myinsight/standards-and-the-future-of-data-exchange",
-  },
-];
+import { MyInsightIndex } from "../lib/myInsight";
 
 const CalendarIcon = () => (
   <svg
@@ -61,22 +30,7 @@ const CalendarIcon = () => (
   </svg>
 );
 
-function AuthorRow() {
-  return (
-    <div className="flex items-center gap-2">
-      <img
-        src={AUTHOR.avatar}
-        alt={AUTHOR.name}
-        className={authorAvatarClassName}
-      />
-      <span className="text-sm font-light text-[#c5f018] sm:text-base">
-        {AUTHOR.name}
-      </span>
-    </div>
-  );
-}
-
-export function BlogSection() {
+export function BlogSection({ insights }: { insights: MyInsightIndex[] }) {
   const imgRef = useRef<HTMLDivElement>(null);
   const [hovered, setHovered] = useState(false);
   const [pos, setPos] = useState({ x: 0, y: 0 });
@@ -92,6 +46,11 @@ export function BlogSection() {
     if (!rect) return;
     setPos({ x: e.clientX - rect.left, y: e.clientY - rect.top });
   };
+
+  const featured = insights[0];
+  const smallPosts = insights.slice(1, 3);
+
+  if (!featured) return null;
 
   return (
     <section className="mx-auto max-w-8xl px-8 py-10 md:px-16 md:py-16">
@@ -119,7 +78,9 @@ export function BlogSection() {
               className="text-2xl font-light leading-tight text-white md:text-5xl lg:text-6xl"
             >
               <span className="font-semibold text-[#c5f018]">Perspective </span>
-              <span className="font-light text-white">on Governance, Infrastructure, and Data Systems</span>
+              <span className="font-light text-white">
+                on Governance, Infrastructure, and Data Systems
+              </span>
             </motion.h2>
             <motion.p
               initial={{ opacity: 0, y: 20 }}
@@ -136,18 +97,14 @@ export function BlogSection() {
             animate={
               headerInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.7 }
             }
-            transition={{
-              duration: 0.8,
-              ease: [0.22, 1, 0.36, 1],
-              delay: 0.3,
-            }}
+            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.3 }}
             className="shrink-0 self-start lg:self-center"
           >
             <Link
-              href="/myinsights"
+              href="/myinsight"
               className="inline-flex shrink-0 items-center justify-center gap-2 rounded-lg bg-[#c5f018] px-4 py-3 text-sm font-medium text-black transition duration-300 hover:border hover:border-white hover:bg-black hover:text-[#c5f018] sm:px-6 sm:py-4 md:text-lg"
             >
-              Explore All Insights
+              View All
               <svg
                 width="16"
                 height="16"
@@ -169,8 +126,9 @@ export function BlogSection() {
         </div>
       </div>
 
+      {/* ── Featured post ── */}
       <Link
-        href={FEATURED_POST.href}
+        href={`/myinsight/${featured.slug}`}
         className="group mb-4 block rounded-xl border border-[#68800a]"
       >
         <div className="relative flex flex-col overflow-hidden rounded-xl bg-zinc-900 transition-colors duration-300 sm:flex-row">
@@ -181,11 +139,13 @@ export function BlogSection() {
             onMouseEnter={() => setHovered(true)}
             onMouseLeave={() => setHovered(false)}
           >
-            <img
-              src={FEATURED_POST.img}
-              alt={FEATURED_POST.title}
-              className="h-48 w-full object-cover transition-transform duration-500 group-hover:scale-105 sm:h-full sm:min-h-[220px]"
-            />
+            {featured.img && (
+              <img
+                src={featured.img}
+                alt={featured.title}
+                className="h-48 w-full object-cover transition-transform duration-500 group-hover:scale-105 sm:h-full sm:min-h-[220px]"
+              />
+            )}
             <div className="absolute inset-0 bg-black/0 transition-all duration-300 group-hover:bg-black/40" />
             <div
               className="pointer-events-none absolute left-0 top-0"
@@ -212,46 +172,59 @@ export function BlogSection() {
           </div>
           <div className="flex flex-1 flex-col justify-between p-4 sm:p-5 lg:p-8">
             <h3 className="text-xl font-light leading-tight text-white sm:text-2xl lg:text-5xl">
-              {FEATURED_POST.title}
+              {featured.title}
             </h3>
             <div className="mt-4 flex flex-col gap-3 xs:flex-row xs:items-center xs:justify-between">
-              <AuthorRow />
-              <div className="flex items-center gap-2 text-xs sm:text-sm">
-                <CalendarIcon />
-                <span>{FEATURED_POST.date}</span>
-              </div>
+              <span className="rounded-full border border-[#c5f018]/35 bg-[#c5f018]/10 px-3 py-1 text-xs font-semibold text-[#c5f018]">
+                {featured.category}
+              </span>
+              {featured.date && (
+                <div className="flex items-center gap-2 text-xs sm:text-sm text-zinc-400">
+                  <CalendarIcon />
+                  <span>{featured.date}</span>
+                </div>
+              )}
             </div>
           </div>
         </div>
       </Link>
 
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-        {SMALL_POSTS.map((post, i) => (
-          <Link key={i} href={post.href} className="group block">
-            <div className="flex h-full flex-row overflow-hidden rounded-xl border border-[#68800a] transition-colors duration-300">
-              <div className="relative w-28 shrink-0 overflow-hidden sm:w-32 lg:w-75">
-                <img
-                  src={post.img}
-                  alt={post.title}
-                  className="h-full w-full min-h-[120px] object-cover transition-transform duration-500 group-hover:scale-105 sm:min-h-[140px]"
-                />
-              </div>
-              <div className="flex min-w-0 flex-1 flex-col justify-between p-3 sm:p-4 lg:p-8">
-                <h3 className="line-clamp-2 text-sm font-light leading-snug text-white sm:text-base lg:text-2xl">
-                  {post.title}
-                </h3>
-                <div className="mt-2 sm:mt-3">
-                  <AuthorRow />
-                  <div className="mt-2 flex items-center gap-2 text-xs sm:text-sm">
-                    <CalendarIcon />
-                    <span>{post.date}</span>
+      {/* ── Small posts ── */}
+      {smallPosts.length > 0 && (
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          {smallPosts.map((post) => (
+            <Link key={post.slug} href={`/myinsight/${post.slug}`} className="group block">
+              <div className="flex h-full flex-row overflow-hidden rounded-xl border border-[#68800a] transition-colors duration-300">
+                <div className="relative w-28 shrink-0 overflow-hidden sm:w-32 lg:w-75">
+                  {post.img && (
+                    <img
+                      src={post.img}
+                      alt={post.title}
+                      className="h-full w-full min-h-[120px] object-cover transition-transform duration-500 group-hover:scale-105 sm:min-h-[140px]"
+                    />
+                  )}
+                </div>
+                <div className="flex min-w-0 flex-1 flex-col justify-between p-3 sm:p-4 lg:p-8">
+                  <h3 className="line-clamp-2 text-sm font-light leading-snug text-white sm:text-base lg:text-2xl">
+                    {post.title}
+                  </h3>
+                  <div className="mt-2 sm:mt-3">
+                    <span className="rounded-full border border-[#c5f018]/35 bg-[#c5f018]/10 px-2 py-0.5 text-[10px] font-semibold text-[#c5f018]">
+                      {post.category}
+                    </span>
+                    {post.date && (
+                      <div className="mt-2 flex items-center gap-2 text-xs sm:text-sm text-zinc-400">
+                        <CalendarIcon />
+                        <span>{post.date}</span>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
-            </div>
-          </Link>
-        ))}
-      </div>
+            </Link>
+          ))}
+        </div>
+      )}
     </section>
   );
 }

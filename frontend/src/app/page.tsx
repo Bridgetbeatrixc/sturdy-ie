@@ -8,12 +8,12 @@ import { CaseStudiesSection } from "../components/CaseStudiesSection";
 import { FooterSection } from "../components/FooterSection";
 import { getChallengeData } from "@/lib/challenge";
 import { getCaseStudiesIndex } from "../lib/caseStudies";
-// import { getChallengeData } from "../lib/challengedel";
 import { ServicesSection } from "@/components/Services";
 import { CaseStudiesTitleSection } from "@/components/CaseStudiesTitleSection";
-import { TestimonialsSection } from "@/components/TestimonialsSection";
+// import { TestimonialsSection } from "@/components/TestimonialsSection";
 import { ProfileSection } from "@/components/ProfileSection";
 import { ContactUsCtaSection } from "@/components/ContactUsCtaSection";
+import { ApplicationSection } from "@/components/ApplicationSection";
 import { BlogSection } from "@/components/BlogSection";
 import { getHeroData } from "../lib/hero";
 import { getResponseData } from "../lib/response";
@@ -21,7 +21,9 @@ import { getPrinciplesData } from "../lib/principles";
 import { getCtaData } from "@/lib/cta";
 import { getStandardsData } from "@/lib/standards";
 import { getFooterData } from "@/lib/footer";
-import { getIndustriesData } from "@/lib/industries"; 
+import { getIndustriesData } from "@/lib/industries";
+import { getApplicationData } from "@/lib/application";
+import { getMyInsightsIndex } from "@/lib/myInsight";
 
 export default async function Home() {
   const [
@@ -29,22 +31,24 @@ export default async function Home() {
     challengeData,
     heroData,
     industriesData,
-    // infrastructureData,
     responseData,
     principlesData,
     standardsData,
     ctaData,
+    applicationData,
+    insights,
     footerData,
   ] = await Promise.all([
     getCaseStudiesIndex(),
     getChallengeData(),
     getHeroData(),
     getIndustriesData(),
-    // getInfrastructureData(),
     getResponseData(),
     getPrinciplesData(),
     getStandardsData(),
     getCtaData(),
+    getApplicationData(),
+    getMyInsightsIndex(),
     getFooterData(),
   ]);
 
@@ -52,19 +56,20 @@ export default async function Home() {
     <main className="relative min-w-0 w-full max-w-full overflow-visible text-sm text-zinc-200">
       <Header />
       <HeroSection data={heroData} />
-      <CapabilitiesSection data={industriesData}/>
+      <CapabilitiesSection data={industriesData} />
       <ServicesSection data={challengeData} />
       <InsightsPreviewSection data={responseData} />
       <VenturesSection />
       <ProfileSection data={standardsData} />
       <CaseStudiesTitleSection />
       <CaseStudiesSection caseStudies={caseStudies} />
-      <TestimonialsSection
+      {/* <TestimonialsSection
         principles={principlesData.principles}
         exploreCard={principlesData.exploreCard}
-      />
+      /> */}
+      <ApplicationSection data={applicationData} />
+      <BlogSection insights={insights} />
       <ContactUsCtaSection data={ctaData} />
-      <BlogSection />
       <FooterSection data={footerData} />
     </main>
   );

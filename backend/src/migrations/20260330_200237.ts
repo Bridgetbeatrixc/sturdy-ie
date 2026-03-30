@@ -11,6 +11,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE TYPE "public"."enum_response_card_bars" AS ENUM('1', '2', '3');
   CREATE TYPE "public"."enum_principles_items_icon" AS ENUM('trust', 'control', 'standards', 'resilience');
   CREATE TYPE "public"."enum_standards_cards_icon" AS ENUM('data-governance', 'security-architecture', 'regulatory-systems', 'institutional-infrastructure', 'health', 'research', 'financial', 'european-data');
+  CREATE TYPE "public"."enum_application_cards_icon" AS ENUM('data-governance', 'security-architecture', 'regulatory-systems', 'institutional-infrastructure', 'health', 'research', 'financial', 'european-data');
   CREATE TABLE "users_sessions" (
   	"_order" integer NOT NULL,
   	"_parent_id" integer NOT NULL,
@@ -84,12 +85,11 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE TABLE "myinsights" (
   	"id" serial PRIMARY KEY NOT NULL,
   	"title" varchar NOT NULL,
-  	"slug" varchar,
+  	"slug" varchar NOT NULL,
   	"category" "enum_myinsights_category" NOT NULL,
-  	"author" varchar DEFAULT 'Jason Sturdy' NOT NULL,
   	"img_id" integer NOT NULL,
   	"date" timestamp(3) with time zone,
-  	"excerpt" varchar NOT NULL,
+  	"summary" jsonb NOT NULL,
   	"flagship" boolean DEFAULT false,
   	"featured" boolean DEFAULT false,
   	"seo_title" varchar,
@@ -280,6 +280,27 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"created_at" timestamp(3) with time zone DEFAULT now() NOT NULL
   );
   
+  CREATE TABLE "application_cards" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" integer NOT NULL,
+  	"id" varchar PRIMARY KEY NOT NULL,
+  	"slug" varchar NOT NULL,
+  	"title" varchar NOT NULL,
+  	"tagline" varchar NOT NULL,
+  	"image_id" integer,
+  	"icon" "enum_application_cards_icon" DEFAULT 'data-governance' NOT NULL
+  );
+  
+  CREATE TABLE "application" (
+  	"id" serial PRIMARY KEY NOT NULL,
+  	"badge" varchar DEFAULT 'Application',
+  	"heading" varchar DEFAULT 'Applied Across' NOT NULL,
+  	"heading_accent" varchar DEFAULT 'Critical Environments',
+  	"body" jsonb DEFAULT '{"root":{"type":"root","children":[{"type":"paragraph","version":1,"children":[{"type":"text","text":"This infrastructure is designed to operate in environments where governance, security, and reliability are essential.","version":1}]}],"direction":"ltr","format":"","indent":0,"version":1}}'::jsonb,
+  	"updated_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
+  	"created_at" timestamp(3) with time zone DEFAULT now() NOT NULL
+  );
+  
   CREATE TABLE "cta_cards" (
   	"_order" integer NOT NULL,
   	"_parent_id" integer NOT NULL,
@@ -330,6 +351,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"response_card_id" integer,
   	"principles_id" integer,
   	"standards_id" integer,
+  	"application_id" integer,
   	"cta_id" integer
   );
   
@@ -402,6 +424,8 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   ALTER TABLE "principles" ADD CONSTRAINT "principles_explore_background_image_id_media_id_fk" FOREIGN KEY ("explore_background_image_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
   ALTER TABLE "standards_cards" ADD CONSTRAINT "standards_cards_image_id_media_id_fk" FOREIGN KEY ("image_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
   ALTER TABLE "standards_cards" ADD CONSTRAINT "standards_cards_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."standards"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "application_cards" ADD CONSTRAINT "application_cards_image_id_media_id_fk" FOREIGN KEY ("image_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
+  ALTER TABLE "application_cards" ADD CONSTRAINT "application_cards_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."application"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "cta_cards" ADD CONSTRAINT "cta_cards_image_id_media_id_fk" FOREIGN KEY ("image_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
   ALTER TABLE "cta_cards" ADD CONSTRAINT "cta_cards_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."cta"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_parent_fk" FOREIGN KEY ("parent_id") REFERENCES "public"."payload_locked_documents"("id") ON DELETE cascade ON UPDATE no action;
@@ -417,6 +441,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_response_card_fk" FOREIGN KEY ("response_card_id") REFERENCES "public"."response_card"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_principles_fk" FOREIGN KEY ("principles_id") REFERENCES "public"."principles"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_standards_fk" FOREIGN KEY ("standards_id") REFERENCES "public"."standards"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_application_fk" FOREIGN KEY ("application_id") REFERENCES "public"."application"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_cta_fk" FOREIGN KEY ("cta_id") REFERENCES "public"."cta"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "payload_preferences_rels" ADD CONSTRAINT "payload_preferences_rels_parent_fk" FOREIGN KEY ("parent_id") REFERENCES "public"."payload_preferences"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "payload_preferences_rels" ADD CONSTRAINT "payload_preferences_rels_users_fk" FOREIGN KEY ("users_id") REFERENCES "public"."users"("id") ON DELETE cascade ON UPDATE no action;
@@ -486,6 +511,11 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE INDEX "standards_cards_image_idx" ON "standards_cards" USING btree ("image_id");
   CREATE INDEX "standards_updated_at_idx" ON "standards" USING btree ("updated_at");
   CREATE INDEX "standards_created_at_idx" ON "standards" USING btree ("created_at");
+  CREATE INDEX "application_cards_order_idx" ON "application_cards" USING btree ("_order");
+  CREATE INDEX "application_cards_parent_id_idx" ON "application_cards" USING btree ("_parent_id");
+  CREATE INDEX "application_cards_image_idx" ON "application_cards" USING btree ("image_id");
+  CREATE INDEX "application_updated_at_idx" ON "application" USING btree ("updated_at");
+  CREATE INDEX "application_created_at_idx" ON "application" USING btree ("created_at");
   CREATE INDEX "cta_cards_order_idx" ON "cta_cards" USING btree ("_order");
   CREATE INDEX "cta_cards_parent_id_idx" ON "cta_cards" USING btree ("_parent_id");
   CREATE INDEX "cta_cards_image_idx" ON "cta_cards" USING btree ("image_id");
@@ -510,6 +540,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE INDEX "payload_locked_documents_rels_response_card_id_idx" ON "payload_locked_documents_rels" USING btree ("response_card_id");
   CREATE INDEX "payload_locked_documents_rels_principles_id_idx" ON "payload_locked_documents_rels" USING btree ("principles_id");
   CREATE INDEX "payload_locked_documents_rels_standards_id_idx" ON "payload_locked_documents_rels" USING btree ("standards_id");
+  CREATE INDEX "payload_locked_documents_rels_application_id_idx" ON "payload_locked_documents_rels" USING btree ("application_id");
   CREATE INDEX "payload_locked_documents_rels_cta_id_idx" ON "payload_locked_documents_rels" USING btree ("cta_id");
   CREATE INDEX "payload_preferences_key_idx" ON "payload_preferences" USING btree ("key");
   CREATE INDEX "payload_preferences_updated_at_idx" ON "payload_preferences" USING btree ("updated_at");
@@ -552,6 +583,8 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
   DROP TABLE "principles" CASCADE;
   DROP TABLE "standards_cards" CASCADE;
   DROP TABLE "standards" CASCADE;
+  DROP TABLE "application_cards" CASCADE;
+  DROP TABLE "application" CASCADE;
   DROP TABLE "cta_cards" CASCADE;
   DROP TABLE "cta" CASCADE;
   DROP TABLE "payload_kv" CASCADE;
@@ -571,5 +604,6 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
   DROP TYPE "public"."enum_hero_blocks_bullet_list_position";
   DROP TYPE "public"."enum_response_card_bars";
   DROP TYPE "public"."enum_principles_items_icon";
-  DROP TYPE "public"."enum_standards_cards_icon";`)
+  DROP TYPE "public"."enum_standards_cards_icon";
+  DROP TYPE "public"."enum_application_cards_icon";`)
 }

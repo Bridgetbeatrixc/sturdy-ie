@@ -79,6 +79,7 @@ export interface Config {
     response_card: ResponseCard;
     principles: Principle;
     standards: Standard;
+    application: Application;
     cta: Cta;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
@@ -99,6 +100,7 @@ export interface Config {
     response_card: ResponseCardSelect<false> | ResponseCardSelect<true>;
     principles: PrinciplesSelect<false> | PrinciplesSelect<true>;
     standards: StandardsSelect<false> | StandardsSelect<true>;
+    application: ApplicationSelect<false> | ApplicationSelect<true>;
     cta: CtaSelect<false> | CtaSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
@@ -299,16 +301,15 @@ export interface Myinsight {
   /**
    * Auto-filled from title. You can override it manually.
    */
-  slug?: string | null;
+  slug: string;
   category:
     | 'Governance & Compliance'
     | 'Research Collaboration'
     | 'Interoperability & Standards'
     | 'Preventive Health Innovation'
     | 'AI & Regulated Data';
-  author: string;
   /**
-   * Upload or select image.
+   * Featured image.
    */
   img: number | Media;
   /**
@@ -316,9 +317,23 @@ export interface Myinsight {
    */
   date?: string | null;
   /**
-   * Short summary shown on the listing card.
+   * Short summary shown in the hero and on listing cards.
    */
-  excerpt: string;
+  summary: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
   /**
    * Mark as a Cornerstone Article.
    */
@@ -327,7 +342,13 @@ export interface Myinsight {
    * Mark as a Featured Article.
    */
   featured?: boolean | null;
+  /**
+   * Add, reorder, or remove sections freely.
+   */
   sections: {
+    /**
+     * Section heading shown on the page.
+     */
     heading: string;
     body: {
       root: {
@@ -347,7 +368,7 @@ export interface Myinsight {
     id?: string | null;
   }[];
   /**
-   * Overrides the page title in search engine results. Leave blank to use the article title.
+   * Overrides the page <title>. Leave blank to use the article title.
    */
   seoTitle?: string | null;
   /**
@@ -897,6 +918,78 @@ export interface Standard {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "application".
+ */
+export interface Application {
+  id: number;
+  /**
+   * Small badge label above the heading (e.g. "Application").
+   */
+  badge?: string | null;
+  /**
+   * First part of heading (rendered in white).
+   */
+  heading: string;
+  /**
+   * Second part of heading (rendered in lime).
+   */
+  headingAccent?: string | null;
+  /**
+   * Paragraph text beneath the heading.
+   */
+  body?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  /**
+   * The application environment cards displayed in the grid.
+   */
+  cards?:
+    | {
+        /**
+         * URL-safe identifier (e.g. "research-platforms").
+         */
+        slug: string;
+        title: string;
+        /**
+         * Short descriptor shown beneath the title.
+         */
+        tagline: string;
+        /**
+         * Optional image for the card.
+         */
+        image?: (number | null) | Media;
+        /**
+         * Pick the icon that best represents this application area.
+         */
+        icon:
+          | 'data-governance'
+          | 'security-architecture'
+          | 'regulatory-systems'
+          | 'institutional-infrastructure'
+          | 'health'
+          | 'research'
+          | 'financial'
+          | 'european-data';
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "cta".
  */
 export interface Cta {
@@ -1014,6 +1107,10 @@ export interface PayloadLockedDocument {
         value: number | Standard;
       } | null)
     | ({
+        relationTo: 'application';
+        value: number | Application;
+      } | null)
+    | ({
         relationTo: 'cta';
         value: number | Cta;
       } | null);
@@ -1128,10 +1225,9 @@ export interface MyinsightsSelect<T extends boolean = true> {
   title?: T;
   slug?: T;
   category?: T;
-  author?: T;
   img?: T;
   date?: T;
-  excerpt?: T;
+  summary?: T;
   flagship?: T;
   featured?: T;
   sections?:
@@ -1320,6 +1416,28 @@ export interface PrinciplesSelect<T extends boolean = true> {
  * via the `definition` "standards_select".
  */
 export interface StandardsSelect<T extends boolean = true> {
+  badge?: T;
+  heading?: T;
+  headingAccent?: T;
+  body?: T;
+  cards?:
+    | T
+    | {
+        slug?: T;
+        title?: T;
+        tagline?: T;
+        image?: T;
+        icon?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "application_select".
+ */
+export interface ApplicationSelect<T extends boolean = true> {
   badge?: T;
   heading?: T;
   headingAccent?: T;

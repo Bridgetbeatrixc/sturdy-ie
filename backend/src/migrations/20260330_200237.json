@@ -724,7 +724,7 @@
           "name": "slug",
           "type": "varchar",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
         },
         "category": {
           "name": "category",
@@ -732,13 +732,6 @@
           "typeSchema": "public",
           "primaryKey": false,
           "notNull": true
-        },
-        "author": {
-          "name": "author",
-          "type": "varchar",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "'Jason Sturdy'"
         },
         "img_id": {
           "name": "img_id",
@@ -752,9 +745,9 @@
           "primaryKey": false,
           "notNull": false
         },
-        "excerpt": {
-          "name": "excerpt",
-          "type": "varchar",
+        "summary": {
+          "name": "summary",
+          "type": "jsonb",
           "primaryKey": false,
           "notNull": true
         },
@@ -2855,6 +2848,234 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
+    "public.application_cards": {
+      "name": "application_cards",
+      "schema": "",
+      "columns": {
+        "_order": {
+          "name": "_order",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "_parent_id": {
+          "name": "_parent_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "id": {
+          "name": "id",
+          "type": "varchar",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "slug": {
+          "name": "slug",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "title": {
+          "name": "title",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "tagline": {
+          "name": "tagline",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "image_id": {
+          "name": "image_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "icon": {
+          "name": "icon",
+          "type": "enum_application_cards_icon",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'data-governance'"
+        }
+      },
+      "indexes": {
+        "application_cards_order_idx": {
+          "name": "application_cards_order_idx",
+          "columns": [
+            {
+              "expression": "_order",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "application_cards_parent_id_idx": {
+          "name": "application_cards_parent_id_idx",
+          "columns": [
+            {
+              "expression": "_parent_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "application_cards_image_idx": {
+          "name": "application_cards_image_idx",
+          "columns": [
+            {
+              "expression": "image_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "application_cards_image_id_media_id_fk": {
+          "name": "application_cards_image_id_media_id_fk",
+          "tableFrom": "application_cards",
+          "tableTo": "media",
+          "columnsFrom": [
+            "image_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        },
+        "application_cards_parent_id_fk": {
+          "name": "application_cards_parent_id_fk",
+          "tableFrom": "application_cards",
+          "tableTo": "application",
+          "columnsFrom": [
+            "_parent_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.application": {
+      "name": "application",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "badge": {
+          "name": "badge",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Application'"
+        },
+        "heading": {
+          "name": "heading",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'Applied Across'"
+        },
+        "heading_accent": {
+          "name": "heading_accent",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Critical Environments'"
+        },
+        "body": {
+          "name": "body",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'{\"root\":{\"type\":\"root\",\"children\":[{\"type\":\"paragraph\",\"version\":1,\"children\":[{\"type\":\"text\",\"text\":\"This infrastructure is designed to operate in environments where governance, security, and reliability are essential.\",\"version\":1}]}],\"direction\":\"ltr\",\"format\":\"\",\"indent\":0,\"version\":1}}'::jsonb"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "application_updated_at_idx": {
+          "name": "application_updated_at_idx",
+          "columns": [
+            {
+              "expression": "updated_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "application_created_at_idx": {
+          "name": "application_created_at_idx",
+          "columns": [
+            {
+              "expression": "created_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
     "public.cta_cards": {
       "name": "cta_cards",
       "schema": "",
@@ -3309,6 +3530,12 @@
           "primaryKey": false,
           "notNull": false
         },
+        "application_id": {
+          "name": "application_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
         "cta_id": {
           "name": "cta_id",
           "type": "integer",
@@ -3542,6 +3769,21 @@
           "method": "btree",
           "with": {}
         },
+        "payload_locked_documents_rels_application_id_idx": {
+          "name": "payload_locked_documents_rels_application_id_idx",
+          "columns": [
+            {
+              "expression": "application_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
         "payload_locked_documents_rels_cta_id_idx": {
           "name": "payload_locked_documents_rels_cta_id_idx",
           "columns": [
@@ -3721,6 +3963,19 @@
           "tableTo": "standards",
           "columnsFrom": [
             "standards_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "payload_locked_documents_rels_application_fk": {
+          "name": "payload_locked_documents_rels_application_fk",
+          "tableFrom": "payload_locked_documents_rels",
+          "tableTo": "application",
+          "columnsFrom": [
+            "application_id"
           ],
           "columnsTo": [
             "id"
@@ -4363,6 +4618,20 @@
         "financial",
         "european-data"
       ]
+    },
+    "public.enum_application_cards_icon": {
+      "name": "enum_application_cards_icon",
+      "schema": "public",
+      "values": [
+        "data-governance",
+        "security-architecture",
+        "regulatory-systems",
+        "institutional-infrastructure",
+        "health",
+        "research",
+        "financial",
+        "european-data"
+      ]
     }
   },
   "schemas": {},
@@ -4375,6 +4644,6 @@
     "tables": {},
     "columns": {}
   },
-  "id": "c7078b93-42fc-4b82-a986-ff9b8bcb5c04",
+  "id": "77de2e30-e888-4b70-8c9a-628594ee5cea",
   "prevId": "00000000-0000-0000-0000-000000000000"
 }

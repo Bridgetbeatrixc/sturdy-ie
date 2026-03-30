@@ -115,9 +115,9 @@ export function WritingClient({
                 >
                   {/* Image */}
                   <div className="relative overflow-hidden rounded-2xl bg-zinc-900 aspect-[4/3]">
-                    {insight.image ? (
+                    {insight.img ? (
                       <img
-                        src={insight.image}
+                        src={insight.img}
                         alt={insight.title}
                         className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                       />
