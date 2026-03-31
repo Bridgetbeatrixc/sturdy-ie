@@ -152,13 +152,13 @@ export function CapabilitiesSection({
   return (
     <section ref={ref} className="mx-auto max-w-8xl py-8 md:py-12 lg:py-16">
       <div
-        className="mb-10 grid grid-cols-1 gap-8 md:mb-12 lg:grid-cols-2 lg:gap-20 lg:mb-14"
+        className="mb-10 grid grid-cols-1 gap-4 md:mb-12 lg:grid-cols-2 lg:gap-12 lg:mb-12"
         style={{
           opacity: visible ? undefined : 0,
           animation: visible ? "fadeUp 1s ease forwards" : "none",
         }}
       >
-        <div className="space-y-5">
+        <div className="space-y-3">
           <div className="flex items-center gap-2">
             <span
               className="h-2 w-2 shrink-0 rounded-sm bg-[#c5f018]"
@@ -169,14 +169,14 @@ export function CapabilitiesSection({
             </span>
           </div>
           <h2 className="text-2xl font-light leading-tight text-white md:text-5xl lg:text-6xl">
-            {d.headingRegular}{" "}
-            <span className="font-light text-[#c5f018]">{d.headingAccent}</span>
-            <br />
-            <span className="font-light text-white">{d.headingLight}</span>
+            {/*<span className="text-[#c5f018]">Operating</span>
+            {" Across"}
+            <br />*/}
+            {d.headingAccent} {d.headingLight}
           </h2>
         </div>
 
-        <div className="flex items-center space-y-2 text-[0.95rem] leading-relaxed text-zinc-300 [&_p]:text-base [&_p]:md:text-lg [&_p]:mb-0">
+        <div className="flex items-center text-[0.95rem] leading-snug text-zinc-300 [&_p]:text-sm [&_p]:md:text-base [&_p]:mb-0 [&_p]:leading-snug">
           <LexicalRenderer data={d.body} />
         </div>
       </div>

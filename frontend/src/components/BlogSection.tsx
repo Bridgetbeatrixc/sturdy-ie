@@ -182,7 +182,7 @@ export function BlogSection({ insights }: { insights: MyInsightIndex[] }) {
               {featured.title}
             </h3>
             <div className="mt-4 flex flex-col gap-3 xs:flex-row xs:items-center xs:justify-between">
-              <span className="rounded-full border border-[#c5f018]/35 bg-[#c5f018]/10 px-3 py-1 text-xs font-semibold text-[#c5f018]">
+              <span className="w-fit rounded-full border border-[#c5f018]/35 bg-[#c5f018]/10 px-3 py-1 text-xs font-semibold text-[#c5f018]">
                 {featured.category}
               </span>
               {featured.date && (
@@ -220,7 +220,7 @@ export function BlogSection({ insights }: { insights: MyInsightIndex[] }) {
                     {post.title}
                   </h3>
                   <div className="mt-2 sm:mt-3">
-                    <span className="rounded-full border border-[#c5f018]/35 bg-[#c5f018]/10 px-2 py-0.5 text-[10px] font-semibold text-[#c5f018]">
+                    <span className="w-fit rounded-full border border-[#c5f018]/35 bg-[#c5f018]/10 px-2 py-0.5 text-[10px] font-semibold text-[#c5f018]">
                       {post.category}
                     </span>
                     {post.date && (

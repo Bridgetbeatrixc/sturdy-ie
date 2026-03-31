@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export function CollaborationCtaSection() {
   return (
-    <section className="border-b border-zinc-900/60">
+    <section className="mx-auto max-w-8xl border-b border-zinc-900/60">
       <div className="relative overflow-hidden bg-zinc-950">
         {/* Diagonal stripes background */}
         <div className="absolute inset-0">
@@ -16,7 +16,7 @@ export function CollaborationCtaSection() {
           <div className="absolute inset-0 bg-gradient-to-r from-zinc-950 via-zinc-950/80 to-transparent" />
         </div>
 
-        <div className="relative mx-auto max-w-6xl px-4 py-20 sm:px-6 md:px-10 md:py-28 lg:px-0">
+        <div className="relative px-4 py-20 sm:px-6 md:px-10 md:py-28 lg:px-0">
           <div className="max-w-2xl space-y-5">
             <h2 className="text-3xl font-semibold leading-tight text-[#c5f018] md:text-4xl">
               Exploring
