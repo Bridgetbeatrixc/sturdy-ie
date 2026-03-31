@@ -16,6 +16,8 @@ import { getCtaData } from "@/lib/cta";
 import { ContactUsCtaSection } from "@/components/ContactUsCtaSection";
 import { getCardAboutData } from "@/lib/cardAbout";
 
+export const dynamic = "force-dynamic";
+
 export default async function AboutPage() {
   const [
     challengesData,
