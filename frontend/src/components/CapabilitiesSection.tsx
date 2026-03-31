@@ -152,7 +152,7 @@ export function CapabilitiesSection({
   return (
     <section ref={ref} className="mx-auto max-w-8xl py-8 md:py-12 lg:py-16">
       <div
-        className="mb-10 grid grid-cols-1 gap-4 md:mb-12 lg:grid-cols-2 lg:gap-12 lg:mb-12"
+        className="mb-10 grid grid-cols-1 gap-4 px-4 sm:px-6 lg:px-0 md:mb-12 lg:grid-cols-2 lg:gap-12 lg:mb-12"
         style={{
           opacity: visible ? undefined : 0,
           animation: visible ? "fadeUp 1s ease forwards" : "none",
@@ -178,34 +178,37 @@ export function CapabilitiesSection({
           </h2>
         </div>
 
-        <div className="flex items-end text-[0.95rem] leading-snug text-white [&_p]:text-sm [&_p]:md:text-base [&_p]:mb-0 [&_p]:leading-snug">
+        <div className="flex items-start lg:items-end text-[0.95rem] leading-snug text-white [&_p]:text-sm [&_p]:md:text-base [&_p]:mb-0 [&_p]:leading-snug">
           <LexicalRenderer data={d.body} />
         </div>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
-        {d.cards.map((card, index) => (
-          <div
-            key={card.title}
-            className="group border border-white/15 transition-all duration-500 cursor-pointer hover:-translate-y-4"
-            style={{
-              opacity: visible ? undefined : 0,
-              animation: visible ? "fadeUp 0.75s ease forwards" : "none",
-              animationDelay: visible ? `${120 + index * 95}ms` : "0ms",
-            }}
-          >
-            <article className="group/card relative w-full overflow-hidden bg-zinc-950/80 h-64 sm:h-80 md:h-96 lg:h-[28rem]">
-              <div
-                className="absolute inset-0 bg-cover bg-center opacity-60 transition-all duration-500 group-hover:opacity-80 group-hover:scale-105"
-                style={{ backgroundImage: `url(${card.imageUrl})` }}
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent" />
-              <div className="relative flex h-full min-h-0 flex-col justify-between p-4 sm:p-5">
-                <CardInterior card={card} index={index} />
-              </div>
-            </article>
-          </div>
-        ))}
+      <div className="px-4 sm:px-6 lg:px-0">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-4 lg:grid-cols-4 lg:gap-0">
+          {d.cards.map((card, index) => (
+            <div
+              key={card.title}
+              className="group border border-white/15 transition-all duration-500 cursor-pointer hover:-translate-y-4"
+              style={{
+                opacity: 0,
+                animation: visible
+                  ? `fadeUp 0.75s ease forwards ${120 + index * 95}ms`
+                  : "none",
+              }}
+            >
+              <article className="group/card relative w-full overflow-hidden bg-zinc-950/80 h-64 sm:h-80 md:h-96 lg:h-[28rem]">
+                <div
+                  className="absolute inset-0 bg-cover bg-center opacity-60 transition-all duration-500 group-hover:opacity-80 group-hover:scale-105"
+                  style={{ backgroundImage: `url(${card.imageUrl})` }}
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent" />
+                <div className="relative flex h-full min-h-0 flex-col justify-between p-4 sm:p-5">
+                  <CardInterior card={card} index={index} />
+                </div>
+              </article>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );
