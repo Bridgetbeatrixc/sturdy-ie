@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { LexicalRenderer } from "@/components/LexicalRenderer";
 import type { IndustriesData, IndustryCard } from "@/lib/industries";
 
-//Fallback 
+//Fallback
 
 const FALLBACK: IndustriesData = {
   sectionLabel: "Industries",
@@ -58,19 +58,22 @@ const FALLBACK: IndustriesData = {
   cards: [
     {
       title: "Healthcare & Medical",
-      description: "Clinical, research, and population health data infrastructure",
+      description:
+        "Clinical, research, and population health data infrastructure",
       imageUrl:
         "https://images.pexels.com/photos/6801648/pexels-photo-6801648.jpeg?auto=compress&cs=tinysrgb&w=800",
     },
     {
       title: "Financial Services",
-      description: "Digital environments enabling collaboration across research and health institutions",
+      description:
+        "Digital environments enabling collaboration across research and health institutions",
       imageUrl:
         "https://images.pexels.com/photos/1181675/pexels-photo-1181675.jpeg?auto=compress&cs=tinysrgb&w=800",
     },
     {
       title: "Government & Public",
-      description: "Policy implementation, national infrastructure, and governance",
+      description:
+        "Policy implementation, national infrastructure, and governance",
       imageUrl:
         "https://images.pexels.com/photos/1181467/pexels-photo-1181467.jpeg?auto=compress&cs=tinysrgb&w=800",
     },
@@ -83,13 +86,7 @@ const FALLBACK: IndustriesData = {
   ],
 };
 
-function CardInterior({
-  card,
-  index,
-}: {
-  card: IndustryCard;
-  index: number;
-}) {
+function CardInterior({ card, index }: { card: IndustryCard; index: number }) {
   const { title, description } = card;
   const isAlt = index % 2 !== 0;
 
@@ -110,7 +107,7 @@ function CardInterior({
           {String(index + 1).padStart(2, "0")}
         </p>
         <h3
-          className={`mb-2 text-sm font-semibold leading-snug sm:text-base md:text-2xl [overflow-wrap:anywhere] ${
+          className={`mb-3 text-sm font-semibold leading-snug sm:text-base md:text-2xl [overflow-wrap:anywhere] ${
             isAlt ? "text-black" : "text-white"
           }`}
         >
@@ -146,31 +143,30 @@ export function CapabilitiesSection({
           observer.disconnect();
         }
       },
-      { threshold: 0.15 }
+      { threshold: 0.15 },
     );
     if (ref.current) observer.observe(ref.current);
     return () => observer.disconnect();
   }, []);
 
   return (
-    <section
-      ref={ref}
-      className="mx-auto max-w-8xl px-4 py-8 sm:px-6 md:py-12 lg:px-8 lg:py-16"
-    >
+    <section ref={ref} className="mx-auto max-w-8xl py-8 md:py-12 lg:py-16">
       <div
-        className="mb-10 flex flex-col gap-8 md:mb-12 lg:flex-row lg:items-start lg:justify-center lg:gap-10 lg:mb-14"
+        className="mb-10 grid grid-cols-1 gap-8 md:mb-12 lg:grid-cols-2 lg:gap-20 lg:mb-14"
         style={{
           opacity: visible ? undefined : 0,
           animation: visible ? "fadeUp 1s ease forwards" : "none",
         }}
       >
-        <div className="space-y-5 md:max-w-xl">
+        <div className="space-y-5">
           <div className="flex items-center gap-2">
             <span
               className="h-2 w-2 shrink-0 rounded-sm bg-[#c5f018]"
               style={{ animation: "dotPulse 1s ease-in-out infinite" }}
             />
-            <span className="text-sm text-white md:text-lg">{d.sectionLabel}</span>
+            <span className="text-sm text-white md:text-lg">
+              {d.sectionLabel}
+            </span>
           </div>
           <h2 className="text-2xl font-light leading-tight text-white md:text-5xl lg:text-6xl">
             {d.headingRegular}{" "}
@@ -180,23 +176,23 @@ export function CapabilitiesSection({
           </h2>
         </div>
 
-        <div className="space-y-2 text-[0.95rem] leading-relaxed text-zinc-300 lg:max-w-xl lg:flex-1 [&_p]:text-base [&_p]:md:text-lg [&_p]:mb-0">
+        <div className="flex items-center space-y-2 text-[0.95rem] leading-relaxed text-zinc-300 [&_p]:text-base [&_p]:md:text-lg [&_p]:mb-0">
           <LexicalRenderer data={d.body} />
         </div>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 overflow-hidden">
         {d.cards.map((card, index) => (
           <div
             key={card.title}
-            className="group border border-white/15 p-3 transition-all duration-500 sm:p-5 cursor-pointer hover:-translate-y-4"
+            className="group border border-white/15 transition-all duration-500 cursor-pointer hover:-translate-y-4"
             style={{
               opacity: visible ? undefined : 0,
               animation: visible ? "fadeUp 0.75s ease forwards" : "none",
               animationDelay: visible ? `${120 + index * 95}ms` : "0ms",
             }}
           >
-            <article className="group/card relative w-full overflow-hidden rounded-lg bg-zinc-950/80 h-64 sm:h-80 md:h-96 lg:h-[28rem]">
+            <article className="group/card relative w-full overflow-hidden bg-zinc-950/80 h-64 sm:h-80 md:h-96 lg:h-[28rem]">
               <div
                 className="absolute inset-0 bg-cover bg-center opacity-60 transition-all duration-500 group-hover:opacity-80 group-hover:scale-105"
                 style={{ backgroundImage: `url(${card.imageUrl})` }}
