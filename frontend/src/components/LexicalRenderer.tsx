@@ -1,7 +1,9 @@
 import React from "react";
 import Link from "next/link";
 
-const API_URL = (process.env.NEXT_PUBLIC_PAYLOAD_API_URL ?? "http://localhost:3001").replace(/\/$/, "");
+const API_URL = (
+  process.env.NEXT_PUBLIC_PAYLOAD_API_URL ?? "http://localhost:3001"
+).replace(/\/$/, "");
 
 function resolveUrl(url?: string) {
   if (!url) return "";
@@ -29,27 +31,46 @@ type LexicalNode = {
   children?: LexicalNode[];
 };
 
-function serializeNode(node: LexicalNode, index: number, parentListType?: string): React.ReactNode {
+function serializeNode(
+  node: LexicalNode,
+  index: number,
+  parentListType?: string,
+): React.ReactNode {
   switch (node.type) {
-
     case "text": {
       let content: React.ReactNode = node.text ?? "";
       if (node.format) {
         if (node.format & 4) content = <s>{content}</s>;
         if (node.format & 8) content = <u>{content}</u>;
-        if (node.format & 16) content = <code className="bg-zinc-800 px-1 rounded text-sm font-mono">{content}</code>;
+        if (node.format & 16)
+          content = (
+            <code className="bg-zinc-800 px-1 rounded text-sm font-mono">
+              {content}
+            </code>
+          );
         if (node.format & 2) content = <em>{content}</em>;
         if (node.format & 1) content = <strong>{content}</strong>;
       }
       return <React.Fragment key={index}>{content}</React.Fragment>;
     }
 
-    case "paragraph":
+    case "linebreak":
+      return <br key={index} />;
+
+    case "paragraph": {
+      const isEmpty =
+        !node.children?.length ||
+        (node.children.length === 1 && node.children[0].type === "linebreak");
       return (
         <p key={index}>
-          {node.children?.map((child, i) => serializeNode(child, i))}
+          {isEmpty ? (
+            <br />
+          ) : (
+            node.children?.map((child, i) => serializeNode(child, i))
+          )}
         </p>
       );
+    }
 
     case "link": {
       const href = node.fields?.url ?? node.url ?? "#";
@@ -60,7 +81,11 @@ function serializeNode(node: LexicalNode, index: number, parentListType?: string
           href={href}
           className="underline text-lime-400 hover:text-lime-300 transition-colors"
           target={isExternal || node.fields?.newTab ? "_blank" : undefined}
-          rel={isExternal || node.fields?.newTab ? "noopener noreferrer" : undefined}
+          rel={
+            isExternal || node.fields?.newTab
+              ? "noopener noreferrer"
+              : undefined
+          }
         >
           {node.children?.map((child, i) => serializeNode(child, i))}
         </a>
@@ -77,7 +102,9 @@ function serializeNode(node: LexicalNode, index: number, parentListType?: string
           : "list-disc list-inside space-y-1 marker:[color:#c5f018]";
       return (
         <Tag key={index} className={cls}>
-          {node.children?.map((child, i) => serializeNode(child, i, node.listType))}
+          {node.children?.map((child, i) =>
+            serializeNode(child, i, node.listType),
+          )}
         </Tag>
       );
     }
@@ -125,7 +152,7 @@ function serializeNode(node: LexicalNode, index: number, parentListType?: string
       return React.createElement(
         tag,
         { key: index, className: "font-semibold text-white" },
-        node.children?.map((child, i) => serializeNode(child, i))
+        node.children?.map((child, i) => serializeNode(child, i)),
       );
     }
 
@@ -152,7 +179,12 @@ function serializeNode(node: LexicalNode, index: number, parentListType?: string
       // Video file
       if (mime.startsWith("video/")) {
         return (
-          <video key={index} src={url} controls className="my-4 max-w-full rounded-lg" />
+          <video
+            key={index}
+            src={url}
+            controls
+            className="my-4 max-w-full rounded-lg"
+          />
         );
       }
 
@@ -183,7 +215,17 @@ function serializeNode(node: LexicalNode, index: number, parentListType?: string
     }
 
     case "relationship": {
-      const val = node.value as any;
+      const val = node.value as
+        | {
+            url?: string;
+            alt?: string;
+            filename?: string;
+            title?: string;
+            name?: string;
+            slug?: string;
+            id?: string | number;
+          }
+        | undefined;
       const relationTo = node.relationTo;
 
       if (!val) return null;
@@ -213,7 +255,11 @@ function serializeNode(node: LexicalNode, index: number, parentListType?: string
         );
       }
 
-      return <span key={index} className="text-zinc-400">{label}</span>;
+      return (
+        <span key={index} className="text-zinc-400">
+          {label}
+        </span>
+      );
     }
 
     default:
@@ -225,7 +271,11 @@ function serializeNode(node: LexicalNode, index: number, parentListType?: string
   }
 }
 
-export function LexicalRenderer({ data }: { data: { root: { children: LexicalNode[] } } }) {
+export function LexicalRenderer({
+  data,
+}: {
+  data: { root: { children: LexicalNode[] } };
+}) {
   const children = data?.root?.children as LexicalNode[] | undefined;
   if (!children?.length) return null;
 

@@ -172,11 +172,13 @@ export function CapabilitiesSection({
             {/*<span className="text-[#c5f018]">Operating</span>
             {" Across"}
             <br />*/}
-            {d.headingAccent} {d.headingLight}
+            <span className="text-[#c5f018]"> {d.headingAccent} </span>
+            {d.headingRegular}{" "}
+            <span className="font-light text-white">{d.headingLight}</span>
           </h2>
         </div>
 
-        <div className="flex items-center text-[0.95rem] leading-snug text-zinc-300 [&_p]:text-sm [&_p]:md:text-base [&_p]:mb-0 [&_p]:leading-snug">
+        <div className="flex items-end text-[0.95rem] leading-snug text-zinc-300 [&_p]:text-sm [&_p]:md:text-base [&_p]:mb-0 [&_p]:leading-snug">
           <LexicalRenderer data={d.body} />
         </div>
       </div>
