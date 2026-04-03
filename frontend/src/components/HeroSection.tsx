@@ -12,7 +12,7 @@ import { LexicalRenderer } from "@/components/LexicalRenderer";
 function SectionBlock({ block }: { block: HeroSection }) {
   if (block.blockType === "richTextSection") {
     return (
-      <div className="text-sm text-white font-semibold max-w-4xl">
+      <div className="text-sm text-white font-semibold max-w-3xl">
         <LexicalRenderer data={block.content} />
       </div>
     );
@@ -61,7 +61,7 @@ function SplitHeading({ heading, highlight }: { heading: string; highlight: stri
   }
   const [before, after] = heading.split(highlight);
   return (
-    <h1 className="text-5xl sm:text-6xl md:text-[120px] lg:text-[150px] xl:text-[160px] font-light leading-tight tracking-tight text-white md:leading-[1.05] text-center sm:text-left">
+    <h1 className="text-5xl sm:text-6xl md:text-[120px] lg:text-[150px] xl:text-[155px] font-light leading-tight tracking-tight text-white md:leading-[1.05] text-center sm:text-left">
       {before}
       <span className="text-[#c5f018]">{highlight}</span>
       {after}
@@ -234,14 +234,14 @@ export function HeroSection({ data }: Props) {
 
           </div>
 
-          <div className="relative mx-auto mt-10 flex w-full max-w-md flex-col items-center justify-center xl:mt-0 xl:mr-20 xl:-ml-34 xl:max-w-none xl:flex-1">
+          <div className="relative mx-auto mt-10 flex w-full max-w-md flex-col items-end justify-end xl:absolute xl:bottom-0 xl:right-0 xl:mt-0 xl:h-full xl:w-[380px] xl:max-w-none xl:mr-6">
             <div className="pointer-events-none absolute inset-0 blur-3xl" />
-            <div className="relative h-[280px] w-[220px] min-[400px]:h-[360px] min-[400px]:w-[270px] sm:h-[460px] sm:w-[320px] md:h-[550px] md:w-[400px] lg:h-[430px] lg:w-[280px]">
+            <div className="relative h-[280px] w-[220px] min-[400px]:h-[360px] min-[400px]:w-[270px] sm:h-[460px] sm:w-[320px] md:h-[550px] md:w-[400px] xl:h-full xl:w-[380px]">
               <motion.div
                 initial={{ opacity: 0, y: 60 }}
                 animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 60 }}
                 transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.4 }}
-                className="relative h-full w-full scale-[2] overflow-hidden bg-transparent object-contain"
+                className="relative h-full w-full scale-[1.5] overflow-hidden bg-transparent object-contain"
               >
                 {data?.portrait?.url ? (
                   <Image
