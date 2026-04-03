@@ -77,7 +77,7 @@ export interface Config {
     industries: Industry;
     response: Response;
     response_card: ResponseCard;
-    'challenge-about': ChallengeAbout;
+    approach: Approach;
     standards: Standard;
     application: Application;
     about: About;
@@ -104,7 +104,7 @@ export interface Config {
     industries: IndustriesSelect<false> | IndustriesSelect<true>;
     response: ResponseSelect<false> | ResponseSelect<true>;
     response_card: ResponseCardSelect<false> | ResponseCardSelect<true>;
-    'challenge-about': ChallengeAboutSelect<false> | ChallengeAboutSelect<true>;
+    approach: ApproachSelect<false> | ApproachSelect<true>;
     standards: StandardsSelect<false> | StandardsSelect<true>;
     application: ApplicationSelect<false> | ApplicationSelect<true>;
     about: AboutSelect<false> | AboutSelect<true>;
@@ -791,9 +791,9 @@ export interface ResponseCard {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "challenge-about".
+ * via the `definition` "approach".
  */
-export interface ChallengeAbout {
+export interface Approach {
   id: number;
   /**
    * Internal label to identify this document in the CMS list.
@@ -1362,8 +1362,8 @@ export interface PayloadLockedDocument {
         value: number | ResponseCard;
       } | null)
     | ({
-        relationTo: 'challenge-about';
-        value: number | ChallengeAbout;
+        relationTo: 'approach';
+        value: number | Approach;
       } | null)
     | ({
         relationTo: 'standards';
@@ -1677,9 +1677,9 @@ export interface ResponseCardSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "challenge-about_select".
+ * via the `definition` "approach_select".
  */
-export interface ChallengeAboutSelect<T extends boolean = true> {
+export interface ApproachSelect<T extends boolean = true> {
   sectionLabel?: T;
   badge?: T;
   headingAccent?: T;

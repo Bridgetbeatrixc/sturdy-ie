@@ -9,7 +9,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE TYPE "public"."enum_hero_blocks_rich_text_section_position" AS ENUM('above-heading', 'below-heading', 'below-subheading', 'below-tagline', 'above-cta', 'below-cta');
   CREATE TYPE "public"."enum_hero_blocks_bullet_list_position" AS ENUM('above-heading', 'below-heading', 'below-subheading', 'below-tagline', 'above-cta', 'below-cta');
   CREATE TYPE "public"."enum_response_card_bars" AS ENUM('1', '2', '3');
-  CREATE TYPE "public"."enum_challenge_about_items_icon" AS ENUM('trust', 'control', 'standards', 'resilience');
+  CREATE TYPE "public"."enum_approach_items_icon" AS ENUM('trust', 'control', 'standards', 'resilience');
   CREATE TYPE "public"."enum_standards_cards_icon" AS ENUM('data-governance', 'security-architecture', 'regulatory-systems', 'institutional-infrastructure', 'health', 'research', 'financial', 'european-data');
   CREATE TYPE "public"."enum_application_cards_icon" AS ENUM('data-governance', 'security-architecture', 'regulatory-systems', 'institutional-infrastructure', 'health', 'research', 'financial', 'european-data');
   CREATE TYPE "public"."enum_focus_cards_icon" AS ENUM('governance', 'security', 'infrastructure', 'operating', 'regulatory', 'collaboration');
@@ -238,17 +238,17 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"created_at" timestamp(3) with time zone DEFAULT now() NOT NULL
   );
   
-  CREATE TABLE "challenge_about_items" (
+  CREATE TABLE "approach_items" (
   	"_order" integer NOT NULL,
   	"_parent_id" integer NOT NULL,
   	"id" varchar PRIMARY KEY NOT NULL,
   	"title" varchar NOT NULL,
   	"body" jsonb NOT NULL,
-  	"icon" "enum_challenge_about_items_icon" DEFAULT 'trust' NOT NULL,
+  	"icon" "enum_approach_items_icon" DEFAULT 'trust' NOT NULL,
   	"bars" numeric DEFAULT 1 NOT NULL
   );
   
-  CREATE TABLE "challenge_about" (
+  CREATE TABLE "approach" (
   	"id" serial PRIMARY KEY NOT NULL,
   	"section_label" varchar DEFAULT 'Challenge',
   	"badge" varchar DEFAULT 'Challenge',
@@ -442,7 +442,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"industries_id" integer,
   	"response_id" integer,
   	"response_card_id" integer,
-  	"challenge_about_id" integer,
+  	"approach_id" integer,
   	"standards_id" integer,
   	"application_id" integer,
   	"about_id" integer,
@@ -521,8 +521,8 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   ALTER TABLE "industries_cards" ADD CONSTRAINT "industries_cards_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."industries"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "response_images" ADD CONSTRAINT "response_images_image_id_media_id_fk" FOREIGN KEY ("image_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
   ALTER TABLE "response_images" ADD CONSTRAINT "response_images_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."response"("id") ON DELETE cascade ON UPDATE no action;
-  ALTER TABLE "challenge_about_items" ADD CONSTRAINT "challenge_about_items_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."challenge_about"("id") ON DELETE cascade ON UPDATE no action;
-  ALTER TABLE "challenge_about" ADD CONSTRAINT "challenge_about_explore_background_image_id_media_id_fk" FOREIGN KEY ("explore_background_image_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
+  ALTER TABLE "approach_items" ADD CONSTRAINT "approach_items_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."approach"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "approach" ADD CONSTRAINT "approach_explore_background_image_id_media_id_fk" FOREIGN KEY ("explore_background_image_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
   ALTER TABLE "standards_cards" ADD CONSTRAINT "standards_cards_image_id_media_id_fk" FOREIGN KEY ("image_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
   ALTER TABLE "standards_cards" ADD CONSTRAINT "standards_cards_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."standards"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "application_cards" ADD CONSTRAINT "application_cards_image_id_media_id_fk" FOREIGN KEY ("image_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
@@ -546,7 +546,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_industries_fk" FOREIGN KEY ("industries_id") REFERENCES "public"."industries"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_response_fk" FOREIGN KEY ("response_id") REFERENCES "public"."response"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_response_card_fk" FOREIGN KEY ("response_card_id") REFERENCES "public"."response_card"("id") ON DELETE cascade ON UPDATE no action;
-  ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_challenge_about_fk" FOREIGN KEY ("challenge_about_id") REFERENCES "public"."challenge_about"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_approach_fk" FOREIGN KEY ("approach_id") REFERENCES "public"."approach"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_standards_fk" FOREIGN KEY ("standards_id") REFERENCES "public"."standards"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_application_fk" FOREIGN KEY ("application_id") REFERENCES "public"."application"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_about_fk" FOREIGN KEY ("about_id") REFERENCES "public"."about"("id") ON DELETE cascade ON UPDATE no action;
@@ -614,11 +614,11 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE INDEX "response_created_at_idx" ON "response" USING btree ("created_at");
   CREATE INDEX "response_card_updated_at_idx" ON "response_card" USING btree ("updated_at");
   CREATE INDEX "response_card_created_at_idx" ON "response_card" USING btree ("created_at");
-  CREATE INDEX "challenge_about_items_order_idx" ON "challenge_about_items" USING btree ("_order");
-  CREATE INDEX "challenge_about_items_parent_id_idx" ON "challenge_about_items" USING btree ("_parent_id");
-  CREATE INDEX "challenge_about_explore_background_image_idx" ON "challenge_about" USING btree ("explore_background_image_id");
-  CREATE INDEX "challenge_about_updated_at_idx" ON "challenge_about" USING btree ("updated_at");
-  CREATE INDEX "challenge_about_created_at_idx" ON "challenge_about" USING btree ("created_at");
+  CREATE INDEX "approach_items_order_idx" ON "approach_items" USING btree ("_order");
+  CREATE INDEX "approach_items_parent_id_idx" ON "approach_items" USING btree ("_parent_id");
+  CREATE INDEX "approach_explore_background_image_idx" ON "approach" USING btree ("explore_background_image_id");
+  CREATE INDEX "approach_updated_at_idx" ON "approach" USING btree ("updated_at");
+  CREATE INDEX "approach_created_at_idx" ON "approach" USING btree ("created_at");
   CREATE INDEX "standards_cards_order_idx" ON "standards_cards" USING btree ("_order");
   CREATE INDEX "standards_cards_parent_id_idx" ON "standards_cards" USING btree ("_parent_id");
   CREATE INDEX "standards_cards_image_idx" ON "standards_cards" USING btree ("image_id");
@@ -672,7 +672,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE INDEX "payload_locked_documents_rels_industries_id_idx" ON "payload_locked_documents_rels" USING btree ("industries_id");
   CREATE INDEX "payload_locked_documents_rels_response_id_idx" ON "payload_locked_documents_rels" USING btree ("response_id");
   CREATE INDEX "payload_locked_documents_rels_response_card_id_idx" ON "payload_locked_documents_rels" USING btree ("response_card_id");
-  CREATE INDEX "payload_locked_documents_rels_challenge_about_id_idx" ON "payload_locked_documents_rels" USING btree ("challenge_about_id");
+  CREATE INDEX "payload_locked_documents_rels_approach_id_idx" ON "payload_locked_documents_rels" USING btree ("approach_id");
   CREATE INDEX "payload_locked_documents_rels_standards_id_idx" ON "payload_locked_documents_rels" USING btree ("standards_id");
   CREATE INDEX "payload_locked_documents_rels_application_id_idx" ON "payload_locked_documents_rels" USING btree ("application_id");
   CREATE INDEX "payload_locked_documents_rels_about_id_idx" ON "payload_locked_documents_rels" USING btree ("about_id");
@@ -719,8 +719,8 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
   DROP TABLE "response_images" CASCADE;
   DROP TABLE "response" CASCADE;
   DROP TABLE "response_card" CASCADE;
-  DROP TABLE "challenge_about_items" CASCADE;
-  DROP TABLE "challenge_about" CASCADE;
+  DROP TABLE "approach_items" CASCADE;
+  DROP TABLE "approach" CASCADE;
   DROP TABLE "standards_cards" CASCADE;
   DROP TABLE "standards" CASCADE;
   DROP TABLE "application_cards" CASCADE;
@@ -752,7 +752,7 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
   DROP TYPE "public"."enum_hero_blocks_rich_text_section_position";
   DROP TYPE "public"."enum_hero_blocks_bullet_list_position";
   DROP TYPE "public"."enum_response_card_bars";
-  DROP TYPE "public"."enum_challenge_about_items_icon";
+  DROP TYPE "public"."enum_approach_items_icon";
   DROP TYPE "public"."enum_standards_cards_icon";
   DROP TYPE "public"."enum_application_cards_icon";
   DROP TYPE "public"."enum_focus_cards_icon";`)

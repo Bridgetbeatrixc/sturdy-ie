@@ -2383,8 +2383,8 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.challenge_about_items": {
-      "name": "challenge_about_items",
+    "public.approach_items": {
+      "name": "approach_items",
       "schema": "",
       "columns": {
         "_order": {
@@ -2419,7 +2419,7 @@
         },
         "icon": {
           "name": "icon",
-          "type": "enum_challenge_about_items_icon",
+          "type": "enum_approach_items_icon",
           "typeSchema": "public",
           "primaryKey": false,
           "notNull": true,
@@ -2434,8 +2434,8 @@
         }
       },
       "indexes": {
-        "challenge_about_items_order_idx": {
-          "name": "challenge_about_items_order_idx",
+        "approach_items_order_idx": {
+          "name": "approach_items_order_idx",
           "columns": [
             {
               "expression": "_order",
@@ -2449,8 +2449,8 @@
           "method": "btree",
           "with": {}
         },
-        "challenge_about_items_parent_id_idx": {
-          "name": "challenge_about_items_parent_id_idx",
+        "approach_items_parent_id_idx": {
+          "name": "approach_items_parent_id_idx",
           "columns": [
             {
               "expression": "_parent_id",
@@ -2466,10 +2466,10 @@
         }
       },
       "foreignKeys": {
-        "challenge_about_items_parent_id_fk": {
-          "name": "challenge_about_items_parent_id_fk",
-          "tableFrom": "challenge_about_items",
-          "tableTo": "challenge_about",
+        "approach_items_parent_id_fk": {
+          "name": "approach_items_parent_id_fk",
+          "tableFrom": "approach_items",
+          "tableTo": "approach",
           "columnsFrom": [
             "_parent_id"
           ],
@@ -2486,8 +2486,8 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.challenge_about": {
-      "name": "challenge_about",
+    "public.approach": {
+      "name": "approach",
       "schema": "",
       "columns": {
         "id": {
@@ -2593,8 +2593,8 @@
         }
       },
       "indexes": {
-        "challenge_about_explore_background_image_idx": {
-          "name": "challenge_about_explore_background_image_idx",
+        "approach_explore_background_image_idx": {
+          "name": "approach_explore_background_image_idx",
           "columns": [
             {
               "expression": "explore_background_image_id",
@@ -2608,8 +2608,8 @@
           "method": "btree",
           "with": {}
         },
-        "challenge_about_updated_at_idx": {
-          "name": "challenge_about_updated_at_idx",
+        "approach_updated_at_idx": {
+          "name": "approach_updated_at_idx",
           "columns": [
             {
               "expression": "updated_at",
@@ -2623,8 +2623,8 @@
           "method": "btree",
           "with": {}
         },
-        "challenge_about_created_at_idx": {
-          "name": "challenge_about_created_at_idx",
+        "approach_created_at_idx": {
+          "name": "approach_created_at_idx",
           "columns": [
             {
               "expression": "created_at",
@@ -2640,9 +2640,9 @@
         }
       },
       "foreignKeys": {
-        "challenge_about_explore_background_image_id_media_id_fk": {
-          "name": "challenge_about_explore_background_image_id_media_id_fk",
-          "tableFrom": "challenge_about",
+        "approach_explore_background_image_id_media_id_fk": {
+          "name": "approach_explore_background_image_id_media_id_fk",
+          "tableFrom": "approach",
           "tableTo": "media",
           "columnsFrom": [
             "explore_background_image_id"
@@ -4473,8 +4473,8 @@
           "primaryKey": false,
           "notNull": false
         },
-        "challenge_about_id": {
-          "name": "challenge_about_id",
+        "approach_id": {
+          "name": "approach_id",
           "type": "integer",
           "primaryKey": false,
           "notNull": false
@@ -4730,11 +4730,11 @@
           "method": "btree",
           "with": {}
         },
-        "payload_locked_documents_rels_challenge_about_id_idx": {
-          "name": "payload_locked_documents_rels_challenge_about_id_idx",
+        "payload_locked_documents_rels_approach_id_idx": {
+          "name": "payload_locked_documents_rels_approach_id_idx",
           "columns": [
             {
-              "expression": "challenge_about_id",
+              "expression": "approach_id",
               "isExpression": false,
               "asc": true,
               "nulls": "last"
@@ -5025,12 +5025,12 @@
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
-        "payload_locked_documents_rels_challenge_about_fk": {
-          "name": "payload_locked_documents_rels_challenge_about_fk",
+        "payload_locked_documents_rels_approach_fk": {
+          "name": "payload_locked_documents_rels_approach_fk",
           "tableFrom": "payload_locked_documents_rels",
-          "tableTo": "challenge_about",
+          "tableTo": "approach",
           "columnsFrom": [
-            "challenge_about_id"
+            "approach_id"
           ],
           "columnsTo": [
             "id"
@@ -5766,8 +5766,8 @@
         "3"
       ]
     },
-    "public.enum_challenge_about_items_icon": {
-      "name": "enum_challenge_about_items_icon",
+    "public.enum_approach_items_icon": {
+      "name": "enum_approach_items_icon",
       "schema": "public",
       "values": [
         "trust",
@@ -5827,6 +5827,6 @@
     "tables": {},
     "columns": {}
   },
-  "id": "90556f9a-4ebd-45ac-a50c-b3a1f4411db7",
+  "id": "671ef7f2-cfe7-4d47-af2c-633a9dfe33a7",
   "prevId": "00000000-0000-0000-0000-000000000000"
 }
