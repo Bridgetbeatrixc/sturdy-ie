@@ -25,46 +25,43 @@ export function CaseStudyBlogSection({ caseStudies }: { caseStudies: CaseStudyIn
 
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
           {caseStudies.map((post) => (
-            <article
-              key={post.slug}
-              className="group"
-            >
+            <article key={post.slug} className="group">
               <Link
                 href={`/case-studies/${post.slug}`}
-                className="block overflow-hidden rounded-2xl bg-black transition-colors hover:border-zinc-700"
+                className="block"
               >
-                <div className="p-4">
-                  <div className="relative aspect-[22/25] overflow-hidden rounded-xl bg-zinc-900">
-                    <div
-                      className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105"
-                      style={{ backgroundImage: `url(${post.img})` }}
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-black/0 to-black/0 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-                  </div>
-                </div>
-
-                <div className="px-4 pb-6">
-                  <div className="flex flex-wrap items-center gap-2 text-xs text-zinc-500">
-                    <span className="font-medium text-zinc-300">
+                <div className="flex flex-col rounded-2xl border border-zinc-800 bg-gradient-to-b from-zinc-950/60 to-black p-6 min-h-[290px] transition-all duration-300 group-hover:border-zinc-600 group-hover:shadow-[0_0_60px_rgba(197,240,24,0.06)]">
+                  {/* Category pill (top-right) - outline style to differentiate */}
+                  <div className="flex items-start justify-end">
+                    <span className="rounded-full border border-zinc-700 bg-transparent px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.08em] text-[#c5f018]">
                       {post.theme.split(" / ")[0]}
                     </span>
-                    <span className="text-zinc-700">•</span>
-                    <span className="text-zinc-500">
-                      {post.date ? post.date : post.period ? post.period : "Case study"}
-                    </span>
                   </div>
 
-                  <h3 className="mt-3 text-2xl font-light leading-tight text-white md:text-3xl">
+                  {/* Title */}
+                  <h3 className="mt-6 text-[28px] font-light leading-[1.12] text-white transition-colors">
                     {post.title}
                   </h3>
 
-                  {/* <p className="mt-3 line-clamp-3 text-sm leading-relaxed text-zinc-400">
-                    {post.summary}
-                  </p> */}
+                  {/* Divider */}
+                  <div className="mt-6 h-px w-full bg-zinc-800" />
 
-                  {/* <div className="mt-5 inline-flex items-center gap-2 text-sm font-medium text-[#c5f018] transition-opacity group-hover:opacity-90">
-                    Read case study <span className="text-xs">→</span>
-                  </div> */}
+                  {/* Date */}
+                  <p className="mt-6 text-sm text-zinc-500">
+                    {post.date ? post.date : post.period ? post.period : "Case study"}
+                  </p>
+
+                  {/* Summary snippet */}
+                  <p className="mt-5 text-sm leading-relaxed text-zinc-400">
+                    {typeof post.summary === "string" ? post.summary : ""}
+                  </p>
+
+                  {/* Button (bottom-right) - more neutral than My Insights */}
+                  <div className="mt-auto pt-8 flex items-center justify-end">
+                    <span className="inline-flex items-center rounded-xl border border-zinc-700 bg-transparent px-6 py-3 text-sm font-semibold text-white transition-colors group-hover:border-zinc-600">
+                      Read more
+                    </span>
+                  </div>
                 </div>
               </Link>
             </article>

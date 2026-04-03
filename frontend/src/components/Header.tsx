@@ -12,6 +12,7 @@ const NAV_ITEMS = [
   { label: "Case Studies", href: "/case-studies" },
   // { label: "Ventures", href: "/ventures" },
   { label: "My Insights", href: "/myinsights" },
+  { label: "Leadership Papers", href: "/leadership-papers" },
   // { label: "Partnerships", href: "/partnerships" },
   { label: "Contact", href: "/contact" },
 ];
