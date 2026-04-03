@@ -2,17 +2,17 @@ import Link from "next/link";
 
 const cards = [
   {
-    label: "Explore Case Studies",
+    label: "Case Studies",
     href: "/case-studies",
     image: "https://images.pexels.com/photos/3183150/pexels-photo-3183150.jpeg?auto=compress&cs=tinysrgb&w=1200",
   },
   {
-    label: "Read My Insights",
+    label: "Insights",
     href: "/myinsights",
     image: "https://images.pexels.com/photos/3183150/pexels-photo-3183150.jpeg?auto=compress&cs=tinysrgb&w=1200",
   },
   {
-    label: "Discuss Partnership",
+    label: "Start a Conversation",
     href: "/contact",
     image: "https://images.pexels.com/photos/3183150/pexels-photo-3183150.jpeg?auto=compress&cs=tinysrgb&w=1200",
   },

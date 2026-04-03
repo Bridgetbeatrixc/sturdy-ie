@@ -1,15 +1,15 @@
 import { CollectionConfig } from 'payload';
 
 export const ChallengeAbout: CollectionConfig = {
-    slug: 'challenge-about',
+    slug: 'approach',
     admin: {
         useAsTitle: 'sectionLabel',
         defaultColumns: ['sectionLabel', 'updatedAt'],
         livePreview: {
-            url: () => `${process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000'}/#challenge`,
+            url: () => `${process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000'}/#approach`,
         },
         preview: () =>
-            `${process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000'}/#challenge`,
+            `${process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000'}/#approach`,
     },
     access: {
         read: () => true,

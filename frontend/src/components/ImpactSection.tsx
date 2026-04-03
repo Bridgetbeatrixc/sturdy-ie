@@ -25,7 +25,7 @@ const FALLBACK_BODY = {
           {
             type: "text",
             version: 1,
-            text: "Across government, financial systems, healthcare, and research, the issue is rarely a lack of data or regulation. Both already exist.",
+            text: "Across government, financial systems, healthcare, and research, the issue is rarely the absence of data or regulation.",
           },
         ],
       },
@@ -36,7 +36,7 @@ const FALLBACK_BODY = {
           {
             type: "text",
             version: 1,
-            text: "The problem is that data is difficult to use, and regulatory intent is hard to translate into systems that work in practice. Too much effort is spent working around systems rather than benefiting from them.",
+            text: "The challenge is making both usable—through systems that support decision-making, enable collaboration, and maintain control within regulated environments.",
           },
         ],
       },
@@ -47,7 +47,7 @@ const FALLBACK_BODY = {
           {
             type: "text",
             version: 1,
-            text: "My work focuses on aligning data, policy, and infrastructure so organisations can operate with clarity, confidence, and control. This enables better decision-making, stronger oversight, and more effective collaboration across institutions.",
+            text: "Effective infrastructure does more than meet compliance requirements. It enables organisations to operate with confidence, adapt to change, and maintain trust across institutional boundaries.",
           },
         ],
       },
