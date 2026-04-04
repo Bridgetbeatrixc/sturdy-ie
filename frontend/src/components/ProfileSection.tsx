@@ -3,7 +3,6 @@
 import { useRef } from "react";
 import { motion, useInView } from "motion/react";
 import type { StandardsData, StandardsCard } from "@/lib/standards";
-import { AiRegulationChipIcon } from "@/components/icons/AiRegulationChipIcon";
 import { LexicalRenderer } from "./LexicalRenderer";
 
 const strokeIcon = {
@@ -16,6 +15,111 @@ const strokeIcon = {
   strokeLinecap: "round" as const,
   strokeLinejoin: "round" as const,
 };
+
+function MedicalGlobeIcon() {
+  return (
+    <svg
+      viewBox="0 0 200 200"
+      xmlns="http://www.w3.org/2000/svg"
+      width="100%"
+      height="100%"
+      aria-hidden
+    >
+      <defs>
+        <radialGradient id="mgGlobeGrad" cx="40%" cy="35%" r="60%">
+          <stop offset="0%" stopColor="#1e3012" />
+          <stop offset="100%" stopColor="#080f05" />
+        </radialGradient>
+        <radialGradient id="mgGlowGrad" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stopColor="#c5f018" stopOpacity="0.18" />
+          <stop offset="100%" stopColor="#c5f018" stopOpacity="0" />
+        </radialGradient>
+        <clipPath id="mgGlobeClip">
+          <circle cx="100" cy="100" r="71" />
+        </clipPath>
+      </defs>
+
+      <circle cx="100" cy="100" r="90" fill="url(#mgGlowGrad)" />
+      <circle cx="100" cy="100" r="71" fill="url(#mgGlobeGrad)" />
+
+      <g
+        clipPath="url(#mgGlobeClip)"
+        fill="none"
+        stroke="#c5f018"
+        strokeOpacity="0.75"
+        strokeWidth="3"
+      >
+        <ellipse cx="100" cy="100" rx="71" ry="22" />
+        <ellipse cx="100" cy="100" rx="71" ry="62" />
+        <ellipse cx="100" cy="100" rx="22" ry="71" />
+        <line x1="100" y1="29" x2="100" y2="171" />
+      </g>
+
+      <circle
+        cx="100"
+        cy="100"
+        r="71"
+        fill="none"
+        stroke="#c5f018"
+        strokeWidth="3.5"
+        strokeOpacity="3"
+      />
+
+      <circle
+        cx="100"
+        cy="100"
+        r="27"
+        fill="#0b1507"
+        stroke="#c5f018"
+        strokeWidth="1.6"
+        strokeOpacity="0.7"
+      />
+
+      <rect x="91.5" y="83" width="17" height="34" rx="3.5" fill="#c5f018" />
+      <rect x="83" y="91.5" width="34" height="17" rx="3.5" fill="#c5f018" />
+
+      <rect x="94.5" y="83" width="4.5" height="34" rx="2" fill="#eaff6a" opacity="0.25" />
+      <rect x="83" y="94.5" width="34" height="4.5" rx="2" fill="#eaff6a" opacity="0.25" />
+    </svg>
+  );
+}
+
+function AiRegulationChipIcon() {
+  return (
+    <svg
+      viewBox="0 0 200 200"
+      xmlns="http://www.w3.org/2000/svg"
+      width="100%"
+      height="100%"
+      aria-hidden
+    >
+      <rect x="30" y="30" width="140" height="140" rx="20" 
+        fill="#0d1a06" stroke="#c5f018" strokeWidth="2.5" />
+
+      <line x1="75" y1="50" x2="75" y2="36" stroke="#c5f018" strokeWidth="2.5" strokeLinecap="round" />
+      <line x1="100" y1="50" x2="100" y2="36" stroke="#c5f018" strokeWidth="2.5" strokeLinecap="round" />
+      <line x1="125" y1="50" x2="125" y2="36" stroke="#c5f018" strokeWidth="2.5" strokeLinecap="round" />
+
+      <line x1="75" y1="150" x2="75" y2="164" stroke="#c5f018" strokeWidth="2.5" strokeLinecap="round" />
+      <line x1="100" y1="150" x2="100" y2="164" stroke="#c5f018" strokeWidth="2.5" strokeLinecap="round" />
+      <line x1="125" y1="150" x2="125" y2="164" stroke="#c5f018" strokeWidth="2.5" strokeLinecap="round" />
+
+      <line x1="50" y1="75" x2="36" y2="75" stroke="#c5f018" strokeWidth="2.5" strokeLinecap="round" />
+      <line x1="50" y1="100" x2="36" y2="100" stroke="#c5f018" strokeWidth="2.5" strokeLinecap="round" />
+      <line x1="50" y1="125" x2="36" y2="125" stroke="#c5f018" strokeWidth="2.5" strokeLinecap="round" />
+
+      <line x1="150" y1="75" x2="164" y2="75" stroke="#c5f018" strokeWidth="2.5" strokeLinecap="round" />
+      <line x1="150" y1="100" x2="164" y2="100" stroke="#c5f018" strokeWidth="2.5" strokeLinecap="round" />
+      <line x1="150" y1="125" x2="164" y2="125" stroke="#c5f018" strokeWidth="2.5" strokeLinecap="round" />
+
+      <text x="100" y="125" textAnchor="middle" dominantBaseline="middle"
+        fontFamily="Arial, sans-serif" fontWeight="700" fontSize="64"
+        fill="#c5f018" letterSpacing="2">
+        AI
+      </text>
+    </svg>
+  );
+}
 
 const ICONS: Record<StandardsCard["icon"], React.ReactNode> = {
   "data-governance": (
@@ -38,12 +142,7 @@ const ICONS: Record<StandardsCard["icon"], React.ReactNode> = {
       <path d="M7 12h7.5l2.5-5.5M7 12h7.5l2.5 5.5" />
     </svg>
   ),
-  health: (
-    <svg {...strokeIcon} aria-hidden>
-      <circle cx="12" cy="12" r="9" />
-      <path d="M12 8v8M8 12h8" />
-    </svg>
-  ),
+  health: <MedicalGlobeIcon />,
   research: (
     <svg {...strokeIcon} aria-hidden>
       <path d="M3 3v18h18" />
@@ -190,10 +289,16 @@ function FocusCard({
 
         <div className="relative z-[1] flex items-start justify-between">
           <div
-            className="flex h-11 w-11 items-center justify-center rounded-full border border-[#c5f018]/45 bg-[#c5f018]/10 text-[#c5f018] shadow-[0_0_24px_-4px_rgba(197,240,24,0.35)] transition-all duration-500 group-hover:scale-110 group-hover:border-[#c5f018]/70 group-hover:bg-[#c5f018]/15 group-hover:shadow-[0_0_28px_-2px_rgba(197,240,24,0.45)] md:h-[3.25rem] md:w-[3.25rem]"
+            className="flex h-14 w-14 items-center justify-center rounded-full border border-[#c5f018]/45 bg-[#c5f018]/10 text-[#c5f018] shadow-[0_0_24px_-4px_rgba(197,240,24,0.35)] transition-all duration-500 group-hover:scale-110 group-hover:border-[#c5f018]/70 group-hover:bg-[#c5f018]/15 group-hover:shadow-[0_0_28px_-2px_rgba(197,240,24,0.45)] md:h-[3.8rem] md:w-[3.8rem]"
             aria-hidden
           >
-            <div className="h-[1.35rem] w-[1.35rem] md:h-7 md:w-7">
+            <div
+              className={
+                card.icon === "health"
+                  ? "h-9 w-9 md:h-[3.2rem] md:w-[3.2rem]"
+                  : "h-[1.35rem] w-[1.35rem] md:h-10 md:w-10"
+              }
+            >
               {ICONS[card.icon] ?? ICONS["data-governance"]}
             </div>
           </div>
@@ -267,10 +372,7 @@ export function ProfileSection({ data }: { data?: StandardsData | null }) {
         transition={{ duration: 1, ease: "easeOut", delay: 0.5 }}
         className="mt-8 flex items-center justify-end gap-2 md:mt-16"
       >
-        <span className="text-xs text-zinc-500 md:text-sm">
-          
-        </span>
-      
+        <span className="text-xs text-zinc-500 md:text-sm"></span>
       </motion.div>
 
       <div className="relative mt-4 overflow-hidden pt-4 md:mt-6">

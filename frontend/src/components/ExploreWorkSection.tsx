@@ -23,7 +23,7 @@ export function ExploreWorkSection() {
               href={card.href}
               className="group flex min-h-[11rem] items-center justify-center gap-3 border border-zinc-800 bg-gradient-to-b from-zinc-950/90 to-black px-6 py-10 transition-all duration-300 hover:border-[#c5f018]/45 hover:shadow-[0_0_40px_-8px_rgba(197,240,24,0.2)] sm:min-h-[12rem] md:gap-4"
             >
-              <span className="text-center text-2xl font-semibold tracking-tight text-white sm:text-3xl md:text-4xl">
+              <span className="text-center text-2xl font-bold tracking-tight text-white sm:text-3xl md:text-4xl">
                 {card.label}
               </span>
               <svg

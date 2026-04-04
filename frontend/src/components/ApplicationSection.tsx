@@ -187,7 +187,7 @@ function FocusCard({
 
         {/* Bottom: title + divider + tagline */}
         <div className="mt-8 md:mt-10">
-          <h3 className="text-2xl font-light leading-snug text-white md:text-3xl lg:text-3xl">
+          <h3 className="text-2xl font-semibold leading-snug text-white md:text-3xl lg:text-3xl">
             {card.title}
           </h3>
           <div

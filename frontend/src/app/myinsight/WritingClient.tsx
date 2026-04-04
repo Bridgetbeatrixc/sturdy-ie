@@ -50,7 +50,14 @@ export function WritingClient({
       <section className="mx-auto max-w-8xl pt-24 pb-16 sm:px-6 lg:px-0 text-center">
         <h1 className="text-5xl font-light text-white md:text-6xl lg:text-7xl">
           My
-          <span className="text-[#ff5e00]"> Insights</span>
+          <span
+            className="bg-clip-text text-transparent"
+            style={{
+              backgroundImage: "linear-gradient(to right, #F28314, #DB4401)",
+            }}
+          >
+            {" "}Insights
+          </span>
         </h1>
         <p className="mt-6 mx-auto max-w-3xl text-base leading-relaxed text-zinc-300">
           Executive perspectives on sovereign infrastructure, governance-led
@@ -59,7 +66,7 @@ export function WritingClient({
         </p>
       </section>
 
-  
+
 
       {/* My Insights */}
       <section className="bg-black">
@@ -89,10 +96,18 @@ export function WritingClient({
                   href={`/myinsight/${insight.slug}`}
                   className="group block"
                 >
-                  <div className="flex flex-col rounded-2xl border border-zinc-800 bg-gradient-to-b from-zinc-950/70 to-black p-6 min-h-[290px] transition-all duration-300 group-hover:border-[#ff5e00]/70 group-hover:shadow-[0_0_60px_rgba(255,94,0,0.22)]">
-                    {/* Category pill (top-right) */}
+                  <div className="flex flex-col rounded-2xl border border-zinc-800 bg-gradient-to-b from-zinc-950/70 to-black p-6 min-h-[290px] transition-all duration-300 group-hover:border-[#DB4401]/70 group-hover:shadow-[0_0_60px_rgba(219,68,1,0.22)]">
                     <div className="flex items-start justify-end">
-                      <span className="rounded-full border border-[#ff5e00]/50 bg-[#ff5e00]/12 px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.08em] text-[#ff5e00]">
+                      <span
+                        className="rounded-full px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.08em] bg-clip-text text-transparent"
+                        style={{
+                          backgroundImage: "linear-gradient(to right, #F28314, #DB4401)",
+                          border: "1px solid transparent",
+                          backgroundClip: "text",
+                          WebkitBackgroundClip: "text",
+                          boxShadow: "inset 0 0 0 1px rgba(219,68,1,0.4)",
+                        }}
+                      >
                         {insight.category}
                       </span>
                     </div>
@@ -141,11 +156,10 @@ export function WritingClient({
                     <button
                       key={page}
                       onClick={() => handlePageChange(page)}
-                      className={`h-9 w-9 rounded-lg text-sm font-medium transition ${
-                        page === currentPage
-                          ? "bg-[#c5f018] text-black"
-                          : "border border-zinc-700 bg-zinc-900 text-zinc-400 hover:border-zinc-500 hover:text-white"
-                      }`}
+                      className={`h-9 w-9 rounded-lg text-sm font-medium transition ${page === currentPage
+                        ? "bg-[#c5f018] text-black"
+                        : "border border-zinc-700 bg-zinc-900 text-zinc-400 hover:border-zinc-500 hover:text-white"
+                        }`}
                     >
                       {page}
                     </button>

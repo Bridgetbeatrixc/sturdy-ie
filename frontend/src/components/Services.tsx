@@ -20,31 +20,24 @@ const svgProps = {
   strokeLinejoin: "round" as const,
 };
 
-/** Shattered glass — four pane shards + small loose fragment */
 const IconFragmented = (
-  <svg  viewBox="0 0 200 240" xmlns="http://www.w3.org/2000/svg">
-  <path d="M100 10 
-           L180 50 
-           L160 170 
-           Q100 230 40 170 
-           L20 50 
-           Z"
-        fill="none"
-        stroke="black"
-        stroke-width="10"
-        stroke-linejoin="round"/>
-
-  <path d="M105 20
-           L115 60
-           L90 95
-           L110 130
-           L95 180"
-        fill="none"
-        stroke="black"
-        stroke-width="10"
-        stroke-linecap="round"
-        stroke-linejoin="round"/>
-</svg>
+  <svg viewBox="0 0 200 240" xmlns="http://www.w3.org/2000/svg">
+    <path
+      d="M100 10 L180 50 L160 170 Q100 230 40 170 L20 50 Z"
+      fill="none"
+      stroke="black"
+      strokeWidth="10"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M105 20 L115 60 L90 95 L110 130 L95 180"
+      fill="none"
+      stroke="black"
+      strokeWidth="10"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
 );
 
 /** Server stack — legacy systems */
