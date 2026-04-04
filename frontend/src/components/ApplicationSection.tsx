@@ -19,9 +19,7 @@ const strokeIcon = {
 const ICONS: Record<ApplicationCard["icon"], React.ReactNode> = {
   "data-governance": (
     <svg {...strokeIcon} aria-hidden>
-      <ellipse cx="12" cy="5" rx="9" ry="3" />
-      <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3" />
-      <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5" />
+      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
     </svg>
   ),
   "security-architecture": (
@@ -32,26 +30,29 @@ const ICONS: Record<ApplicationCard["icon"], React.ReactNode> = {
   ),
   "regulatory-systems": (
     <svg {...strokeIcon} aria-hidden>
-      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-      <path d="M14 2v6h6" />
-      <path d="M16 13H8" /><path d="M16 17H8" /><path d="M10 9H8" />
+      <path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3L12 3Z" />
     </svg>
   ),
   "institutional-infrastructure": (
     <svg {...strokeIcon} aria-hidden>
-      <circle cx="12" cy="12" r="10" />
-      <path d="M2 12h20" />
-      <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+      <circle cx="5" cy="12" r="2.25" />
+      <circle cx="19" cy="6" r="2.25" />
+      <circle cx="19" cy="18" r="2.25" />
+      <path d="M7 12h7.5l2.5-5.5M7 12h7.5l2.5 5.5" />
     </svg>
   ),
   health: (
     <svg {...strokeIcon} aria-hidden>
-      <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
+      <circle cx="12" cy="12" r="9" />
+      <path d="M12 8v8M8 12h8" />
     </svg>
   ),
   research: (
     <svg {...strokeIcon} aria-hidden>
-      <path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2v-4M9 21H5a2 2 0 0 1-2-2v-4m0 0h18" />
+      <path d="M3 3v18h18" />
+      <path d="M7 16V10" />
+      <path d="M12 16V6" />
+      <path d="M17 16v-5" />
     </svg>
   ),
   financial: (
@@ -61,11 +62,10 @@ const ICONS: Record<ApplicationCard["icon"], React.ReactNode> = {
   ),
   "european-data": (
     <svg {...strokeIcon} aria-hidden>
-      <circle cx="12" cy="12" r="3" />
-      <circle cx="4" cy="6" r="2" /><circle cx="20" cy="6" r="2" />
-      <circle cx="4" cy="18" r="2" /><circle cx="20" cy="18" r="2" />
-      <path d="M6 6.5l4 4" /><path d="M18 6.5l-4 4" />
-      <path d="M6 17.5l4-4" /><path d="M18 17.5l-4-4" />
+      <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+      <circle cx="9" cy="7" r="4" />
+      <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+      <path d="M16 3.13a4 4 0 0 1 0 7.75" />
     </svg>
   ),
 };

@@ -19,9 +19,7 @@ const strokeIcon = {
 const ICONS: Record<StandardsCard["icon"], React.ReactNode> = {
   "data-governance": (
     <svg {...strokeIcon} aria-hidden>
-      <ellipse cx="12" cy="5" rx="9" ry="3" />
-      <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3" />
-      <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5" />
+      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
     </svg>
   ),
   "security-architecture": (
@@ -32,32 +30,29 @@ const ICONS: Record<StandardsCard["icon"], React.ReactNode> = {
   ),
   "regulatory-systems": (
     <svg {...strokeIcon} aria-hidden>
-      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-      <path d="M14 2v6h6" />
-      <path d="M16 13H8" />
-      <path d="M16 17H8" />
-      <path d="M10 9H8" />
+      <path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3L12 3Z" />
     </svg>
   ),
   "institutional-infrastructure": (
     <svg {...strokeIcon} aria-hidden>
-      <circle cx="12" cy="12" r="10" />
-      <path d="M2 12h20" />
-      <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+      <circle cx="5" cy="12" r="2.25" />
+      <circle cx="19" cy="6" r="2.25" />
+      <circle cx="19" cy="18" r="2.25" />
+      <path d="M7 12h7.5l2.5-5.5M7 12h7.5l2.5 5.5" />
     </svg>
   ),
   health: (
     <svg {...strokeIcon} aria-hidden>
-      <ellipse cx="12" cy="5" rx="9" ry="3" />
-      <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3" />
-      <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5" />
-      <path d="M12 12v5" />
-      <path d="M9.5 14.5l2.5-2.5 2.5 2.5" />
+      <circle cx="12" cy="12" r="9" />
+      <path d="M12 8v8M8 12h8" />
     </svg>
   ),
   research: (
     <svg {...strokeIcon} aria-hidden>
-      <path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2v-4M9 21H5a2 2 0 0 1-2-2v-4m0 0h18" />
+      <path d="M3 3v18h18" />
+      <path d="M7 16V10" />
+      <path d="M12 16V6" />
+      <path d="M17 16v-5" />
     </svg>
   ),
   financial: (
@@ -67,15 +62,10 @@ const ICONS: Record<StandardsCard["icon"], React.ReactNode> = {
   ),
   "european-data": (
     <svg {...strokeIcon} aria-hidden>
-      <circle cx="12" cy="12" r="3" />
-      <circle cx="4" cy="6" r="2" />
-      <circle cx="20" cy="6" r="2" />
-      <circle cx="4" cy="18" r="2" />
-      <circle cx="20" cy="18" r="2" />
-      <path d="M6 6.5l4 4" />
-      <path d="M18 6.5l-4 4" />
-      <path d="M6 17.5l4-4" />
-      <path d="M18 17.5l-4-4" />
+      <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+      <circle cx="9" cy="7" r="4" />
+      <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+      <path d="M16 3.13a4 4 0 0 1 0 7.75" />
     </svg>
   ),
 };
@@ -195,6 +185,12 @@ function FocusCard({
       style={{ flex: "0 0 clamp(220px, 24vw, 320px)" }}
     >
       <div className="relative flex aspect-[3/4] w-full flex-col overflow-hidden rounded-[1.5rem] border border-zinc-800/80 border-l-[3px] border-l-[#c5f018]/85 bg-gradient-to-b from-zinc-900/95 via-zinc-950 to-black p-5 shadow-[0_4px_28px_rgba(0,0,0,0.45)] ring-1 ring-inset ring-white/[0.05] transition-all duration-500 ease-out before:pointer-events-none before:absolute before:inset-0 before:bg-[radial-gradient(ellipse_90%_60%_at_100%_0%,rgba(197,240,24,0.09),transparent_55%)] after:pointer-events-none after:absolute after:inset-0 after:opacity-[0.22] after:[background-image:linear-gradient(rgba(255,255,255,0.04)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.04)_1px,transparent_1px)] after:bg-[length:22px_22px] hover:-translate-y-2 hover:border-zinc-600/70 hover:border-l-[#c5f018] hover:shadow-[0_28px_56px_-14px_rgba(0,0,0,0.72),0_0_48px_-12px_rgba(197,240,24,0.14)] hover:ring-[#c5f018]/10 md:p-6">
+        {/* Large grey ring (stroke only), clipped at right — mirrors hero graphic */}
+        <div
+          className="pointer-events-none absolute right-0 top-1/2 z-0 aspect-square w-[125%] max-w-[19rem] translate-x-[52%] -translate-y-1/2 rounded-full border-[10px] border-zinc-600/40 bg-transparent md:max-w-[21rem] md:border-[12px]"
+          aria-hidden
+        />
+
         <div className="relative z-[1] flex items-start justify-between">
           <div
             className="flex h-11 w-11 items-center justify-center rounded-full border border-[#c5f018]/45 bg-[#c5f018]/10 text-[#c5f018] shadow-[0_0_24px_-4px_rgba(197,240,24,0.35)] transition-all duration-500 group-hover:scale-110 group-hover:border-[#c5f018]/70 group-hover:bg-[#c5f018]/15 group-hover:shadow-[0_0_28px_-2px_rgba(197,240,24,0.45)] md:h-[3.25rem] md:w-[3.25rem]"
@@ -205,17 +201,17 @@ function FocusCard({
             </div>
           </div>
 
-          <span className="rounded-full border border-zinc-600/50 bg-zinc-900/90 px-2.5 py-1 font-mono text-[0.65rem] font-medium uppercase tracking-[0.2em] text-zinc-400 transition-colors duration-300 group-hover:border-[#c5f018]/35 group-hover:text-[#c5f018] md:text-xs">
+          <span className="rounded-full border border-zinc-600/50 bg-zinc-900/90 px-2.5 py-1 font-mono text-[0.65rem] font-medium uppercase tracking-[0.2em] text-white/85 transition-colors duration-300 group-hover:border-[#c5f018]/35 group-hover:text-[#c5f018] md:text-xs">
             {String(index + 1).padStart(2, "0")}
           </span>
         </div>
 
         <div className="relative z-[1] mt-auto flex flex-col pt-8 md:pt-10">
           <div className="mb-4 h-px w-full bg-gradient-to-r from-[#c5f018]/25 via-zinc-700/60 to-transparent md:mb-5" aria-hidden />
-          <h3 className="text-xl font-light leading-snug tracking-tight text-white transition-colors duration-300 group-hover:text-[#f4ffc9] md:text-2xl">
+          <h3 className="text-xl font-bold leading-snug tracking-tight text-[#c5f018] transition-colors duration-300 group-hover:text-[#d4ff2a] md:text-2xl">
             {card.title}
           </h3>
-          <p className="mt-2.5 text-sm leading-relaxed text-zinc-400 transition-colors duration-300 group-hover:text-zinc-300 md:text-[0.95rem]">
+          <p className="mt-2.5 text-sm leading-relaxed text-white transition-colors duration-300 group-hover:text-white md:text-[0.95rem]">
             {card.tagline}
           </p>
         </div>
