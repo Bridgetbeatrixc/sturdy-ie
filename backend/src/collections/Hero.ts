@@ -34,8 +34,8 @@ export const Hero: CollectionConfig = {
       name: 'headingHighlight',
       label: 'Heading Highlight',
       type: 'text',
-      defaultValue: 'Sturdy',
-      admin: { description: 'Portion of the heading rendered in lime (#c5f018). Must match a substring of Heading.' },
+      defaultValue: 'Jason',
+      admin: { description: 'Portion of the heading rendered in lime (#c5f018). Must match a substring of Heading (e.g. Jason with Sturdy in white).' },
     },
 
     {

@@ -109,7 +109,9 @@ export function HeroSection({ data }: Props) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "0px 0px -80px 0px" });
   const heading = data?.heading ?? "Jason Sturdy";
-  const headingHighlight = data?.headingHighlight ?? "Sturdy";
+  const rawHighlight = data?.headingHighlight?.trim() ?? "";
+  const headingHighlight =
+    rawHighlight === "Sturdy" || rawHighlight === "" ? "Jason" : rawHighlight;
   const subheading = data?.subheading ?? "Building Trusted Systems from Policy to Practice";
   const tagline = data?.tagline ?? "Data Governance • Security Architecture • Operating Models • Digital Infrastructure";
   const sections = data?.sections?.length ? data.sections : FALLBACK_SECTIONS;

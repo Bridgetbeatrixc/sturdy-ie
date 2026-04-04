@@ -107,7 +107,7 @@ export const Application: CollectionConfig = {
                         { label: 'Institutional Infrastructure (Globe)', value: 'institutional-infrastructure' },
                         { label: 'Health (Pulse)', value: 'health' },
                         { label: 'Research (Table Grid)', value: 'research' },
-                        { label: 'Financial (Dollar Sign)', value: 'financial' },
+                        { label: 'Financial (Euro)', value: 'financial' },
                         { label: 'European Data (Network)', value: 'european-data' },
                     ],
                     admin: { description: 'Pick the icon that best represents this application area.' },

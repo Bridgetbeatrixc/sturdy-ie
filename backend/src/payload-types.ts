@@ -531,7 +531,7 @@ export interface Hero {
    */
   heading: string;
   /**
-   * Portion of the heading rendered in lime (#c5f018). Must match a substring of Heading.
+   * Portion of the heading rendered in lime (#c5f018). Must match a substring of Heading (e.g. Jason with Sturdy in white).
    */
   headingHighlight?: string | null;
   /**
