@@ -1,21 +1,9 @@
 import Link from "next/link";
 
 const cards = [
-  {
-    label: "Case Studies",
-    href: "/case-studies",
-    image: "https://images.pexels.com/photos/3183150/pexels-photo-3183150.jpeg?auto=compress&cs=tinysrgb&w=1200",
-  },
-  {
-    label: "Insights",
-    href: "/myinsights",
-    image: "https://images.pexels.com/photos/3183150/pexels-photo-3183150.jpeg?auto=compress&cs=tinysrgb&w=1200",
-  },
-  {
-    label: "Start a Conversation",
-    href: "/contact",
-    image: "https://images.pexels.com/photos/3183150/pexels-photo-3183150.jpeg?auto=compress&cs=tinysrgb&w=1200",
-  },
+  { label: "Case Studies", href: "/case-studies" },
+  { label: "Insights", href: "/myinsights" },
+  { label: "Leadership Papers", href: "/leadership-papers" },
 ];
 
 export function ExploreWorkSection() {
@@ -33,40 +21,24 @@ export function ExploreWorkSection() {
             <Link
               key={card.label}
               href={card.href}
-              className="group block border border-zinc-800 bg-black p-3 aspect-video"
+              className="group flex min-h-[11rem] items-center justify-center gap-3 border border-zinc-800 bg-gradient-to-b from-zinc-950/90 to-black px-6 py-10 transition-all duration-300 hover:border-[#c5f018]/45 hover:shadow-[0_0_40px_-8px_rgba(197,240,24,0.2)] sm:min-h-[12rem] md:gap-4"
             >
-              {/* Inner image wrapper — fills padded area with gap from border */}
-              <div className="relative h-full w-full overflow-hidden">
-                {/* Background image */}
-                <img
-                  src={card.image}
-                  alt={card.label}
-                  className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-100"
-                />
-
-                {/* Dark overlay */}
-                <div className="absolute inset-0 bg-black/40 transition-opacity duration-300 group-hover:bg-black/30" />
-
-                {/* Centered label */}
-                <div className="absolute inset-0 flex items-center justify-center gap-2">
-                  <span className="text-lg font-semibold text-white drop-shadow-lg">
-                    {card.label}
-                  </span>
-                  <svg
-                    viewBox="0 0 24 24"
-                    className="h-5 w-5 text-[#c5f018] transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    aria-hidden="true"
-                  >
-                    <line x1="7" y1="17" x2="17" y2="7" />
-                    <polyline points="7 7 17 7 17 17" />
-                  </svg>
-                </div>
-              </div>
+              <span className="text-center text-2xl font-semibold tracking-tight text-white sm:text-3xl md:text-4xl">
+                {card.label}
+              </span>
+              <svg
+                viewBox="0 0 24 24"
+                className="h-7 w-7 shrink-0 text-[#c5f018] transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 sm:h-8 sm:w-8 md:h-9 md:w-9"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+              >
+                <line x1="7" y1="17" x2="17" y2="7" />
+                <polyline points="7 7 17 7 17 17" />
+              </svg>
             </Link>
           ))}
         </div>

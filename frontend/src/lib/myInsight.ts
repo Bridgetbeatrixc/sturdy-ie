@@ -45,9 +45,9 @@ export const CATEGORY_STYLES: Record<
     tag:    "border-rose-500/40 text-rose-400 bg-rose-500/10",
   },
   "AI & Regulated Data": {
-    active: "bg-amber-500 border-amber-500 text-black",
+    active: "bg-[#ff5e00] border-[#ff5e00] text-black",
     badge:  "bg-black/20 text-black",
-    tag:    "border-amber-500/40 text-amber-400 bg-amber-500/10",
+    tag:    "border-[#ff5e00]/45 text-[#ff944d] bg-[#ff5e00]/10",
   },
 };
 

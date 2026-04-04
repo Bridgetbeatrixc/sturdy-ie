@@ -1,10 +1,12 @@
+const CHIP_ORANGE = "#ff5e00";
+
 /** AI chip with pins + “AI” label — matches provided 980×980 artwork; scales via viewBox. */
 export function AiRegulationChipIcon() {
   return (
     <svg width="100%" height="100%" viewBox="0 0 980 980" fill="none" aria-hidden>
       <g
         fill="none"
-        stroke="currentColor"
+        stroke={CHIP_ORANGE}
         strokeWidth={52}
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -38,7 +40,7 @@ export function AiRegulationChipIcon() {
       <text
         x="490"
         y="490"
-        fill="currentColor"
+        fill={CHIP_ORANGE}
         stroke="none"
         fontFamily="system-ui, Arial, Helvetica, sans-serif"
         fontSize="180"
