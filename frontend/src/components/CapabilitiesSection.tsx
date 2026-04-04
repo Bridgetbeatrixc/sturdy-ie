@@ -64,7 +64,7 @@ function CardInterior({
       >
         <p
           className={`mb-1.5 text-[0.65rem] font-semibold uppercase tracking-[0.12em] sm:text-xs ${
-            isAlt ? "text-[#c5f018]" : "text-[#c5f018]"
+            isAlt ? "text-black" : "text-[#c5f018]"
           }`}
         >
           {String(index + 1).padStart(2, "0")}

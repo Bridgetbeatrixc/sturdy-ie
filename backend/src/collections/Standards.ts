@@ -115,7 +115,7 @@ export const Standards: CollectionConfig = {
                     options: [
                         { label: 'Data Protection (Shield)', value: 'data-governance' },
                         { label: 'Security Architecture (Lock)', value: 'security-architecture' },
-                        { label: 'AI / Regulation (Sparkle)', value: 'regulatory-systems' },
+                        { label: 'AI / Regulation (Chip + AI)', value: 'regulatory-systems' },
                         { label: 'Interoperability (Connected nodes)', value: 'institutional-infrastructure' },
                         { label: 'Health (Medical cross)', value: 'health' },
                         { label: 'Research / Analytics (Bar chart)', value: 'research' },

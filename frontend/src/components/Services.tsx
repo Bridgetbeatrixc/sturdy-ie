@@ -57,13 +57,12 @@ const IconServer = (
   </svg>
 );
 
-/** Interconnected nodes — operational complexity */
+/** Database cylinder — operational complexity (clean ellipse + arcs, scales with section) */
 const IconNetwork = (
-  <svg {...svgProps}>
-    <circle cx="5" cy="6" r="2.5" />
-    <circle cx="19" cy="6" r="2.5" />
-    <circle cx="12" cy="19" r="2.5" />
-    <path d="M7 7.5 10 14M17 7.5 14 14M12 9v7" />
+  <svg {...svgProps} aria-hidden>
+    <ellipse cx="12" cy="5" rx="9" ry="3" />
+    <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3" />
+    <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5" />
   </svg>
 );
 
@@ -130,7 +129,7 @@ function ServiceCard({
       className="group flex flex-col items-center md:flex-row md:items-center gap-4 md:gap-8 rounded-lg md:rounded-2xl border border-[#677f06] p-6 md:p-0"
     >
       <div className="flex-shrink-0 flex h-14 w-14 md:h-45 md:w-40 items-center justify-center rounded-xl md:rounded-l-2xl md:rounded-r-none bg-[#c5f018] text-black">
-        <div className="w-10 h-10 md:w-20 md:h-20">
+        <div className="w-10 h-10 md:w-23 md:h-23">
           {ICONS[item.icon] ?? ICONS.fragmented}
         </div>
       </div>

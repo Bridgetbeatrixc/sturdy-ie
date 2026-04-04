@@ -30,7 +30,41 @@ const ICONS: Record<StandardsCard["icon"], React.ReactNode> = {
   ),
   "regulatory-systems": (
     <svg {...strokeIcon} aria-hidden>
-      <path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3L12 3Z" />
+      <line x1="9" y1="8" x2="9" y2="4.9" />
+      <circle cx="9" cy="4" r="0.85" />
+      <line x1="12" y1="8" x2="12" y2="3.2" />
+      <circle cx="12" cy="2.35" r="0.85" />
+      <line x1="15" y1="8" x2="15" y2="4.9" />
+      <circle cx="15" cy="4" r="0.85" />
+      <line x1="9" y1="18" x2="9" y2="21.1" />
+      <circle cx="9" cy="22" r="0.85" />
+      <line x1="12" y1="18" x2="12" y2="21.8" />
+      <circle cx="12" cy="22.65" r="0.85" />
+      <line x1="15" y1="18" x2="15" y2="21.1" />
+      <circle cx="15" cy="22" r="0.85" />
+      <line x1="7" y1="10" x2="4.9" y2="10" />
+      <circle cx="4.05" cy="10" r="0.85" />
+      <line x1="7" y1="13" x2="3.6" y2="13" />
+      <circle cx="2.75" cy="13" r="0.85" />
+      <line x1="7" y1="16" x2="4.9" y2="16" />
+      <circle cx="4.05" cy="16" r="0.85" />
+      <line x1="17" y1="10" x2="19.1" y2="10" />
+      <circle cx="19.95" cy="10" r="0.85" />
+      <line x1="17" y1="13" x2="20.4" y2="13" />
+      <circle cx="21.25" cy="13" r="0.85" />
+      <line x1="17" y1="16" x2="19.1" y2="16" />
+      <circle cx="19.95" cy="16" r="0.85" />
+      <rect x="7" y="8" width="10" height="10" rx="2" ry="2" />
+      <text
+        x="12"
+        y="14.75"
+        textAnchor="middle"
+        fill="currentColor"
+        stroke="none"
+        style={{ fontSize: "6.25px", fontWeight: 700, fontFamily: "system-ui, sans-serif" }}
+      >
+        AI
+      </text>
     </svg>
   ),
   "institutional-infrastructure": (
@@ -182,7 +216,7 @@ function FocusCard({
         ease: [0.22, 1, 0.36, 1],
       }}
       className="group relative shrink-0"
-      style={{ flex: "0 0 clamp(220px, 24vw, 320px)" }}
+      style={{ flex: "0 0 clamp(252px, 30vw, 340px)" }}
     >
       <div className="relative flex aspect-[3/4] w-full flex-col overflow-hidden rounded-[1.5rem] border border-zinc-800/80 border-l-[3px] border-l-[#c5f018]/85 bg-gradient-to-b from-zinc-900/95 via-zinc-950 to-black p-5 shadow-[0_4px_28px_rgba(0,0,0,0.45)] ring-1 ring-inset ring-white/[0.05] transition-all duration-500 ease-out before:pointer-events-none before:absolute before:inset-0 before:bg-[radial-gradient(ellipse_90%_60%_at_100%_0%,rgba(197,240,24,0.09),transparent_55%)] after:pointer-events-none after:absolute after:inset-0 after:opacity-[0.22] after:[background-image:linear-gradient(rgba(255,255,255,0.04)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.04)_1px,transparent_1px)] after:bg-[length:22px_22px] hover:-translate-y-2 hover:border-zinc-600/70 hover:border-l-[#c5f018] hover:shadow-[0_28px_56px_-14px_rgba(0,0,0,0.72),0_0_48px_-12px_rgba(197,240,24,0.14)] hover:ring-[#c5f018]/10 md:p-6">
         {/* Large grey ring (stroke only), clipped at right — mirrors hero graphic */}
@@ -206,9 +240,9 @@ function FocusCard({
           </span>
         </div>
 
-        <div className="relative z-[1] mt-auto flex flex-col pt-8 md:pt-10">
+        <div className="relative z-[1] mt-auto flex min-w-0 flex-col pt-8 md:pt-10">
           <div className="mb-4 h-px w-full bg-gradient-to-r from-[#c5f018]/25 via-zinc-700/60 to-transparent md:mb-5" aria-hidden />
-          <h3 className="text-xl font-bold leading-snug tracking-tight text-[#c5f018] transition-colors duration-300 group-hover:text-[#d4ff2a] md:text-2xl">
+          <h3 className="min-w-0 text-pretty text-base font-bold leading-[1.18] tracking-tight text-[#c5f018] transition-colors duration-300 [overflow-wrap:anywhere] line-clamp-2 sm:text-lg md:text-xl group-hover:text-[#d4ff2a]">
             {card.title}
           </h3>
           <p className="mt-2.5 text-sm leading-relaxed text-white transition-colors duration-300 group-hover:text-white md:text-[0.95rem]">
