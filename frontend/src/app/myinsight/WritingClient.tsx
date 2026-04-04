@@ -50,7 +50,7 @@ export function WritingClient({
       <section className="mx-auto max-w-8xl pt-24 pb-16 sm:px-6 lg:px-0 text-center">
         <h1 className="text-5xl font-light text-white md:text-6xl lg:text-7xl">
           My
-          <span className="text-[#F59709]"> Insights</span>
+          <span className="text-[#ff6e0a]"> Insights</span>
         </h1>
         <p className="mt-6 mx-auto max-w-3xl text-base leading-relaxed text-zinc-300">
           Executive perspectives on sovereign infrastructure, governance-led
@@ -89,16 +89,16 @@ export function WritingClient({
                   href={`/myinsight/${insight.slug}`}
                   className="group block"
                 >
-                  <div className="flex flex-col rounded-2xl border border-zinc-800 bg-gradient-to-b from-zinc-950/70 to-black p-6 min-h-[290px] transition-all duration-300 group-hover:border-[#f59e0b]/70 group-hover:shadow-[0_0_60px_rgba(245,158,11,0.12)]">
+                  <div className="flex flex-col rounded-2xl border border-zinc-800 bg-gradient-to-b from-zinc-950/70 to-black p-6 min-h-[290px] transition-all duration-300 group-hover:border-[#ff6e0a]/70 group-hover:shadow-[0_0_60px_rgba(255,110,10,0.2)]">
                     {/* Category pill (top-right) */}
                     <div className="flex items-start justify-end">
-                      <span className="rounded-full border border-[#f59e0b]/45 bg-[#f59e0b]/10 px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.08em] text-[#f59e0b]">
+                      <span className="rounded-full border border-[#ff6e0a]/50 bg-[#ff6e0a]/12 px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.08em] text-[#ff6e0a]">
                         {insight.category}
                       </span>
                     </div>
 
                     {/* Title */}
-                    <h2 className="mt-6 text-[28px] font-light leading-[1.12] text-white transition-colors group-hover:text-[#fcd34d]">
+                    <h2 className="mt-6 text-[28px] font-light leading-[1.12] text-white transition-colors group-hover:text-[#ffb24d]">
                       {insight.title}
                     </h2>
 
@@ -115,7 +115,7 @@ export function WritingClient({
 
                     {/* Button (bottom-right) */}
                     <div className="mt-auto pt-8 flex items-center justify-end">
-                      <span className="inline-flex items-center rounded-xl border border-zinc-700 bg-transparent px-6 py-3 text-sm font-semibold text-white transition-colors group-hover:border-[#f59e0b]/70 group-hover:text-[#fcd34d]">
+                      <span className="inline-flex items-center rounded-xl border border-zinc-700 bg-transparent px-6 py-3 text-sm font-semibold text-white transition-colors group-hover:border-[#ff6e0a]/70 group-hover:text-[#ffb24d]">
                         Read more
                       </span>
                     </div>

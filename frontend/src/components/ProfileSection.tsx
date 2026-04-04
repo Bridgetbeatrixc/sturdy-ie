@@ -3,6 +3,7 @@
 import { useRef } from "react";
 import { motion, useInView } from "motion/react";
 import type { StandardsData, StandardsCard } from "@/lib/standards";
+import { AiRegulationChipIcon } from "@/components/icons/AiRegulationChipIcon";
 import { LexicalRenderer } from "./LexicalRenderer";
 
 const strokeIcon = {
@@ -28,45 +29,7 @@ const ICONS: Record<StandardsCard["icon"], React.ReactNode> = {
       <path d="M7 11V7a5 5 0 0 1 10 0v4" />
     </svg>
   ),
-  "regulatory-systems": (
-    <svg {...strokeIcon} aria-hidden>
-      <line x1="9" y1="8" x2="9" y2="4.9" />
-      <circle cx="9" cy="4" r="0.85" />
-      <line x1="12" y1="8" x2="12" y2="3.2" />
-      <circle cx="12" cy="2.35" r="0.85" />
-      <line x1="15" y1="8" x2="15" y2="4.9" />
-      <circle cx="15" cy="4" r="0.85" />
-      <line x1="9" y1="18" x2="9" y2="21.1" />
-      <circle cx="9" cy="22" r="0.85" />
-      <line x1="12" y1="18" x2="12" y2="21.8" />
-      <circle cx="12" cy="22.65" r="0.85" />
-      <line x1="15" y1="18" x2="15" y2="21.1" />
-      <circle cx="15" cy="22" r="0.85" />
-      <line x1="7" y1="10" x2="4.9" y2="10" />
-      <circle cx="4.05" cy="10" r="0.85" />
-      <line x1="7" y1="13" x2="3.6" y2="13" />
-      <circle cx="2.75" cy="13" r="0.85" />
-      <line x1="7" y1="16" x2="4.9" y2="16" />
-      <circle cx="4.05" cy="16" r="0.85" />
-      <line x1="17" y1="10" x2="19.1" y2="10" />
-      <circle cx="19.95" cy="10" r="0.85" />
-      <line x1="17" y1="13" x2="20.4" y2="13" />
-      <circle cx="21.25" cy="13" r="0.85" />
-      <line x1="17" y1="16" x2="19.1" y2="16" />
-      <circle cx="19.95" cy="16" r="0.85" />
-      <rect x="7" y="8" width="10" height="10" rx="2" ry="2" />
-      <text
-        x="12"
-        y="14.75"
-        textAnchor="middle"
-        fill="currentColor"
-        stroke="none"
-        style={{ fontSize: "6.25px", fontWeight: 700, fontFamily: "system-ui, sans-serif" }}
-      >
-        AI
-      </text>
-    </svg>
-  ),
+  "regulatory-systems": <AiRegulationChipIcon />,
   "institutional-infrastructure": (
     <svg {...strokeIcon} aria-hidden>
       <circle cx="5" cy="12" r="2.25" />
